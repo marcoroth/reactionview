@@ -1,0 +1,3 @@
+module ReActionView
+  VERSION: String
+end
