@@ -32,4 +32,8 @@ Gem::Specification.new do |spec|
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
+
+  spec.add_dependency "actionview", ">= 6.0"
+  spec.add_dependency "herb"
+  spec.add_dependency "nokogiri"
 end
