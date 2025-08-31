@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="https://rubygems.org/gems/reactionview"><img alt="Gem Version" src="https://img.shields.io/gem/v/reactionview"></a>
-  <a href="https://herb-tools.dev"><img alt="Documentation" src="https://img.shields.io/badge/documentation-available-green"></a>
+  <a href="https://reactionview.dev"><img alt="Documentation" src="https://img.shields.io/badge/documentation-available-green"></a>
   <a href="https://github.com/marcoroth/reactionview/blob/main/LICENSE.txt"><img alt="License" src="https://img.shields.io/github/license/marcoroth/reactionview"></a>
   <a href="https://github.com/marcoroth/reactionview/issues"><img alt="Issues" src="https://img.shields.io/github/issues/marcoroth/reactionview"></a>
 </p>
