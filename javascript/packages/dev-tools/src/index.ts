@@ -115,8 +115,18 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   document.addEventListener("turbo:visit", initializeDevTools)
 }
 
+declare global {
+  interface Window {
+    ReActionViewDevTools: {
+      init: typeof initReActionViewDevTools
+      ReActionViewDevTools: typeof ReActionViewDevTools
+      HerbOverlay: typeof HerbOverlay
+    }
+  }
+}
+
 if (typeof window !== "undefined") {
-  (window as any).ReActionViewDevTools = {
+  window.ReActionViewDevTools = {
     init: initReActionViewDevTools,
     ReActionViewDevTools,
     HerbOverlay
