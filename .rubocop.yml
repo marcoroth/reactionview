@@ -2,12 +2,67 @@ AllCops:
   NewCops: enable
   SuggestExtensions: false
   TargetRubyVersion: 3.1
+  Exclude:
+    - node_modules/**/*
 
 Style/StringLiterals:
+  Enabled: true
   EnforcedStyle: double_quotes
 
-Style/StringLiteralsInInterpolation:
-  EnforcedStyle: double_quotes
+Style/ClassAndModuleChildren:
+  Enabled: false
 
 Style/Documentation:
+  Enabled: false
+
+Style/StringLiteralsInInterpolation:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Style/WordArray:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/BlockDelimiters:
+  Enabled: false
+
+Style/AccessorGrouping:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: diff_comma
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Max: 15
+
+Metrics/CyclomaticComplexity:
+  Max: 15
+
+Metrics/MethodLength:
+  Max: 25
+  Exclude:
+    - test/**/*_test.rb
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/BlockLength:
+  Max: 30
+  Exclude:
+    - test/**/*_test.rb
+
+Layout/LineLength:
+  Max: 150
+  Exclude:
+    - test/**/*_test.rb
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/LeadingCommentSpace:
   Enabled: false

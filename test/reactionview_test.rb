@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require_relative "test_helper"
 
-class TestReActionView < Minitest::Test
-  def test_that_it_has_a_version_number
+class TestReActionView < Minitest::Spec
+  test "has version number" do
     refute_nil ::ReActionView::VERSION
   end
 end

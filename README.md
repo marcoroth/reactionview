@@ -1,106 +1,51 @@
-# ReActionView
+<div align="center">
+  <img alt="ReActionView - Enhanced Rails templates" style="height: 256px" height="256px" src="assets/reactionview.png">
+</div>
 
-Reactive ActionView.
+<h2 align="center">ReActionView</h2>
+
+<h4 align="center">Enhanced Rails templates powered by <code>Herb::Engine</code></h4>
+
+<div align="center">Seamless integration of Herb's HTML-aware ERB Rendering Engine into Rails applications.</div><br/>
+
+<p align="center">
+  <a href="https://rubygems.org/gems/reactionview"><img alt="Gem Version" src="https://img.shields.io/gem/v/reactionview"></a>
+  <a href="https://herb-tools.dev"><img alt="Documentation" src="https://img.shields.io/badge/documentation-available-green"></a>
+  <a href="https://github.com/marcoroth/reactionview/blob/main/LICENSE.txt"><img alt="License" src="https://img.shields.io/github/license/marcoroth/reactionview"></a>
+  <a href="https://github.com/marcoroth/reactionview/issues"><img alt="Issues" src="https://img.shields.io/github/issues/marcoroth/reactionview"></a>
+</p>
+
+<br/><br/><br/>
 
 ## Installation
 
-Install the gem and add to the application's Gemfile by executing:
+Add to your Rails application:
 
 ```bash
 bundle add reactionview
-```
-
-If bundler is not being used to manage dependencies, install the gem by executing:
-
-```bash
-gem install reactionview
+rails generate reactionview:install
 ```
 
 ## Usage
 
-ReactionView is a Rails engine that provides an alternative template processing system. It automatically handles `.html.herb` files and can optionally override `.html.erb` files.
+ReActionView provides two ways to use enhanced template processing:
 
-### Automatic Processing
-
-Files with the `.html.herb` extension are automatically processed by ReactionView:
-
-```erb
-<!-- app/views/users/show.html.herb -->
-<h1><%= @user.name %></h1>
-<p><%= @user.email %></p>
-```
+1. **Native .html.herb templates** - Automatically processed with `Herb::Engine`
+2. **Intercept `.html.erb` templates** - Enable in config to process all HTML+ERB templates with Herb
 
 ### Configuration
 
 ```ruby
-require "reactionview"
+# config/initializers/reactionview.rb
 
-# ReactionView automatically handles .html.herb files
-# No registration needed for .html.herb files - they use ReactionView by default
-
-# Optionally register ReactionView for .html.erb files (overrides default ActionView)
-# ReActionView.register_content_type('html.erb', ReActionView::TemplateEngine)
-
-# Configure template exclusion filter and validation options
 ReActionView.configure do |config|
-  config.template_exclusion_filter = ->(template_path) {
-    # Exclude certain templates from ReactionView processing
-    template_path.include?('admin') || template_path.include?('legacy')
-  }
-  
-  # Enable/disable Herb validation (default: true)
-  config.enable_herb_validation = true
-  
-  # Enable/disable HTML5 validation with Nokogiri (default: true)
-  config.enable_html5_validation = true
-  
-  # Enable verbose error logging for debugging (default: false)
-  config.verbose_error_logging = true
+  # Intercept .html.erb templates to use Herb::Engine
+  config.intercept_erb = true
+
+  # Enable debug mode
+  config.debug_mode = Rails.env.development?
 end
 ```
-
-### File Extensions
-
-- **`.html.erb`** - Uses standard ActionView (can be overridden to use ReactionView)
-- **`.html.herb`** - Automatically processed by ReactionView
-
-This allows you to gradually migrate templates or use ReactionView selectively in your application.
-
-## Features
-
-### Template Validation
-
-ReactionView includes comprehensive template validation using both Herb and Nokogiri:
-
-#### Pre-render Validation
-- **Herb Integration**: Validates raw template files using `Herb.parse_file()` before rendering
-- **Syntax Checking**: Catches ERB syntax errors and HTML structure issues early
-
-#### Post-render Validation  
-- **Herb Validation**: Validates the final rendered output using `Herb.parse()`
-- **HTML5 Compliance**: Uses Nokogiri's HTML5 parser to validate HTML5 compliance
-- **Smart Detection**: Only validates content that appears to be HTML
-
-#### Error Reporting
-- **Detailed Logging**: Shows precise line and column numbers for all validation errors
-- **Separate Error Types**: Distinguishes between Herb (ERB/HTML syntax) and HTML5 validation errors
-- **Configurable Verbosity**: Optional verbose error logging with full stack traces
-
-### Configuration Options
-
-| Option | Default | Description |
-|--------|---------|-------------|
-| `enable_herb_validation` | `true` | Enable/disable Herb validation for ERB and HTML syntax |
-| `enable_html5_validation` | `true` | Enable/disable HTML5 compliance validation with Nokogiri |
-| `verbose_error_logging` | `false` | Include full stack traces in error logs |
-| `template_exclusion_filter` | `nil` | Lambda to exclude specific templates from ReactionView processing |
-
-### Validation Flow
-
-1. **Pre-render**: Herb validates the raw `.html.herb` template file
-2. **Rendering**: Template is processed by ReactionView's template engine  
-3. **Post-render**: Both Herb and Nokogiri validate the final HTML output
-4. **Error Logging**: Any validation errors are logged with precise location information
 
 ## Development
 

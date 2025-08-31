@@ -2,5 +2,15 @@
 
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
+require "rails"
+require "action_view"
 require "reactionview"
-require "minitest/autorun"
+
+require "pathname"
+require "ostruct"
+
+require "maxitest/autorun"
+require "minitest/spec"
+
+Minitest::Spec::DSL.send(:alias_method, :test, :it)
+Minitest::Spec::DSL.send(:alias_method, :xtest, :xit)

@@ -4,6 +4,11 @@ source "https://rubygems.org"
 
 gemspec
 
+gem "actionview", "~> 8.0"
+gem "herb"
+gem "maxitest"
 gem "minitest", "~> 5.16"
+gem "minitest-difftastic"
+gem "railties", "~> 8.0"
 gem "rake", "~> 13.0"
-gem "rubocop", "~> 1.21"
+gem "rubocop", "~> 1.80.1"

@@ -1,0 +1,40 @@
+{
+  "name": "@reactionview/dev-tools",
+  "version": "0.0.1",
+  "description": "Development tools for ReActionView with Herb integration",
+  "type": "module",
+  "license": "MIT",
+  "main": "./dist/reactionview-dev-tools.umd.js",
+  "module": "./dist/reactionview-dev-tools.esm.js",
+  "types": "./dist/types/index.d.ts",
+  "scripts": {
+    "build": "yarn clean && rollup -c",
+    "dev": "rollup -c -w",
+    "clean": "rimraf dist"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/reactionview-dev-tools.esm.js",
+      "default": "./dist/reactionview-dev-tools.umd.js"
+    }
+  },
+  "dependencies": {
+    "@herb-tools/dev-tools": "file:../../../../herb-linter/javascript/packages/dev-tools"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.4",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.50.0",
+    "tslib": "^2.8.1",
+    "typescript": "^5.9.2"
+  },
+  "files": [
+    "package.json",
+    "README.md",
+    "dist/",
+    "src/"
+  ]
+}

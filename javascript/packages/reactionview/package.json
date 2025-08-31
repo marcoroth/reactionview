@@ -1,0 +1,10 @@
+{
+  "name": "reactionview",
+  "version": "0.0.1",
+  "description": "ReActionView",
+  "main": "src/index.js",
+  "repository": "https://github.com/marcoroth/reactionview",
+  "author": "Marco Roth",
+  "license": "MIT",
+  "private": false
+}

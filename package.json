@@ -1,0 +1,15 @@
+{
+  "name": "@reactionview/source",
+  "version": "0.0.1",
+  "description": "ReActionView Rails template handler with Herb integration",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "cd javascript/packages/dev-tools && npm run build",
+    "build:watch": "cd javascript/packages/dev-tools && npm run dev",
+    "clean": "rimraf app/assets/javascripts/reactionview-dev-tools.*"
+  },
+  "workspaces": [
+    "javascript/packages/*"
+  ]
+}

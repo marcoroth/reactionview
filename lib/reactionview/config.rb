@@ -2,23 +2,30 @@
 
 module ReActionView
   class Config
-    attr_accessor :template_exclusion_filter, :enable_herb_validation, :enable_html5_validation, :verbose_error_logging, :inject_development_errors, :strict_validation
+    attr_accessor :intercept_erb
+    attr_accessor :debug_mode
 
     def initialize
-      @template_exclusion_filter = nil
-      @enable_herb_validation = true
-      @enable_html5_validation = true
-      @verbose_error_logging = false
-      @inject_development_errors = true
-      @strict_validation = false
+      @intercept_erb = false
+      @debug_mode = nil
     end
 
-    def development_mode?
+    def development?
       defined?(Rails) && Rails.env.development?
     end
 
-    def should_inject_errors?
-      @inject_development_errors && development_mode?
+    def production?
+      defined?(Rails) && Rails.env.production?
+    end
+
+    def test?
+      defined?(Rails) && Rails.env.test?
+    end
+
+    def debug_mode_enabled?
+      return @debug_mode unless @debug_mode.nil?
+
+      development?
     end
   end
 
