@@ -1,0 +1,22 @@
+{
+  "name": "@reactionview/docs",
+  "version": "0.0.0",
+  "private": true,
+  "homepage": "https://reactionview.dev",
+  "bugs": "https://github.com/marcoroth/reactionview/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marcoroth/reactionview.git",
+    "directory": "docs"
+  },
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview",
+    "clean": "rimraf .vitepress/dist/ && rimraf .vitepress/cache/"
+  },
+  "devDependencies": {
+    "vitepress": "^2.0.0-alpha.5",
+    "vitepress-plugin-group-icons": "^1.5.5"
+  }
+}
