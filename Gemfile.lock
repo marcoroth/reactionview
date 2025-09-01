@@ -4,8 +4,6 @@ PATH
     reactionview (0.0.1)
       actionview (>= 7.0)
       herb (~> 0.6.1)
-      nokogiri
-      prism
 
 GEM
   remote: https://rubygems.org/

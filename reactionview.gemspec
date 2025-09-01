@@ -36,6 +36,4 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "actionview", ">= 7.0"
   spec.add_dependency "herb", "~> 0.6.1"
-  spec.add_dependency "nokogiri"
-  spec.add_dependency "prism"
 end
