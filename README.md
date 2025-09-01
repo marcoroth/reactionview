@@ -4,9 +4,10 @@
 
 <h2 align="center">ReActionView</h2>
 
-<h4 align="center">Enhanced Rails templates powered by <code>Herb::Engine</code></h4>
+<h4 align="center">A new ActionView-compatible ERB engine with modern DX - re-imagined with <a href="https://github.com/marcoroth/herb"><code>Herb::Engine</code></a>.</h4>
 
-<div align="center">Seamless integration of Herb's HTML-aware ERB Rendering Engine into Rails applications.</div><br/>
+<div align="center">Seamless integration of Herb's HTML-aware ERB rendering engine into Rails applications. <br>Compatible with <code>.html.erb</code>, but with modern enhancements:  
+HTML validation, better error feedback, a developer-friendly debug mode, and more!</div><br/>
 
 <p align="center">
   <a href="https://rubygems.org/gems/reactionview"><img alt="Gem Version" src="https://img.shields.io/gem/v/reactionview"></a>
