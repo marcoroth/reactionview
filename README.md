@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="ReActionView - Enhanced Rails templates" style="height: 256px" height="256px" src="assets/reactionview.png">
+  <img alt="ReActionView - Enhanced Rails templates" style="height: 256px" height="256px" src="https://github.com/marcoroth/reactionview/blob/main/assets/reactionview.png?raw=true">
 </div>
 
 <h2 align="center">ReActionView</h2>
