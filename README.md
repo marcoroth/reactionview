@@ -30,8 +30,8 @@ rails generate reactionview:install
 
 ReActionView provides two ways to use enhanced template processing:
 
-1. **Native .html.herb templates** - Automatically processed with `Herb::Engine`
-2. **Intercept `.html.erb` templates** - Enable in config to process all HTML+ERB templates with Herb
+1. **Native `.html.herb` templates** - Automatically processed with `Herb::Engine`.
+2. **Intercept `.html.erb` templates** - Enable in config to process all HTML+ERB templates with Herb.
 
 ### Configuration
 
@@ -40,7 +40,7 @@ ReActionView provides two ways to use enhanced template processing:
 
 ReActionView.configure do |config|
   # Intercept .html.erb templates to use Herb::Engine
-  config.intercept_erb = true
+  # config.intercept_erb = true
 
   # Enable debug mode
   config.debug_mode = Rails.env.development?
