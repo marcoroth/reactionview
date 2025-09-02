@@ -5,7 +5,7 @@ source "https://rubygems.org"
 gemspec
 
 gem "actionview", "~> 8.0"
-gem "herb", path: "../herb-linter"
+# gem "herb", path: "../herb"
 gem "maxitest"
 gem "minitest-difftastic"
 gem "minitest", "~> 5.16"

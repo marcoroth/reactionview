@@ -160,7 +160,6 @@ PLATFORMS
 
 DEPENDENCIES
   actionview (~> 8.0)
-  herb
   maxitest
   minitest (~> 5.16)
   minitest-difftastic
