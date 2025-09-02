@@ -33,7 +33,7 @@ features:
 
   - title: Reactive Templates (Coming Soon)
     icon: ⚡
-    details: Enable reactive server-rendered components that bridge traditional views with modern frontend needs.
+    details: Reactive server-rendered templates that bridge traditional views with modern frontend needs.
 
   - title: HTML Validation
     icon: 🛡️
