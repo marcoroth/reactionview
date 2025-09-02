@@ -1,6 +1,8 @@
 # Overview
 
-ReActionView is a new ActionView-compatible ERB engine with modern developer experience - re-imagined with `Herb::Engine`. It provides seamless integration of Herb's HTML-aware ERB rendering engine into Rails applications, compatible with `.html.erb` templates but with modern enhancements like HTML validation, better error feedback, developer-friendly debug mode, and more!
+ReActionView is a new ActionView-compatible ERB engine with modern developer experience - re-imagined with `Herb::Engine`.
+
+It provides seamless integration of Herb's HTML-aware ERB rendering engine into Rails applications, compatible with `.html.erb` templates but with modern enhancements like HTML validation, better error feedback, developer-friendly debug mode, and more!
 
 ## The Herb Journey
 

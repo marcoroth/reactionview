@@ -4,13 +4,13 @@ Get started with ReActionView in your Rails application.
 
 ## Requirements
 
-- **Ruby**: 3.1+ (3.4+ recommended)
+- **Ruby**: 3.0+ (3.4+ recommended)
 - **Rails**: 7.0+ (8.0+ recommended)
 - **Herb**: The Herb gem will be installed automatically as a dependency
 
 ## Install the Gem
 
-Add ReActionView to your Rails application's Gemfile:
+Add ReActionView to your Rails application's `Gemfile`:
 
 ```ruby
 gem "reactionview"
