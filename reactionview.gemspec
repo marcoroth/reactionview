@@ -8,13 +8,13 @@ Gem::Specification.new do |spec|
   spec.authors = ["Marco Roth"]
   spec.email = ["marco.roth@intergga.ch"]
 
-  spec.summary = "Reactive ActionView"
+  spec.summary = "An ActionView-compatible ERB engine with modern DX - re-imagined with Herb."
   spec.description = spec.summary
-  spec.homepage = "https://github.com/marcoroth/reactionview"
-  spec.required_ruby_version = ">= 3.1.0"
+  spec.homepage = "https://reactionview.dev"
+  spec.required_ruby_version = ">= 3.0.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = spec.homepage
+  spec.metadata["source_code_uri"] = "https://github.com/marcoroth/reactionview"
   spec.metadata["changelog_uri"] = "https://github.com/marcoroth/reactionview/releases"
   spec.metadata["rubygems_mfa_required"] = "true"
 
