@@ -6,7 +6,7 @@ import { createThemeConfig } from "./config/theme.mts"
 const themeConfig = createThemeConfig()
 
 const title = "ReActionView"
-const description = "Enhanced ERB templates with Herb engine integration for Rails applications."
+const description = "A new ActionView-compatible ERB engine with modern DX - re-imagined with Herb."
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
