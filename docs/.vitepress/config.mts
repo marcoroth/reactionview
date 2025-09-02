@@ -13,7 +13,7 @@ export default defineConfig({
   title,
   description,
   srcDir: "./docs",
-  base: "/reactionview/",
+  base: "/",
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }],
     ['link', { rel: 'icon', href: '/favicon-16x16.png', sizes: '16x16' }],
