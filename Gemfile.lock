@@ -50,13 +50,28 @@ GEM
       pretty_please
     difftastic (0.7.0-arm64-darwin)
       pretty_please
+    difftastic (0.7.0-arm64-linux)
+      pretty_please
+    difftastic (0.7.0-x86_64-darwin)
+      pretty_please
+    difftastic (0.7.0-x86_64-linux)
+      pretty_please
     dispersion (0.2.0)
       prism
     drb (2.2.3)
     erb (5.0.2)
     erubi (1.13.1)
     herb (0.7.0)
+    herb (0.7.0-aarch64-linux-gnu)
+    herb (0.7.0-aarch64-linux-musl)
+    herb (0.7.0-arm-linux-gnu)
+    herb (0.7.0-arm-linux-musl)
     herb (0.7.0-arm64-darwin)
+    herb (0.7.0-x86-linux-gnu)
+    herb (0.7.0-x86-linux-musl)
+    herb (0.7.0-x86_64-darwin)
+    herb (0.7.0-x86_64-linux-gnu)
+    herb (0.7.0-x86_64-linux-musl)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     io-console (0.8.1)
@@ -80,7 +95,21 @@ GEM
     nokogiri (1.18.8)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
+    nokogiri (1.18.8-aarch64-linux-gnu)
+      racc (~> 1.4)
+    nokogiri (1.18.8-aarch64-linux-musl)
+      racc (~> 1.4)
+    nokogiri (1.18.8-arm-linux-gnu)
+      racc (~> 1.4)
+    nokogiri (1.18.8-arm-linux-musl)
+      racc (~> 1.4)
     nokogiri (1.18.8-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.18.8-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.18.8-x86_64-linux-gnu)
+      racc (~> 1.4)
+    nokogiri (1.18.8-x86_64-linux-musl)
       racc (~> 1.4)
     parallel (1.27.0)
     parser (3.3.9.0)
@@ -155,8 +184,19 @@ GEM
     zeitwerk (2.7.3)
 
 PLATFORMS
-  arm64-darwin-24
+  aarch64-linux-gnu
+  aarch64-linux-musl
+  arm-linux-gnu
+  arm-linux-musl
+  arm64-darwin
+  arm64-linux
   ruby
+  x86-linux-gnu
+  x86-linux-musl
+  x86_64-darwin
+  x86_64-linux
+  x86_64-linux-gnu
+  x86_64-linux-musl
 
 DEPENDENCIES
   actionview (~> 8.0)
