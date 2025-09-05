@@ -18,9 +18,7 @@ module ReActionView
 
     initializer "reactionview.configure_erb_handler" do
       ActiveSupport.on_load(:action_view) do
-        if ReActionView.config.intercept_erb
-          ActionView::Template.register_template_handler :erb, ReActionView::Template::Handlers::Herb
-        end
+        ActionView::Template.register_template_handler :erb, ReActionView::Template::Handlers::Herb
       end
     end
   end
