@@ -13,6 +13,7 @@
     "docs:preview": "cd docs && yarn preview"
   },
   "workspaces": [
-    "docs"
+    "docs",
+    "javascript/packages/*"
   ]
 }
