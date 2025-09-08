@@ -4,6 +4,7 @@ AllCops:
   TargetRubyVersion: 3.2
   Exclude:
     - node_modules/**/*
+    - vendor/**/*
 
 Style/StringLiterals:
   Enabled: true
