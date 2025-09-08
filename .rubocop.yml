@@ -1,9 +1,10 @@
 AllCops:
   NewCops: enable
   SuggestExtensions: false
-  TargetRubyVersion: 3.1
+  TargetRubyVersion: 3.2
   Exclude:
     - node_modules/**/*
+    - vendor/**/*
 
 Style/StringLiterals:
   Enabled: true

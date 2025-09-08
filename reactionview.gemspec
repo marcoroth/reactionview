@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary = "An ActionView-compatible ERB engine with modern DX - re-imagined with Herb."
   spec.description = spec.summary
   spec.homepage = "https://reactionview.dev"
-  spec.required_ruby_version = ">= 3.0.0"
+  spec.required_ruby_version = ">= 3.2.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/marcoroth/reactionview"
