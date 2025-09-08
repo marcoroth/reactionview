@@ -7,7 +7,6 @@ require "action_view"
 require "reactionview"
 
 require "pathname"
-require "ostruct"
 
 require "maxitest/autorun"
 require "minitest/spec"
