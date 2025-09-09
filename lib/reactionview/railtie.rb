@@ -12,7 +12,7 @@ module ReActionView
     PRECOMPILE_ASSETS = %w[
       reactionview-dev-tools.esm.js
       reactionview-dev-tools.umd.js
-    ]
+    ].freeze
 
     initializer "reactionview.assets" do |app|
       if ReActionView.config.development? && app.config.respond_to?(:assets)
