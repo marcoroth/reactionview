@@ -13,9 +13,16 @@ module ReActionView
             filename: template.identifier,
             project_path: Rails.root.to_s,
             validation_mode: :overlay,
-            debug: ::ReActionView.config.debug_mode_enabled?,
             content_for_head: reactionview_dev_tools_markup(template),
+            visitors: ReActionView.config.transform_visitors,
           }
+
+          if ::ReActionView.config.debug_mode_enabled?
+            config[:visitors] << ::Herb::Engine::DebugVisitor.new(
+              file_path: template.identifier,
+              project_path: Rails.root.to_s
+            )
+          end
 
           erb_implementation.new(source, config).src
         end

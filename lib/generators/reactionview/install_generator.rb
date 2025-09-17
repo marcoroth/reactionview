@@ -22,6 +22,11 @@ module ReActionView
 
             # Enable debug mode in development (adds debug attributes to HTML)
             config.debug_mode = Rails.env.development?
+
+            # Add custom transform visitors to process templates before compilation
+            # config.transform_visitors = [
+            #   Herb::Visitor::new
+            # ]
           end
         RUBY
       end
@@ -30,8 +35,8 @@ module ReActionView
         say "\nReActionView has been successfully installed! 🎉", :green
         say "\nNext steps:", :blue
         say "  1. Review config/initializers/reactionview.rb"
-        say "  2. Enable `config.intercept_erb = true` to process all .html.erb templates using `Herb::Engine`."
-        say "  3. Create .html.herb templates for explicit Herb usage."
+        say "  2. Enable `config.intercept_erb = true` to process all `*.html.erb` templates using `Herb::Engine`."
+        say "  3. Create `*.html.herb` templates for explicit Herb usage."
 
         say "\nLearn more:", :yellow
         say "  GitHub:  https://github.com/marcoroth/reactionview"
