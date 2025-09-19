@@ -13,7 +13,7 @@ appraise "rails-7-2" do
   gem "railties", "~> 7.2"
 end
 
-appraise "rails-8" do
+appraise "rails-8-0" do
   gem "actionview", "~> 8.0"
   gem "railties", "~> 8.0"
 end
