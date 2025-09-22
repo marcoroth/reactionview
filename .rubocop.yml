@@ -5,6 +5,7 @@ AllCops:
   Exclude:
     - node_modules/**/*
     - vendor/**/*
+    - gemfiles/**/*
 
 Style/StringLiterals:
   Enabled: true

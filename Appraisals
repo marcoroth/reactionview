@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 appraise "rails-7-0" do
   gem "actionview", "~> 7.0"
   gem "railties", "~> 7.0"
