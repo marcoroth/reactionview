@@ -19,7 +19,7 @@ Debug mode is enabled by default in development environments:
 :::code-group
 ```ruby [config/initializers/reactionview.rb]
 ReActionView.configure do |config|
-  config.debug_mode = Rails.env.development?
+  config.debug_mode = Rails.env.development? && !ENV["REACTIONVIEW_DISABLE_DEBUG_MODE"]
 end
 ```
 :::
