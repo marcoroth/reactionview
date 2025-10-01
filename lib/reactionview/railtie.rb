@@ -31,7 +31,7 @@ module ReActionView
 
     config.after_initialize do
       ActiveSupport.on_load(:action_view) do
-        ActionView::Template.register_template_handler :erb, ReActionView::Template::Handlers::Herb if ReActionView.config.intercept_erb
+        ActionView::Template.register_template_handler :erb, ReActionView::Template::Handlers::ERB if ReActionView.config.intercept_erb
       end
     end
   end

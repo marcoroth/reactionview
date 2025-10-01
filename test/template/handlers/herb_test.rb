@@ -5,6 +5,7 @@ require_relative "../../test_helper"
 class HerbTemplateHandlerTest < Minitest::Test
   def setup
     ReActionView.config.debug_mode = false
+    ReActionView.config.intercept_erb = true
 
     lookup_context = ActionView::LookupContext.new([])
     @view_context = ActionView::Base.with_empty_template_cache.new(lookup_context, {}, nil)
@@ -17,7 +18,7 @@ class HerbTemplateHandlerTest < Minitest::Test
     template = ActionView::Template.new(
       template_source,
       "test_template",
-      ReActionView::Template::Handlers::Herb,
+      ReActionView::Template::Handlers::ERB,
       virtual_path: "test",
       format: :html,
       locals: []
@@ -34,7 +35,7 @@ class HerbTemplateHandlerTest < Minitest::Test
     template = ActionView::Template.new(
       template_source,
       "test_template",
-      ReActionView::Template::Handlers::Herb,
+      ReActionView::Template::Handlers::ERB,
       virtual_path: "test",
       format: :text,
       locals: []
