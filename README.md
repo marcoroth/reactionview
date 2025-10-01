@@ -44,7 +44,7 @@ ReActionView.configure do |config|
   # config.intercept_erb = true
 
   # Enable debug mode
-  config.debug_mode = Rails.env.development?
+  config.debug_mode = Rails.env.development? && !ENV["REACTIONVIEW_DISABLE_DEBUG_MODE"]
 end
 ```
 
