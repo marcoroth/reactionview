@@ -5,10 +5,45 @@ require_relative "../../test_helper"
 class HerbTemplateHandlerTest < Minitest::Test
   def setup
     ReActionView.config.debug_mode = false
+    ReActionView.config.intercept_erb = true
 
     lookup_context = ActionView::LookupContext.new([])
     @view_context = ActionView::Base.with_empty_template_cache.new(lookup_context, {}, nil)
     @handler = ReActionView::Template::Handlers::Herb.new
+  end
+
+  def test_error_for_invalid_html
+    template_source = "Plain text: <%= 1 + 1 %> (<with_an_invalid_bracket>)"
+
+    template = ActionView::Template.new(
+      template_source,
+      "test_template",
+      ReActionView::Template::Handlers::ERB,
+      virtual_path: "test",
+      format: :html,
+      locals: []
+    )
+
+    result = template.render(@view_context, {})
+
+    assert_includes result, "data-herb-parser-error"
+  end
+
+  def test_rendering_for_non_html_formats
+    template_source = "Plain text: <%= 1 + 1 %> (<with_an_invalid_bracket>)"
+
+    template = ActionView::Template.new(
+      template_source,
+      "test_template",
+      ReActionView::Template::Handlers::ERB,
+      virtual_path: "test",
+      format: :text,
+      locals: []
+    )
+
+    result = template.render(@view_context, {})
+
+    assert_equal "Plain text: 2 (<with_an_invalid_bracket>)", result
   end
 
   def test_compilation_basic_template
