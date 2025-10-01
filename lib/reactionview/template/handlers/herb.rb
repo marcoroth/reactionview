@@ -9,6 +9,10 @@ module ReActionView
         class_attribute :erb_implementation, default: Handlers::Herb::Herb
 
         def call(template, source)
+          if template.format != :html
+            return ActionView::Template::Handlers::ERB.call(template, source)
+          end
+
           config = {
             filename: template.identifier,
             project_path: Rails.root.to_s,
