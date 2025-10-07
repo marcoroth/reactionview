@@ -7,6 +7,7 @@ Gem::Specification.new do |spec|
   spec.version = ReActionView::VERSION
   spec.authors = ["Marco Roth"]
   spec.email = ["marco.roth@intergga.ch"]
+  spec.license = "MIT"
 
   spec.summary = "An ActionView-compatible ERB engine with modern DX - re-imagined with Herb."
   spec.description = spec.summary
