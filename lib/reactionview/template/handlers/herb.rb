@@ -17,7 +17,7 @@ module ReActionView
             visitors: ReActionView.config.transform_visitors,
           }
 
-          if ::ReActionView.config.debug_mode_enabled?
+          if ::ReActionView.config.debug_mode_enabled? && local_template?(template)
             config[:visitors] << ::Herb::Engine::DebugVisitor.new(
               file_path: template.identifier,
               project_path: Rails.root.to_s
@@ -35,8 +35,13 @@ module ReActionView
           template.identifier.include?("/layouts/")
         end
 
+        def local_template?(template)
+          template.identifier.start_with?("#{Rails.root}/app/views")
+        end
+
         def reactionview_dev_tools_markup(template)
           return nil unless layout_template?(template) && ::ReActionView.config.debug_mode_enabled?
+          return nil unless local_template?(template)
 
           <<~HTML
             <meta name="herb-debug-mode" content="true">
