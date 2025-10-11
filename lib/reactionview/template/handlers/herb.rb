@@ -9,20 +9,22 @@ module ReActionView
         class_attribute :erb_implementation, default: Handlers::Herb::Herb
 
         def call(template, source)
+          visitors = []
+
+          if ::ReActionView.config.debug_mode_enabled?
+            visitors << ::Herb::Engine::DebugVisitor.new(
+              file_path: template.identifier,
+              project_path: Rails.root.to_s
+            )
+          end
+
           config = {
             filename: template.identifier,
             project_path: Rails.root.to_s,
             validation_mode: :overlay,
             content_for_head: reactionview_dev_tools_markup(template),
-            visitors: ReActionView.config.transform_visitors,
+            visitors: visitors + ReActionView.config.transform_visitors,
           }
-
-          if ::ReActionView.config.debug_mode_enabled?
-            config[:visitors] << ::Herb::Engine::DebugVisitor.new(
-              file_path: template.identifier,
-              project_path: Rails.root.to_s
-            )
-          end
 
           erb_implementation.new(source, config).src
         end
