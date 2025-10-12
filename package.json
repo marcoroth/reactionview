@@ -1,6 +1,6 @@
 {
   "name": "@reactionview/source",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "ReActionView Rails template handler with Herb integration",
   "private": true,
   "type": "module",

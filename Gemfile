@@ -5,6 +5,7 @@ source "https://rubygems.org"
 gemspec
 
 gem "appraisal"
+gem "rails"
 # gem "herb", path: "../herb"
 gem "maxitest"
 gem "minitest", "~> 5.16"
