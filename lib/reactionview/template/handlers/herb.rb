@@ -11,7 +11,7 @@ module ReActionView
         def call(template, source)
           visitors = []
 
-          if ::ReActionView.config.debug_mode_enabled && local_template?(template)?
+          if ::ReActionView.config.debug_mode_enabled? && local_template?(template)
             visitors << ::Herb::Engine::DebugVisitor.new(
               file_path: template.identifier,
               project_path: Rails.root.to_s
@@ -38,6 +38,8 @@ module ReActionView
         end
 
         def local_template?(template)
+          return true unless template.respond_to?(:identifier) && template.identifier
+
           template.identifier.start_with?("#{Rails.root}/app/views")
         end
 
