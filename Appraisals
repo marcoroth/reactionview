@@ -21,6 +21,11 @@ appraise "rails-8-0" do
 end
 
 appraise "rails-8-1" do
-  gem "actionview", "~> 8.1.0.beta1"
-  gem "railties", "~> 8.1.0.beta1"
+  gem "actionview", "~> 8.1"
+  gem "railties", "~> 8.1"
+end
+
+appraise "rails-8-2" do
+  gem "actionview", github: "rails/rails"
+  gem "railties", github: "rails/rails"
 end
