@@ -43,13 +43,29 @@ module ReActionView
           template.identifier.start_with?("#{Rails.root}/app/views")
         end
 
+        def active_support_editor
+          return unless defined?(ActiveSupport::Editor)
+          return if ActiveSupport::Editor.current.blank?
+
+          ActiveSupport::Editor.current.instance_variable_get(:@url_pattern).split("://").first
+        end
+
+        def editor_meta_tag
+          editor_name = active_support_editor || ENV["RAILS_EDITOR"] || ENV.fetch("EDITOR", nil)
+
+          return if editor_name.blank?
+
+          %(<meta name="herb-default-editor" content="#{editor_name}">)
+        end
+
         def reactionview_dev_tools_markup(template)
           return nil unless layout_template?(template) && ::ReActionView.config.debug_mode_enabled?
           return nil unless local_template?(template)
 
           <<~HTML
             <meta name="herb-debug-mode" content="true">
-            <meta name="herb-rails-root" content="#{Rails.root}">
+            <meta name="herb-project-path" content="#{Rails.root}">
+            #{editor_meta_tag}
 
             #{ActionController::Base.new.view_context.javascript_include_tag "reactionview-dev-tools.umd.js", defer: true}
           HTML
