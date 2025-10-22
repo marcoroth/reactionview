@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Ruby ${{ matrix.ruby }}
+    name: "Ruby ${{ matrix.ruby }} / ${{ matrix.gemfile }}"
     strategy:
       matrix:
         ruby:
