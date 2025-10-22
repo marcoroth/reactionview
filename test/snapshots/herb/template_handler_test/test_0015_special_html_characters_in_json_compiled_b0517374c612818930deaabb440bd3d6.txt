@@ -1,0 +1,3 @@
+
+ @output_buffer.safe_append='<div data-value="'.freeze; @output_buffer << ((@value.to_json)); @output_buffer.safe_append='"></div>'.freeze;
+@output_buffer

@@ -1,0 +1,3 @@
+
+ @output_buffer.safe_append='<div data-holidays-current-value="'.freeze; @output_buffer << ((json_escape(@holidays.to_json))); @output_buffer.safe_append='"></div>'.freeze;
+@output_buffer

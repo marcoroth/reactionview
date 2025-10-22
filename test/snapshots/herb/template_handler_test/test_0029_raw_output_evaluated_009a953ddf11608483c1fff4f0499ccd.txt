@@ -1,0 +1,1 @@
+<div data-config="{&quot;key&quot;:&quot;value&quot;}"></div>

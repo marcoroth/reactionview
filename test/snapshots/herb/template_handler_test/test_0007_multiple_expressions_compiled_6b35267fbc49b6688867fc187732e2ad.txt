@@ -1,0 +1,3 @@
+
+ @output_buffer.safe_append='<h1>Hello '.freeze; @output_buffer.append=(@name); @output_buffer.safe_append='!</h1><p>'.freeze; @output_buffer.append=(@message); @output_buffer.safe_append='</p>'.freeze;
+@output_buffer

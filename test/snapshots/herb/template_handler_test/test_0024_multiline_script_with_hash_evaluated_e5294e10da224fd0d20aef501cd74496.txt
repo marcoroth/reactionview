@@ -1,0 +1,3 @@
+<script>
+  window.railsVariables = {"a":"first_item","b":"second_item"}
+</script>

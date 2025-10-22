@@ -1,0 +1,5 @@
+
+ @output_buffer.safe_append='<div>
+'.freeze; @output_buffer.append=(@content); @output_buffer.safe_append='
+</div>'.freeze;
+@output_buffer

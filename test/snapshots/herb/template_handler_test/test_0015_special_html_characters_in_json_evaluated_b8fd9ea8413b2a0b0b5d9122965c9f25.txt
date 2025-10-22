@@ -1,0 +1,1 @@
+<div data-value="[&quot;\u003cscript\u003e&quot;,&quot;a \u0026 b&quot;,&quot;x \u003e y&quot;]"></div>
