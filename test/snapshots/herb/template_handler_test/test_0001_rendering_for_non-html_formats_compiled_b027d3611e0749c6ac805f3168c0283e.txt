@@ -1,0 +1,2 @@
+ @output_buffer.safe_append='Plain text: '.freeze; @output_buffer.safe_expr_append=( 1 + 1 ); @output_buffer.safe_append=' (<with_an_invalid_bracket>)'.freeze;
+@output_buffer
