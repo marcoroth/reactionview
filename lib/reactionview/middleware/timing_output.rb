@@ -12,9 +12,7 @@ module ReActionView
 
         status, headers, response = @app.call(env)
 
-        if ::ReActionView.config.show_render_times? && html_response?(headers)
-          response = inject_timing_data(response)
-        end
+        response = inject_timing_data(response) if ::ReActionView.config.show_render_times? && html_response?(headers)
 
         Thread.current[:reactionview_timings] = nil
 
@@ -25,7 +23,7 @@ module ReActionView
 
       def html_response?(headers)
         content_type = headers["Content-Type"]
-        content_type && content_type.include?("text/html")
+        content_type&.include?("text/html")
       end
 
       def inject_timing_data(response)
