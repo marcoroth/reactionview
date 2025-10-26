@@ -40,7 +40,9 @@ module ReActionView
         def local_template?(template)
           return true unless template.respond_to?(:identifier) && template.identifier
 
-          template.identifier.start_with?("#{Rails.root}/app/views")
+          ActionController::Base.view_paths
+                                .select { |view_path| view_path.path.start_with?(Rails.root.to_s) }
+                                .any? { |view_path| template.identifier.start_with?(view_path.path) }
         end
 
         def active_support_editor
