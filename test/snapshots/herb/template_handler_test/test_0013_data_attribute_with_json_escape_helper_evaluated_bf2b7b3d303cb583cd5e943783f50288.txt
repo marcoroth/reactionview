@@ -1,0 +1,1 @@
+<div data-holidays-current-value="[&quot;2025-10-20&quot;,&quot;2025-10-21&quot;,&quot;2025-11-26&quot;]"></div>

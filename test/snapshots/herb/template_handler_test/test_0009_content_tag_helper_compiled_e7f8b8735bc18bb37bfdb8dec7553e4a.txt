@@ -1,0 +1,3 @@
+
+ @output_buffer.append=(content_tag :div, "Hello", class: "greeting");
+@output_buffer

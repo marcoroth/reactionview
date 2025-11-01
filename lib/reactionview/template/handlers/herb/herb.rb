@@ -20,7 +20,11 @@ module ReActionView
             # Tell Herb whether the template will be compiled with `frozen_string_literal: true`
             properties[:freeze_template_literals] = !::ActionView::Template.frozen_string_literal
 
+            # Disable all Herb escape functions - let ActionView::OutputBuffer handle escaping
             properties[:escapefunc] = ""
+            properties[:attrfunc] = ""
+            properties[:jsfunc] = ""
+            properties[:cssfunc] = ""
 
             super
           end
