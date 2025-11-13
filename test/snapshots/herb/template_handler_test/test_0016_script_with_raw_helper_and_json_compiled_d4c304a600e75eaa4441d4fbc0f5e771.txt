@@ -1,3 +1,2 @@
-
  @output_buffer.safe_append='<script>window.config = '.freeze; @output_buffer << ((raw @config.to_json)); @output_buffer.safe_append='</script>'.freeze;
 @output_buffer

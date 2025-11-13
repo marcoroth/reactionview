@@ -1,3 +1,2 @@
-
  @output_buffer.safe_append='<script>const data = '.freeze; @output_buffer << ((@data.to_json.html_safe)); @output_buffer.safe_append='; console.log(data);</script>'.freeze;
 @output_buffer

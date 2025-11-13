@@ -204,6 +204,7 @@ class Herb::TemplateHandlerTest < Minitest::Spec
     template = %(<div data-config="<%= @config.to_json %>"></div>)
 
     assert_compiled_snapshot(template)
+    assert_evaluated_snapshot(template, ivars: { config: { key: "value" } })
     assert_evaluated_snapshot(template, ivars: {
       config: {
         name: "Test",
@@ -330,13 +331,6 @@ class Herb::TemplateHandlerTest < Minitest::Spec
 
   test "raw helper with json" do
     template = %(<div data-config="<%= raw @config.to_json %>"></div>)
-
-    assert_compiled_snapshot(template)
-    assert_evaluated_snapshot(template, ivars: { config: { key: "value" } })
-  end
-
-  test "regular output" do
-    template = %(<div data-config="<%= @config.to_json %>"></div>)
 
     assert_compiled_snapshot(template)
     assert_evaluated_snapshot(template, ivars: { config: { key: "value" } })

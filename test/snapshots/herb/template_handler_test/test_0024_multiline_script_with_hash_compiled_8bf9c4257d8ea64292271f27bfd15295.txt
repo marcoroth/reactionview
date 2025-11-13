@@ -1,4 +1,3 @@
-
  @output_buffer.safe_append='<script>
   window.railsVariables = '.freeze; @output_buffer << ((@hash.to_json.html_safe)); @output_buffer.safe_append='
 </script>

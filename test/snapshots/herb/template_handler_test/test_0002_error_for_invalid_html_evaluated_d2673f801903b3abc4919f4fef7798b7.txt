@@ -298,10 +298,10 @@
       <div class="herb-error-header-content">
         <div class="herb-error-title">
           <div class="herb-error-icon">!</div>
-          Template Errors (2)
+          Template Error
         </div>
         <div class="herb-error-message">
-          Tag `&lt;with_an_invalid_bracket&gt;` opened at (1:27) was never closed before the end of document.
+          Opening tag `&lt;with_an_invalid_bracket&gt;` at (1:27) doesn&#39;t have a matching closing tag `&lt;/with_an_invalid_bracket&gt;` in the same scope.
         </div>
       </div>
     </div>
@@ -310,10 +310,10 @@
       <div class="herb-code-section">
   <div class="herb-code-header">
     <div class="herb-file-icon">ERB</div>
-    Error 1: UnclosedElement - test_template:1:52
+    test_template:1:26
   </div>
   <div class="herb-error-message-section">
-    <div class="herb-error-message">Tag `&lt;with_an_invalid_bracket&gt;` opened at (1:27) was never closed before the end of document.</div>
+    <div class="herb-error-message">Opening tag `&lt;with_an_invalid_bracket&gt;` at (1:27) doesn&#39;t have a matching closing tag `&lt;/with_an_invalid_bracket&gt;` in the same scope.</div>
   </div>
   <div class="herb-code-content">
     <div class="herb-code-line herb-error-line">
@@ -321,42 +321,19 @@
   <div class="herb-line-content">Plain text: <span class="herb-erb">&lt;%=</span><span class="herb-erb"> 1 + 1 </span><span class="herb-erb">%&gt;</span> (<span class="herb-tag">&lt;</span><span class="herb-tag">with_an_invalid_bracket</span><span class="herb-tag">&gt;</span>)</div>
 </div>
 
-<div class="herb-error-pointer">                                                   ^ ← Unclosed element</div>
-
-  </div>
-</div>
-
-<div class="herb-code-section">
-  <div class="herb-code-header">
-    <div class="herb-file-icon">ERB</div>
-    Error 2: MissingClosingTag - test_template:1:27
-  </div>
-  <div class="herb-error-message-section">
-    <div class="herb-error-message">Opening tag `&lt;with_an_invalid_bracket&gt;` at (1:27) doesn&#39;t have a matching closing tag `&lt;/with_an_invalid_bracket&gt;`.</div>
-  </div>
-  <div class="herb-code-content">
-    <div class="herb-code-line herb-error-line">
-  <div class="herb-line-number">1</div>
-  <div class="herb-line-content">Plain text: <span class="herb-erb">&lt;%=</span><span class="herb-erb"> 1 + 1 </span><span class="herb-erb">%&gt;</span> (<span class="herb-tag">&lt;</span><span class="herb-tag">with_an_invalid_bracket</span><span class="herb-tag">&gt;</span>)</div>
-</div>
-
-<div class="herb-error-pointer">                          ^~~~~~~~~~~~~~~~~~~~~~~~~~ ← Missing closing tag</div>
+<div class="herb-error-pointer">                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~ ← Missing closing tag</div>
 
   </div>
 </div>
 
 <div class="herb-section">
-  <div class="herb-section-header" data-section-id="suggestions-5f68fd073b7e13cdae96b20e85458fdc">
+  <div class="herb-section-header" data-section-id="suggestions-a0caf34d3599b38196ac951dd3a71110">
     Suggestions
-    <span class="herb-section-toggle" id="suggestions-5f68fd073b7e13cdae96b20e85458fdc-toggle">▼</span>
+    <span class="herb-section-toggle" id="suggestions-a0caf34d3599b38196ac951dd3a71110-toggle">▼</span>
   </div>
-  <div class="herb-section-content" id="suggestions-5f68fd073b7e13cdae96b20e85458fdc-content">
+  <div class="herb-section-content" id="suggestions-a0caf34d3599b38196ac951dd3a71110-content">
     <div class="herb-suggestions">
       <div class="herb-suggestion-item">
-  <div class="herb-suggestion-title">Close unclosed element</div>
-  <div>Add &lt;/with_an_invalid_bracket&gt; before the end of the template</div>
-</div>
-<div class="herb-suggestion-item">
   <div class="herb-suggestion-title">Add missing closing tag</div>
   <div>Add &lt;/with_an_invalid_bracket&gt; to close the opening tag</div>
 </div>

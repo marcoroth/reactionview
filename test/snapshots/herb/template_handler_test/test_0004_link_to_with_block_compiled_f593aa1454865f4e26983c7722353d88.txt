@@ -1,3 +1,2 @@
-
  @output_buffer.append= link_to "/users", class: "btn" do; @output_buffer.safe_append='Click me'.freeze; end;
 @output_buffer

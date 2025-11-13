@@ -1,3 +1,2 @@
-
  @output_buffer.safe_append='<script type="application/json">'.freeze; @output_buffer << ((@data.to_json.html_safe)); @output_buffer.safe_append='</script>'.freeze;
 @output_buffer

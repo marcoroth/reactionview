@@ -1,4 +1,9 @@
-
- @output_buffer.safe_append='<canvas data-controller="chart" data-chart-unit-type-value="'.freeze; @output_buffer << ((@unit_type)); @output_buffer.safe_append='" data-chart-data-value="'.freeze; @output_buffer << ((@data.to_json)); @output_buffer.safe_append='" data-chart-labels-value="'.freeze; @output_buffer << ((@labels.to_json)); @output_buffer.safe_append='" data-chart-unit-value="'.freeze; @output_buffer << ((@unit_label)); @output_buffer.safe_append='"></canvas>
+ @output_buffer.safe_append='<canvas
+data-controller="chart"
+data-chart-unit-type-value="'.freeze; @output_buffer << ((@unit_type)); @output_buffer.safe_append='"
+data-chart-data-value="'.freeze; @output_buffer << ((@data.to_json)); @output_buffer.safe_append='"
+data-chart-labels-value="'.freeze; @output_buffer << ((@labels.to_json)); @output_buffer.safe_append='"
+data-chart-unit-value="'.freeze; @output_buffer << ((@unit_label)); @output_buffer.safe_append='"
+></canvas>
 '.freeze;
 @output_buffer
