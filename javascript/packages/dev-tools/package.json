@@ -1,6 +1,6 @@
 {
   "name": "@reactionview/dev-tools",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Development tools for ReActionView with Herb integration",
   "type": "module",
   "license": "MIT",
@@ -21,7 +21,7 @@
     }
   },
   "dependencies": {
-    "@herb-tools/dev-tools": "0.7.5"
+    "@herb-tools/dev-tools": "0.8.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^16.0.1",

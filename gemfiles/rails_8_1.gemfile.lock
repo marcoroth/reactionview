@@ -1,9 +1,9 @@
 PATH
   remote: ..
   specs:
-    reactionview (0.1.5)
+    reactionview (0.1.6)
       actionview (>= 7.0)
-      herb (>= 0.7.5, < 1.0.0)
+      herb (>= 0.8.0, < 1.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -62,12 +62,12 @@ GEM
     drb (2.2.3)
     erb (5.0.2)
     erubi (1.13.1)
-    herb (0.7.5)
-    herb (0.7.5-aarch64-linux-musl)
-    herb (0.7.5-arm64-darwin)
-    herb (0.7.5-x86_64-darwin)
-    herb (0.7.5-x86_64-linux-gnu)
-    herb (0.7.5-x86_64-linux-musl)
+    herb (0.8.0)
+    herb (0.8.0-aarch64-linux-gnu)
+    herb (0.8.0-aarch64-linux-musl)
+    herb (0.8.0-arm-linux-gnu)
+    herb (0.8.0-arm-linux-musl)
+    herb (0.8.0-x86_64-linux-musl)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     io-console (0.8.1)
