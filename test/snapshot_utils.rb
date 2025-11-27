@@ -12,8 +12,8 @@ def ask?(prompt = "")
   Readline.readline("===> #{prompt}? (y/N) ", true).squeeze(" ").strip == "y"
 end
 
-module SnapshotUtils
-  def assert_compiled_snapshot(source, handler: ReActionView::Template::Handlers::ERB, virtual_path: "test", format: :html, locals: [], options: {})
+module SnapshotUtils # rubocop:disable Metrics/ModuleLength
+  def assert_compiled_snapshot(source, handler: ReActionView::Template::Handlers::ERB, virtual_path: "test", format: :html, locals: [], options: {}) # rubocop:disable Metrics/ParameterLists
     template = ActionView::Template.new(
       source,
       "test_template",
@@ -39,7 +39,7 @@ module SnapshotUtils
     compiled_source
   end
 
-  def assert_evaluated_snapshot(source, ivars: {}, options: {}, handler: ReActionView::Template::Handlers::ERB, virtual_path: "test", format: :html, locals: [])
+  def assert_evaluated_snapshot(source, ivars: {}, options: {}, handler: ReActionView::Template::Handlers::ERB, virtual_path: "test", format: :html, locals: []) # rubocop:disable Metrics/ParameterLists,Layout/LineLength
     template = ActionView::Template.new(
       source,
       "test_template",
@@ -66,7 +66,7 @@ module SnapshotUtils
       locals: locals,
       options: options,
       handler: handler,
-      format: format
+      format: format,
     })
 
     assert_snapshot_matches(result, snapshot_key, mode: "evaluated")
@@ -151,7 +151,7 @@ module SnapshotUtils
     end
   end
 
-  def snapshot_file(source, options = {})
+  def snapshot_file(source, options = {}) # rubocop:disable Metrics/MethodLength
     test_class_name = underscore(self.class.name)
 
     content_hash = Digest::MD5.hexdigest(source || "#{source.class}-#{source.inspect}")
@@ -161,7 +161,7 @@ module SnapshotUtils
     mode = options[:mode]
     mode_suffix = mode ? "_#{mode}" : ""
 
-    opts_for_hash = options.reject { |k, _v| k == :mode }
+    opts_for_hash = options.except(:mode)
 
     if opts_for_hash && !opts_for_hash.empty?
       options_hash = Digest::MD5.hexdigest(opts_for_hash.inspect)

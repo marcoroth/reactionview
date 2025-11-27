@@ -119,7 +119,7 @@ class Herb::TemplateHandlerTest < Minitest::Spec
 
     assert_compiled_snapshot(template)
 
-    normalized_result = result.gsub(/>\s+</, '><').gsub(/\s+/, ' ').strip
+    normalized_result = result.gsub(/>\s+</, "><").gsub(/\s+/, " ").strip
     assert_equal '<div class="user-card"><h2>John Doe</h2><span class="badge">Verified</span><a class="btn btn-primary" href="/users/123"> View Profile </a></div>', normalized_result
   end
 
