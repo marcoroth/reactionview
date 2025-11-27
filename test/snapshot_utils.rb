@@ -6,6 +6,7 @@
 require "fileutils"
 require "readline"
 require "digest"
+require "json"
 
 def ask?(prompt = "")
   Readline.readline("===> #{prompt}? (y/N) ", true).squeeze(" ").strip == "y"
@@ -24,14 +25,14 @@ module SnapshotUtils
 
     compiled_source = template.handler.call(template, source)
 
-    snapshot_key = {
+    snapshot_key = JSON.generate({
       source: source,
       handler: handler,
       virtual_path: virtual_path,
       options: options,
       locals: locals,
       format: format,
-    }.to_s
+    })
 
     assert_snapshot_matches(compiled_source, snapshot_key, mode: "compiled")
 
@@ -59,14 +60,14 @@ module SnapshotUtils
 
     result = view_context.instance_eval(compiled_source).to_s
 
-    snapshot_key = {
+    snapshot_key = JSON.generate({
       source: source,
       ivars: ivars,
       locals: locals,
       options: options,
       handler: handler,
       format: format
-    }.to_s
+    })
 
     assert_snapshot_matches(result, snapshot_key, mode: "evaluated")
 
