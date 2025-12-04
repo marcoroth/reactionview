@@ -9,6 +9,6 @@ gem "minitest-difftastic"
 gem "rake", "~> 13.0"
 gem "rubocop", "~> 1.80.1"
 gem "actionview", github: "rails/rails"
-gem "railties",github: "rails/rails"
+gem "railties", github: "rails/rails"
 
 gemspec path: "../"
