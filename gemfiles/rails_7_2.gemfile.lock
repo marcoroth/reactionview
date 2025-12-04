@@ -189,12 +189,12 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  actionview (~> 7.2)
+  actionview (~> 7.2.0)
   appraisal
   maxitest
   minitest (~> 5.16)
   minitest-difftastic
-  railties (~> 7.2)
+  railties (~> 7.2.0)
   rake (~> 13.0)
   reactionview!
   rubocop (~> 1.80.1)
