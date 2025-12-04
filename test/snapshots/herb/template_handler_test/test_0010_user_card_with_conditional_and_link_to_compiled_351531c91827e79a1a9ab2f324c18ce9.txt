@@ -1,0 +1,11 @@
+ @output_buffer.safe_append='<div class="user-card">
+  <h2>'.freeze; @output_buffer.append=(@user[:name]); @output_buffer.safe_append='</h2>
+'.freeze;   if @user[:verified] 
+ @output_buffer.safe_append='    <span class="badge">Verified</span>
+'.freeze;   end 
+ @output_buffer.safe_append='  '.freeze; @output_buffer.append= link_to user_path(@user[:id]), class: "btn btn-primary" do; @output_buffer.safe_append='
+    View Profile
+'.freeze;   end 
+ @output_buffer.safe_append='</div>
+'.freeze;
+@output_buffer

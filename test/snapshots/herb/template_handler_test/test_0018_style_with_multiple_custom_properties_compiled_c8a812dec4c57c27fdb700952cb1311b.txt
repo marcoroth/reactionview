@@ -1,0 +1,2 @@
+ @output_buffer.safe_append='<style>:root { --primary: '.freeze; @output_buffer << ((@primary)); @output_buffer.safe_append='; --secondary: '.freeze; @output_buffer << ((@secondary)); @output_buffer.safe_append='; }</style>'.freeze;
+@output_buffer

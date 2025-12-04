@@ -1,0 +1,425 @@
+ @output_buffer << ('<template data-herb-parser-error><div class="herb-parser-error-overlay">
+  <style>
+    .herb-parser-error-overlay * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .herb-parser-error-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      font-family: \'SF Mono\', Monaco, \'Cascadia Code\', \'Roboto Mono\', Consolas, \'Courier New\', monospace;
+      color: #e5e5e5;
+      line-height: 1.6;
+    }
+
+    .herb-parser-error-overlay .herb-error-container {
+      background: #000000;
+      border: 1px solid #374151;
+      border-radius: 12px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      max-width: 1200px;
+      max-height: 80vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .herb-parser-error-overlay .herb-error-header {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      padding: 20px 24px;
+      border-bottom: 1px solid #374151;
+      border-radius: 12px 12px 0 0;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .herb-parser-error-overlay .herb-error-header-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .herb-parser-error-overlay .herb-error-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .herb-parser-error-overlay .herb-error-icon {
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #dc2626;
+      font-weight: bold;
+    }
+
+    .herb-parser-error-overlay .herb-error-message {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 400;
+    }
+
+    .herb-parser-error-overlay .herb-error-message-section {
+      background: #1a1a1a;
+      border-bottom: 1px solid #374151;
+      padding: 12px 16px;
+    }
+
+    .herb-parser-error-overlay .herb-error-message-section .herb-error-message {
+      font-size: 13px;
+      color: #fbbf24;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .herb-parser-error-overlay .herb-error-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .herb-parser-error-overlay .herb-code-section {
+      background: #111111;
+      border: 1px solid #374151;
+      border-radius: 8px;
+    }
+
+    .herb-parser-error-overlay .herb-code-header {
+      background: #262626;
+      padding: 12px 16px;
+      border-bottom: 1px solid #374151;
+      font-size: 13px;
+      color: #9ca3af;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .herb-parser-error-overlay .herb-file-icon {
+      width: 20px;
+      height: 20px;
+      background: #008000;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      color: white;
+      padding: 2px;
+    }
+
+    .herb-parser-error-overlay .herb-code-content {
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .herb-parser-error-overlay .herb-code-line {
+      display: flex;
+      align-items: flex-start;
+      min-height: 20px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .herb-parser-error-overlay .herb-line-number {
+      color: #6b7280;
+      width: 40px;
+      text-align: right;
+      padding-right: 16px;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    .herb-parser-error-overlay .herb-line-content {
+      flex: 1;
+      white-space: pre;
+      font-family: inherit;
+    }
+
+    .herb-parser-error-overlay .herb-error-line {
+      background: rgba(220, 38, 38, 0.1);
+      border-left: 3px solid #dc2626;
+      margin: 0 -16px;
+      padding: 0 16px;
+    }
+
+    .herb-parser-error-overlay .herb-error-line .herb-line-number {
+      color: #dc2626;
+      font-weight: 600;
+    }
+
+    .herb-parser-error-overlay .herb-error-line .herb-line-content {
+      color: #fecaca;
+    }
+
+    .herb-parser-error-overlay .herb-error-pointer {
+      color: #dc2626;
+      font-weight: bold;
+      margin-left: 40px;
+      padding-left: 16px;
+      font-size: 12px;
+    }
+
+    .herb-parser-error-overlay .herb-section {
+      background: #111111;
+      border: 1px solid #374151;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .herb-parser-error-overlay .herb-section-header {
+      background: #262626;
+      padding: 12px 16px;
+      border-bottom: 1px solid #374151;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 500;
+      color: #e5e5e5;
+      transition: background-color 0.2s;
+    }
+
+    .herb-parser-error-overlay .herb-section-header:hover {
+      background: #2d2d2d;
+    }
+
+    .herb-parser-error-overlay .herb-section-toggle {
+      transition: transform 0.2s;
+    }
+
+    .herb-parser-error-overlay .herb-section-toggle.collapsed {
+      transform: rotate(-90deg);
+    }
+
+    .herb-parser-error-overlay .herb-section-content {
+      padding: 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .herb-parser-error-overlay .herb-section-content.collapsed {
+      display: none;
+    }
+
+    .herb-parser-error-overlay .herb-suggestions {
+      color: #d1d5db;
+    }
+
+    .herb-parser-error-overlay .herb-suggestion-item {
+      margin-bottom: 12px;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .herb-parser-error-overlay .herb-suggestion-item::before {
+      content: "•";
+      color: #10b981;
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+
+    .herb-parser-error-overlay .herb-suggestion-title {
+      color: #10b981;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    /* Syntax highlighting */
+    .herb-parser-error-overlay .herb-keyword { color: #c678dd; }
+    .herb-parser-error-overlay .herb-string { color: #98c379; }
+    .herb-parser-error-overlay .herb-comment { color: #5c6370; font-style: italic; }
+    .herb-parser-error-overlay .herb-tag { color: #e06c75; }
+    .herb-parser-error-overlay .herb-attr { color: #d19a66; }
+    .herb-parser-error-overlay .herb-value { color: #98c379; }
+    .herb-parser-error-overlay .herb-erb {
+      color: #61dafb;
+      background: rgba(97, 218, 251, 0.1);
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+
+    @media (max-width: 768px) {
+      .herb-parser-error-overlay {
+        padding: 10px;
+      }
+
+      .herb-parser-error-overlay .herb-error-container {
+        max-height: 90vh;
+      }
+
+      .herb-parser-error-overlay .herb-error-content {
+        padding: 16px;
+        gap: 16px;
+      }
+
+      .herb-parser-error-overlay .herb-error-header {
+        padding: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+    }
+  </style>
+
+  <div class="herb-error-container">
+    <div class="herb-error-header">
+      <div class="herb-error-header-content">
+        <div class="herb-error-title">
+          <div class="herb-error-icon">!</div>
+          Template Error
+        </div>
+        <div class="herb-error-message">
+          Opening tag `&lt;with_an_invalid_bracket&gt;` at (1:27) doesn&#39;t have a matching closing tag `&lt;/with_an_invalid_bracket&gt;` in the same scope.
+        </div>
+      </div>
+    </div>
+
+    <div class="herb-error-content">
+      <div class="herb-code-section">
+  <div class="herb-code-header">
+    <div class="herb-file-icon">ERB</div>
+    test_template:1:26
+  </div>
+  <div class="herb-error-message-section">
+    <div class="herb-error-message">Opening tag `&lt;with_an_invalid_bracket&gt;` at (1:27) doesn&#39;t have a matching closing tag `&lt;/with_an_invalid_bracket&gt;` in the same scope.</div>
+  </div>
+  <div class="herb-code-content">
+    <div class="herb-code-line herb-error-line">
+  <div class="herb-line-number">1</div>
+  <div class="herb-line-content">Plain text: <span class="herb-erb">&lt;%=</span><span class="herb-erb"> 1 + 1 </span><span class="herb-erb">%&gt;</span> (<span class="herb-tag">&lt;</span><span class="herb-tag">with_an_invalid_bracket</span><span class="herb-tag">&gt;</span>)</div>
+</div>
+
+<div class="herb-error-pointer">                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~ ← Missing closing tag</div>
+
+  </div>
+</div>
+
+<div class="herb-section">
+  <div class="herb-section-header" data-section-id="suggestions-a0caf34d3599b38196ac951dd3a71110">
+    Suggestions
+    <span class="herb-section-toggle" id="suggestions-a0caf34d3599b38196ac951dd3a71110-toggle">▼</span>
+  </div>
+  <div class="herb-section-content" id="suggestions-a0caf34d3599b38196ac951dd3a71110-content">
+    <div class="herb-suggestions">
+      <div class="herb-suggestion-item">
+  <div class="herb-suggestion-title">Add missing closing tag</div>
+  <div>Add &lt;/with_an_invalid_bracket&gt; to close the opening tag</div>
+</div>
+
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      function toggleSection(sectionId) {
+        const content = document.getElementById(sectionId + \'-content\');
+        const toggle = document.getElementById(sectionId + \'-toggle\');
+
+        if (content && toggle) {
+          if (content.classList.contains(\'collapsed\')) {
+            content.classList.remove(\'collapsed\');
+            toggle.classList.remove(\'collapsed\');
+            toggle.textContent = \'▼\';
+          } else {
+            content.classList.add(\'collapsed\');
+            toggle.classList.add(\'collapsed\');
+            toggle.textContent = \'▶\';
+          }
+        }
+      }
+
+      function closeErrorOverlay() {
+        const overlay = document.querySelector(\'.herb-parser-error-overlay\');
+        if (overlay) overlay.style.display = \'none\';
+      }
+
+      // Setup close button
+      const closeBtn = document.querySelector(\'.herb-close-button\');
+      if (closeBtn) {
+        closeBtn.addEventListener(\'click\', closeErrorOverlay);
+      }
+
+      // Close when clicking on backdrop (outside the container)
+      const overlay = document.querySelector(\'.herb-parser-error-overlay\');
+      const container = document.querySelector(\'.herb-error-container\');
+      if (overlay && container) {
+        overlay.addEventListener(\'click\', function(e) {
+          if (e.target === overlay) {
+            closeErrorOverlay();
+          }
+        });
+      }
+
+      // Setup section toggles
+      document.querySelectorAll(\'.herb-section-header\').forEach(header => {
+        header.addEventListener(\'click\', function() {
+          const sectionId = this.getAttribute(\'data-section-id\');
+          if (sectionId) toggleSection(sectionId);
+        });
+      });
+
+      // Close on Escape key
+      document.addEventListener(\'keydown\', function(e) {
+        if (e.key === \'Escape\') {
+          closeErrorOverlay();
+        }
+      });
+
+      // Prevent body scroll when overlay is open
+      document.body.style.overflow = \'hidden\';
+
+      // Restore scroll when closed (cleanup for navigation)
+      const overlay = document.querySelector(\'.herb-parser-error-overlay\');
+      if (overlay) {
+        const observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type === \'attributes\' && mutation.attributeName === \'style\') {
+              if (overlay.style.display === \'none\') {
+                document.body.style.overflow = \'\';
+              }
+            }
+          });
+        });
+        observer.observe(overlay, { attributes: true });
+      }
+    })();
+  </script>
+</div>
+</template>'.html_safe).to_s;
+@output_buffer

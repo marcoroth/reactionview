@@ -1,0 +1,15 @@
+ @output_buffer.safe_append='<div class="container py-8">
+  <h1 class="title">'.freeze; @output_buffer.append=(title "Events by Country"); @output_buffer.safe_append='</h1>
+
+  '.freeze; @output_buffer.append=(ui_button "View all cities", url: cities_path, kind: :secondary); @output_buffer.safe_append='
+
+'.freeze;   if @show_countries 
+ @output_buffer.safe_append='    <h2>Countries</h2>
+    '.freeze; @output_buffer.append= link_to country_path("switzerland"), id: "country-ch", class: "event-item" do; @output_buffer.safe_append='
+      <span class="event-name">🇨🇭 Switzerland</span>
+      '.freeze; @output_buffer.append=(ui_badge(5, kind: :secondary, class: "event-count")); @output_buffer.safe_append='
+'.freeze;     end 
+   end 
+ @output_buffer.safe_append='</div>
+'.freeze;
+@output_buffer

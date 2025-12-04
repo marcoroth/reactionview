@@ -1,0 +1,2 @@
+ @output_buffer.safe_append='<div data-empty-array="'.freeze; @output_buffer << ((@empty_array.to_json)); @output_buffer.safe_append='" data-empty-object="'.freeze; @output_buffer << ((@empty_object.to_json)); @output_buffer.safe_append='"></div>'.freeze;
+@output_buffer
