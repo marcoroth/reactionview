@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    reactionview (0.1.6)
+    reactionview (0.2.0)
       actionview (>= 7.0)
       herb (>= 0.8.0, < 1.0.0)
 
