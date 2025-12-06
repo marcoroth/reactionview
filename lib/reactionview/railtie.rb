@@ -29,6 +29,10 @@ module ReActionView
       end
     end
 
+    initializer "reactionview.middleware" do |app|
+      app.middleware.use ReActionView::Middleware::TimingOutput if ReActionView.config.show_render_times?
+    end
+
     config.after_initialize do
       ActiveSupport.on_load(:action_view) do
         ActionView::Template.register_template_handler :erb, ReActionView::Template::Handlers::ERB if ReActionView.config.intercept_erb
