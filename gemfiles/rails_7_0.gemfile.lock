@@ -149,6 +149,8 @@ GEM
     rdoc (6.14.2)
       erb
       psych (>= 4.0.0)
+    readline (0.0.4)
+      reline
     regexp_parser (2.11.3)
     reline (0.6.2)
       io-console (~> 0.5)
@@ -170,6 +172,7 @@ GEM
     securerandom (0.4.1)
     stringio (3.1.7)
     thor (1.4.0)
+    tsort (0.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (3.2.0)
@@ -197,7 +200,9 @@ DEPENDENCIES
   railties (~> 7.0)
   rake (~> 13.0)
   reactionview!
+  readline (~> 0.0.4)
   rubocop (~> 1.80.1)
+  tsort (~> 0.2.0)
 
 BUNDLED WITH
    2.7.1

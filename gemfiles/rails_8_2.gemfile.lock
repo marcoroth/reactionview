@@ -155,6 +155,8 @@ GEM
       erb
       psych (>= 4.0.0)
       tsort
+    readline (0.0.4)
+      reline
     regexp_parser (2.11.3)
     reline (0.6.2)
       io-console (~> 0.5)
@@ -205,7 +207,9 @@ DEPENDENCIES
   railties!
   rake (~> 13.0)
   reactionview!
+  readline (~> 0.0.4)
   rubocop (~> 1.80.1)
+  tsort (~> 0.2.0)
 
 BUNDLED WITH
    2.7.1
