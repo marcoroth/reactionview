@@ -143,7 +143,7 @@ module SnapshotUtils # rubocop:disable Metrics/ModuleLength
 
         Run the test using UPDATE_SNAPSHOTS=true to update (or create) the snapshot file for "#{class_name} #{name}"
 
-        UPDATE_SNAPSHOTS=true mtest #{e.location}
+        UPDATE_SNAPSHOTS=true minitest #{e.location}
 
         #{divider}
         \e[0m
