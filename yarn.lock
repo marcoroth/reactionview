@@ -180,17 +180,17 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.25.9.tgz#585624dc829cfb6e7c0aa6c3ca7d7e6daa87e34f"
   integrity sha512-PPOl1mi6lpLNQxnGoyAfschAodRFYXJ+9fs6WHXz7CSWKbOqiMZsubC+BQsVKuul+3vKLuwTHsS2c2y9EoKwxQ==
 
-"@herb-tools/core@0.8.3":
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/@herb-tools/core/-/core-0.8.3.tgz#ebf10deca3579fb1f35ef8fc0d5f4a500c5c8b47"
-  integrity sha512-yYPNRYlRKo31xS+Kx9ETRlTOAIB6q2JOIFJd7KnfgOzHaeMnhgRxucD8rE9h67UNb0LVbhH0FWQucss1pHTc8w==
+"@herb-tools/core@0.8.7":
+  version "0.8.7"
+  resolved "https://registry.yarnpkg.com/@herb-tools/core/-/core-0.8.7.tgz#6dbc987e5434352aa89cb85e6f1f58417cf2c551"
+  integrity sha512-AqoH0zfUL6Vk5NOj9nr+2LdOENaQ/m5D77kVbdqhv2XKlq3uSMpRKKAKldj4ebox8dsrvtRM7/VG5IIli3l+3A==
 
-"@herb-tools/dev-tools@0.8.3":
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/@herb-tools/dev-tools/-/dev-tools-0.8.3.tgz#5e743108c8713d5b299194f53dee477862b44735"
-  integrity sha512-0f0DdqTh4R0uNdeHdsgwyDIEBBg6SsaPW0JG/oqDw9oGD4zVhFgVwuFpA1kq//K9dPjjgbPqdsP1DGQW37XN0Q==
+"@herb-tools/dev-tools@0.8.7":
+  version "0.8.7"
+  resolved "https://registry.yarnpkg.com/@herb-tools/dev-tools/-/dev-tools-0.8.7.tgz#3b5b764147788b4d67dbd3d40325e4a019880015"
+  integrity sha512-Co7EuUe5i1/qiq8IhY7+XcWp4BDv8Lg1u2zEjujGDRRJVaKp5T+qH8caTc0UCOWgcB9QezFelTO+ztRgTmivWg==
   dependencies:
-    "@herb-tools/core" "0.8.3"
+    "@herb-tools/core" "0.8.7"
 
 "@iconify-json/logos@^1.2.4":
   version "1.2.9"
