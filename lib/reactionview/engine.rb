@@ -9,10 +9,8 @@ module ReActionView
 
     initializer "reactionview.assets" do |app|
       # Sprockets precompilation config (for backward compatibility)
-      if ReActionView.config.development? && app.config.respond_to?(:assets)
-        if app.config.assets.respond_to?(:precompile)
-          app.config.assets.precompile += PRECOMPILE_ASSETS
-        end
+      if ReActionView.config.development? && app.config.respond_to?(:assets) && app.config.assets.respond_to?(:precompile)
+        app.config.assets.precompile += PRECOMPILE_ASSETS
       end
     end
 
