@@ -84,9 +84,10 @@ GEM
     loofah (2.24.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
-    maxitest (6.0.0)
-      minitest (>= 5.20.0, < 5.26.0)
-    minitest (5.25.5)
+    maxitest (7.1.0)
+      minitest (>= 6.0.0, < 6.1.0)
+    minitest (6.0.1)
+      prism (~> 1.5)
     minitest-difftastic (0.2.1)
       difftastic (~> 0.6)
     nokogiri (1.18.10-aarch64-linux-gnu)
@@ -193,8 +194,7 @@ PLATFORMS
 DEPENDENCIES
   actionview (~> 8.1.0)
   appraisal
-  maxitest
-  minitest (~> 5.16)
+  maxitest (~> 7.0)
   minitest-difftastic
   railties (~> 8.1.0)
   rake (~> 13.0)
