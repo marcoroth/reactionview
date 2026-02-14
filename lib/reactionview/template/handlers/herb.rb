@@ -18,6 +18,14 @@ module ReActionView
             )
           end
 
+          if ::ReActionView.config.show_render_times? && local_template?(template)
+            visitors << ::ReActionView::TimingVisitor.new(
+              template_name: File.basename(template.identifier),
+              template_path: template.identifier.sub("#{Rails.root}/", ""),
+              template_identifier: template.identifier
+            )
+          end
+
           config = {
             filename: template.identifier,
             project_path: Rails.root.to_s,
