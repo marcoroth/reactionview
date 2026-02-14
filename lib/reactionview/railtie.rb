@@ -14,8 +14,8 @@ module ReActionView
       reactionview-dev-tools.umd.js
     ].freeze
 
-    initializer "reactionview.assets" do |app|
-      if ReActionView.config.development? && app.config.respond_to?(:assets)
+    initializer "reactionview.assets", after: :load_config_initializers do |app|
+      if ReActionView.config.debug_mode_enabled? && app.config.respond_to?(:assets)
         gem_root = Gem::Specification.find_by_name("reactionview").gem_dir
 
         app.config.assets.paths << File.join(gem_root, "app", "assets", "javascripts")
