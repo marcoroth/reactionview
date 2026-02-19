@@ -66,7 +66,7 @@ module ReActionView
                       end
 
               if wrap_parentheses
-                @src << "(" << code << ")"
+                @src << "(" << code << "\n)"
               else
                 @src << " " << code
               end

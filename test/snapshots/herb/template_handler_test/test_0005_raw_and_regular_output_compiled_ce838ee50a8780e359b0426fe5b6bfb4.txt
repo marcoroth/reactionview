@@ -1,2 +1,4 @@
- @output_buffer.append=(@html); @output_buffer.append=(raw @safe_html);
+ @output_buffer.append=(@html
+); @output_buffer.append=(raw @safe_html
+);
 @output_buffer

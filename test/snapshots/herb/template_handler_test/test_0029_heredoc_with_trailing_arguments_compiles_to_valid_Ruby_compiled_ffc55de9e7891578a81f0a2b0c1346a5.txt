@@ -1,0 +1,8 @@
+ @output_buffer.append=(method_call <<~GRAPHQL, variables
+  query {
+    field
+  }
+GRAPHQL
+);
+ @output_buffer.safe_append='
+'.freeze;@output_buffer
