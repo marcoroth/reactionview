@@ -52,7 +52,7 @@ module SnapshotUtils # rubocop:disable Metrics/ModuleLength
     compiled_source
   end
 
-  def assert_evaluated_snapshot(source, ivars: {}, options: {}, handler: ReActionView::Template::Handlers::ERB, virtual_path: "test", format: :html, locals: []) # rubocop:disable Metrics/ParameterLists,Layout/LineLength
+  def assert_evaluated_snapshot(source, ivars: {}, options: {}, handler: ReActionView::Template::Handlers::ERB, virtual_path: "test", format: :html, locals: []) # rubocop:disable Metrics/ParameterLists,Layout/LineLength,Metrics/MethodLength
     template = ActionView::Template.new(
       source,
       "test_template",
