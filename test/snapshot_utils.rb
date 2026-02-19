@@ -7,6 +7,7 @@ require "fileutils"
 require "readline"
 require "digest"
 require "json"
+require "prism"
 
 def ask?(prompt = "")
   Readline.readline("===> #{prompt}? (y/N) ", true).squeeze(" ").strip == "y"
@@ -24,6 +25,18 @@ module SnapshotUtils # rubocop:disable Metrics/ModuleLength
     )
 
     compiled_source = template.handler.call(template, source)
+
+    prism_result = Prism.parse(compiled_source)
+    syntax_errors = prism_result.errors.reject { |e| e.type == :invalid_yield }
+
+    assert syntax_errors.empty?, <<~MESSAGE
+      Compiled output is not valid Ruby:
+
+      #{syntax_errors.map { |e| "  - #{e.message} (line #{e.location.start_line})" }.join("\n")}
+
+      Compiled source:
+      #{compiled_source}
+    MESSAGE
 
     snapshot_key = JSON.generate({
       source: source,
@@ -50,6 +63,18 @@ module SnapshotUtils # rubocop:disable Metrics/ModuleLength
     )
 
     compiled_source = template.handler.call(template, source)
+
+    prism_result = Prism.parse(compiled_source)
+    syntax_errors = prism_result.errors.reject { |e| e.type == :invalid_yield }
+
+    assert syntax_errors.empty?, <<~MESSAGE
+      Compiled output is not valid Ruby:
+
+      #{syntax_errors.map { |e| "  - #{e.message} (line #{e.location.start_line})" }.join("\n")}
+
+      Compiled source:
+      #{compiled_source}
+    MESSAGE
 
     lookup_context = ActionView::LookupContext.new([])
     view_context = ActionView::Base.with_empty_template_cache.new(lookup_context, {}, nil)
