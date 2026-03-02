@@ -43,6 +43,9 @@ ReActionView.configure do |config|
   # Intercept .html.erb templates to use Herb::Engine
   # config.intercept_erb = true
 
+  # Raise on errors
+  config.validation_mode = :raise if Rails.env.test?
+
   # Enable debug mode
   config.debug_mode = Rails.env.development?
 end
