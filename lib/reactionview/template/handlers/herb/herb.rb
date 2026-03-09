@@ -55,6 +55,28 @@ module ReActionView
             add_rails_expression(indicator, code, wrap_parentheses: false)
           end
 
+          def add_expression_block_end(code, escaped: false)
+            flush_newline_if_pending(@src)
+
+            terminate_expression
+
+            trailing_newline = code.end_with?("\n")
+            code_stripped = code.chomp
+
+            @src.chomp! if @src.end_with?("\n") && code_stripped.start_with?(" ")
+
+            @src << " " << code_stripped
+
+            # Don't add closing parens — add_expression_block doesn't open any
+            @src << if code.include?("#") || trailing_newline
+                      "\n"
+                    else
+                      ";"
+                    end
+
+            @buffer_on_stack = false
+          end
+
           def add_rails_expression(indicator, code, wrap_parentheses:)
             flush_newline_if_pending(@src)
 

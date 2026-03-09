@@ -342,4 +342,21 @@ class Herb::TemplateHandlerTest < Minitest::Spec
     assert_compiled_snapshot(template)
     assert_evaluated_snapshot(template, ivars: { config: { key: "value" } })
   end
+
+  test "render with block (e.g. component with do/end)" do
+    template = <<~HTML
+      <% if true %>
+        <%= content_tag(:div, class: "wrapper") do %>
+          <p>Hello</p>
+        <% end %>
+      <% else %>
+        <%= content_tag(:div, class: "fallback") do %>
+          <p>Fallback</p>
+        <% end %>
+      <% end %>
+    HTML
+
+    assert_compiled_snapshot(template)
+    assert_evaluated_snapshot(template)
+  end
 end
