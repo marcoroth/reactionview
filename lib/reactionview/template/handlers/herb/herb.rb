@@ -55,7 +55,7 @@ module ReActionView
             add_rails_expression(indicator, code, wrap_parentheses: false)
           end
 
-          def add_expression_block_end(code, escaped: false)
+          def add_expression_block_end(code)
             flush_newline_if_pending(@src)
 
             terminate_expression
