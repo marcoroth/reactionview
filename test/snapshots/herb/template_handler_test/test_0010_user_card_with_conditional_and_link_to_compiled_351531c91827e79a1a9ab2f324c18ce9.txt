@@ -1,5 +1,6 @@
  @output_buffer.safe_append='<div class="user-card">
-  <h2>'.freeze; @output_buffer.append=(@user[:name]); @output_buffer.safe_append='</h2>
+  <h2>'.freeze; @output_buffer.append=(@user[:name]
+); @output_buffer.safe_append='</h2>
 '.freeze;   if @user[:verified] 
  @output_buffer.safe_append='    <span class="badge">Verified</span>
 '.freeze;   end 

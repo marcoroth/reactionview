@@ -342,4 +342,17 @@ class Herb::TemplateHandlerTest < Minitest::Spec
     assert_compiled_snapshot(template)
     assert_evaluated_snapshot(template, ivars: { config: { key: "value" } })
   end
+
+  test "heredoc with trailing arguments compiles to valid Ruby" do
+    template = <<~ERB
+      <%= method_call <<~GRAPHQL, variables
+        query {
+          field
+        }
+      GRAPHQL
+      %>
+    ERB
+
+    assert_compiled_snapshot(template)
+  end
 end
