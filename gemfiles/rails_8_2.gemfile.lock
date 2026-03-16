@@ -44,9 +44,9 @@ GIT
 PATH
   remote: ..
   specs:
-    reactionview (0.2.1)
+    reactionview (0.2.2)
       actionview (>= 7.0)
-      herb (>= 0.8.0, < 1.0.0)
+      herb (>= 0.8.0, < 0.9.0)
 
 GEM
   remote: https://rubygems.org/
