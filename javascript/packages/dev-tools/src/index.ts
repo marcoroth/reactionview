@@ -1,4 +1,5 @@
 import { initHerbDevTools, HerbOverlay, type HerbDevToolsOptions } from "@herb-tools/dev-tools"
+import { enhanceLabelsWithRenderTimes } from "./reactionview-overlay"
 
 export interface ReActionViewDevToolsOptions extends HerbDevToolsOptions {
   projectPath?: string
@@ -24,6 +25,8 @@ export class ReActionViewDevTools {
       projectPath: this.options.projectPath,
       ...this.options
     })
+
+    enhanceLabelsWithRenderTimes()
 
     return this.herbOverlay
   }
