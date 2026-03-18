@@ -41,7 +41,7 @@ ReActionView.configure do |config|
   # config.intercept_erb = true
 
   # Enable debug mode in development (adds debug attributes to HTML)
-  config.debug_mode = Rails.env.development?
+  config.debug_mode = Rails.env.development? && !ENV["REACTIONVIEW_DISABLE_DEBUG_MODE"]
 end
 ```
 :::
@@ -60,7 +60,7 @@ To process **all** existing `.html.erb` templates through the Herb engine, enabl
 ```ruby [config/initializers/reactionview.rb]
 ReActionView.configure do |config|
   config.intercept_erb = true
-  config.debug_mode = Rails.env.development?
+  config.debug_mode = Rails.env.development? && !ENV["REACTIONVIEW_DISABLE_DEBUG_MODE"]
 end
 ```
 :::
