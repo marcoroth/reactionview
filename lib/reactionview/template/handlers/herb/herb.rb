@@ -48,28 +48,24 @@ module ReActionView
           end
 
           def add_expression(indicator, code)
-            add_rails_expression(indicator, code, wrap_parentheses: true)
-          end
-
-          def add_expression_block(indicator, code)
-            add_rails_expression(indicator, code, wrap_parentheses: false)
-          end
-
-          def add_rails_expression(indicator, code, wrap_parentheses:)
             flush_newline_if_pending(@src)
 
             with_buffer do
-              @src << if (indicator == "==") || @escape
-                        ".safe_expr_append="
-                      else
-                        ".append="
-                      end
+              @src << expression_append_method(indicator)
 
-              if wrap_parentheses
-                @src << "(" << code << ")"
-              else
+              if expression_block?
                 @src << " " << code
+              else
+                @src << "(" << code << trailing_newline(code) << ")"
               end
+            end
+          end
+
+          def expression_append_method(indicator)
+            if (indicator == "==") || @escape
+              ".safe_expr_append="
+            else
+              ".append="
             end
           end
 
