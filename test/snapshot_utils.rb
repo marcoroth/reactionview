@@ -7,6 +7,8 @@ require "fileutils"
 require "readline"
 require "digest"
 require "json"
+require "prism"
+require "difftastic"
 
 def ask?(prompt = "")
   Readline.readline("===> #{prompt}? (y/N) ", true).squeeze(" ").strip == "y"
@@ -25,6 +27,18 @@ module SnapshotUtils # rubocop:disable Metrics/ModuleLength
 
     compiled_source = template.handler.call(template, source)
 
+    prism_result = Prism.parse(compiled_source)
+    syntax_errors = prism_result.errors.reject { |e| e.type == :invalid_yield }
+
+    assert syntax_errors.empty?, <<~MESSAGE
+      Compiled output is not valid Ruby:
+
+      #{syntax_errors.map { |e| "  - #{e.message} (line #{e.location.start_line})" }.join("\n")}
+
+      Compiled source:
+      #{compiled_source}
+    MESSAGE
+
     snapshot_key = JSON.generate({
       source: source,
       handler: handler,
@@ -39,7 +53,7 @@ module SnapshotUtils # rubocop:disable Metrics/ModuleLength
     compiled_source
   end
 
-  def assert_evaluated_snapshot(source, ivars: {}, options: {}, handler: ReActionView::Template::Handlers::ERB, virtual_path: "test", format: :html, locals: []) # rubocop:disable Metrics/ParameterLists,Layout/LineLength
+  def assert_evaluated_snapshot(source, ivars: {}, options: {}, handler: ReActionView::Template::Handlers::ERB, virtual_path: "test", format: :html, locals: []) # rubocop:disable Metrics/ParameterLists,Layout/LineLength,Metrics/MethodLength
     template = ActionView::Template.new(
       source,
       "test_template",
@@ -50,6 +64,18 @@ module SnapshotUtils # rubocop:disable Metrics/ModuleLength
     )
 
     compiled_source = template.handler.call(template, source)
+
+    prism_result = Prism.parse(compiled_source)
+    syntax_errors = prism_result.errors.reject { |e| e.type == :invalid_yield }
+
+    assert syntax_errors.empty?, <<~MESSAGE
+      Compiled output is not valid Ruby:
+
+      #{syntax_errors.map { |e| "  - #{e.message} (line #{e.location.start_line})" }.join("\n")}
+
+      Compiled source:
+      #{compiled_source}
+    MESSAGE
 
     lookup_context = ActionView::LookupContext.new([])
     view_context = ActionView::Base.with_empty_template_cache.new(lookup_context, {}, nil)
@@ -79,17 +105,17 @@ module SnapshotUtils # rubocop:disable Metrics/ModuleLength
       previous_content = snapshot_file(source, options).read
 
       if previous_content == content
-        puts "\n\nSnapshot for '#{class_name} #{name}' didn't change: \n#{snapshot_file(source, options)}\n"
+        puts "\n\nSnapshot for '#{self.class.name} #{name}' didn't change: \n#{snapshot_file(source, options)}\n"
         false
       else
-        puts "\n\nSnapshot for '#{class_name} #{name}' changed:\n"
+        puts "\n\nSnapshot for '#{self.class.name} #{name}' changed:\n"
 
         puts Difftastic::Differ.new(color: :always).diff_strings(previous_content, content)
         puts "==============="
         true
       end
     else
-      puts "\n\nSnapshot for '#{class_name} #{name}' doesn't exist at: \n#{snapshot_file(source, options)}\n"
+      puts "\n\nSnapshot for '#{self.class.name} #{name}' doesn't exist at: \n#{snapshot_file(source, options)}\n"
       true
     end
   end
@@ -97,21 +123,21 @@ module SnapshotUtils # rubocop:disable Metrics/ModuleLength
   def save_failures_to_snapshot(content, source, options = {})
     return unless snapshot_changed?(content, source, options)
 
-    puts "\n==== [ Input for '#{class_name} #{name}' ] ====="
+    puts "\n==== [ Input for '#{self.class.name} #{name}' ] ====="
     puts source
     puts "\n\n"
 
     if !ENV["FORCE_UPDATE_SNAPSHOTS"].nil? ||
-       ask?("Do you want to update (or create) the snapshot for '#{class_name} #{name}'?")
+       ask?("Do you want to update (or create) the snapshot for '#{self.class.name} #{name}'?")
 
-      puts "\nUpdating Snapshot for '#{class_name} #{name}' at: \n#{snapshot_file(source, options)}\n"
+      puts "\nUpdating Snapshot for '#{self.class.name} #{name}' at: \n#{snapshot_file(source, options)}\n"
 
       FileUtils.mkdir_p(snapshot_file(source, options).dirname)
       snapshot_file(source, options).write(content)
 
-      puts "\nSnapshot for '#{class_name} #{name}' written: \n#{snapshot_file(source, options)}\n"
+      puts "\nSnapshot for '#{self.class.name} #{name}' written: \n#{snapshot_file(source, options)}\n"
     else
-      puts "\nNot updating snapshot for '#{class_name} #{name}' at: \n#{snapshot_file(source, options)}.\n"
+      puts "\nNot updating snapshot for '#{self.class.name} #{name}' at: \n#{snapshot_file(source, options)}.\n"
     end
   end
 
@@ -139,9 +165,9 @@ module SnapshotUtils # rubocop:disable Metrics/ModuleLength
         #{Difftastic::Differ.new(color: :always).diff_strings(snapshot_file(source, snapshot_opts).read, actual)}
         \e[31m#{divider}
 
-        Snapshots for "#{class_name} #{name}" didn't match.
+        Snapshots for "#{self.class.name} #{name}" didn't match.
 
-        Run the test using UPDATE_SNAPSHOTS=true to update (or create) the snapshot file for "#{class_name} #{name}"
+        Run the test using UPDATE_SNAPSHOTS=true to update (or create) the snapshot file for "#{self.class.name} #{name}"
 
         UPDATE_SNAPSHOTS=true minitest #{e.location}
 

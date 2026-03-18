@@ -1,0 +1,10 @@
+ if true 
+ @output_buffer.safe_append='  '.freeze; @output_buffer.append= content_tag(:div, class: "wrapper") do; @output_buffer.safe_append='
+    <p>Hello</p>
+'.freeze;   end 
+ else 
+ @output_buffer.safe_append='  '.freeze; @output_buffer.append= content_tag(:div, class: "fallback") do; @output_buffer.safe_append='
+    <p>Fallback</p>
+'.freeze;   end 
+ end 
+@output_buffer

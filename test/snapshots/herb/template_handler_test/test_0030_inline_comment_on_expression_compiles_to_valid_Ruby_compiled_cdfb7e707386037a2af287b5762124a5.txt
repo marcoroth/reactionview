@@ -1,0 +1,3 @@
+ @output_buffer.append=(render(component) # rubocop:disable Some/Rule
+);
+@output_buffer
