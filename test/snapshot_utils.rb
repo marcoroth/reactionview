@@ -8,6 +8,7 @@ require "readline"
 require "digest"
 require "json"
 require "prism"
+require "difftastic"
 
 def ask?(prompt = "")
   Readline.readline("===> #{prompt}? (y/N) ", true).squeeze(" ").strip == "y"
