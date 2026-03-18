@@ -80,6 +80,8 @@ module SnapshotUtils # rubocop:disable Metrics/ModuleLength
     lookup_context = ActionView::LookupContext.new([])
     view_context = ActionView::Base.with_empty_template_cache.new(lookup_context, {}, nil)
 
+    view_context.instance_variable_set(:@output_buffer, ActionView::OutputBuffer.new)
+
     ivars.each do |key, value|
       view_context.instance_variable_set(:"@#{key}", value)
     end

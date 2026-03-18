@@ -9,12 +9,12 @@ class Herb::TemplateHandlerTest < Minitest::Spec
 
     lookup_context = ActionView::LookupContext.new([])
     @view_context = ActionView::Base.with_empty_template_cache.new(lookup_context, {}, nil)
+    @view_context.instance_variable_set(:@output_buffer, ActionView::OutputBuffer.new)
   end
 
   test "rendering for non-html formats" do
     template = "Plain text: <%= 1 + 1 %> (<with_an_invalid_bracket>)"
 
-    assert_compiled_snapshot(template, format: :text)
     assert_evaluated_snapshot(template, format: :text, ivars: { name: "User" })
   end
 

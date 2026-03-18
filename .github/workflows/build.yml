@@ -26,6 +26,9 @@ jobs:
           - rails_8_0
           - rails_8_1
           - rails_8_2
+        exclude:
+          - ruby: '3.2'
+            gemfile: rails_8_2
 
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
