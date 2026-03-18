@@ -46,7 +46,7 @@ ReActionView.configure do |config|
   # Enable debug mode
   config.debug_mode = Rails.env.development?
 
-  # Validation mode (:raise or :overlay) — defaults to :raise in test, :overlay otherwise
+  # Validation mode (:raise, :overlay, or :none) — defaults to :raise in test, :overlay otherwise
   # config.validation_mode = :overlay
 end
 ```

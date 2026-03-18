@@ -35,6 +35,18 @@ class ReActionView::ConfigTest < Minitest::Spec
     assert_equal :overlay, config.validation_mode
   end
 
+  test "explicit :none disables validation" do
+    config = ReActionView::Config.new
+
+    def config.test?
+      true
+    end
+
+    config.validation_mode = :none
+
+    assert_equal :none, config.validation_mode
+  end
+
   test "explicit :raise overrides non-test environment default" do
     config = ReActionView::Config.new
 

@@ -59,16 +59,28 @@ module ReActionView
         end
 
         def reactionview_dev_tools_markup(template)
-          return nil unless layout_template?(template) && ::ReActionView.config.debug_mode_enabled?
+          return nil unless layout_template?(template)
           return nil unless local_template?(template)
 
-          <<~HTML
-            <meta name="herb-debug-mode" content="true">
-            <meta name="herb-project-path" content="#{Rails.root}">
-            #{editor_meta_tag}
+          markup = +""
 
-            #{ActionController::Base.new.view_context.javascript_include_tag "reactionview-dev-tools.umd.js", defer: true}
-          HTML
+          if ::ReActionView.config.debug_mode_enabled?
+            markup << <<~HTML
+              <meta name="herb-debug-mode" content="true">
+              <meta name="herb-project-path" content="#{Rails.root}">
+              #{editor_meta_tag}
+
+              #{ActionController::Base.new.view_context.javascript_include_tag "reactionview-dev-tools.umd.js", defer: true}
+            HTML
+          end
+
+          if ::ReActionView.config.validation_mode == :overlay
+            markup << <<~HTML
+              <template data-herb-dismiss-hint>You can also disable this overlay by setting <code style="color: #ffeb3b; font-family: monospace; font-size: 12pt;">config.validation_mode = :none</code> in <code style="color: #ffeb3b; font-family: monospace; font-size: 12pt;">config/initializers/reactionview.rb</code>.</template>
+            HTML
+          end
+
+          markup.presence
         end
       end
     end
