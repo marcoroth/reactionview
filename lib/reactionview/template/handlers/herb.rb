@@ -21,7 +21,7 @@ module ReActionView
           config = {
             filename: template.identifier,
             project_path: Rails.root.to_s,
-            validation_mode: :overlay,
+            validation_mode: ReActionView.config.validation_mode,
             content_for_head: reactionview_dev_tools_markup(template),
             visitors: visitors + ReActionView.config.transform_visitors,
           }
