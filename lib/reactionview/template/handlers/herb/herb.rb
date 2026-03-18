@@ -56,7 +56,7 @@ module ReActionView
               if expression_block?
                 @src << " " << code
               else
-                @src << "(" << code << ")"
+                @src << "(" << code << trailing_newline(code) << ")"
               end
             end
           end

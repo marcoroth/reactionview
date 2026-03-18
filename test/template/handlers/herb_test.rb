@@ -359,4 +359,10 @@ class Herb::TemplateHandlerTest < Minitest::Spec
     assert_compiled_snapshot(template)
     assert_evaluated_snapshot(template)
   end
+
+  test "inline comment on expression compiles to valid Ruby" do
+    template = %(<%= render(component) # rubocop:disable Some/Rule %>)
+
+    assert_compiled_snapshot(template)
+  end
 end
