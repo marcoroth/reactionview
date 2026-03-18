@@ -1,1 +1,1 @@
-<div data-config="{&quot;key&quot;:&quot;value&quot;}"></div>
+<div data-config="{"key":"value"}"></div>

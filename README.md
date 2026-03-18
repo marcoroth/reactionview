@@ -45,6 +45,9 @@ ReActionView.configure do |config|
 
   # Enable debug mode
   config.debug_mode = Rails.env.development?
+
+  # Validation mode (:raise, :overlay, or :none) — defaults to :raise in test, :overlay otherwise
+  # config.validation_mode = :overlay
 end
 ```
 
@@ -62,6 +65,6 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/marcor
 
 Everyone interacting in the ReActionView project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/marcoroth/reactionview/blob/main/CODE_OF_CONDUCT.md).
 
-## License 
+## License
 
 This project is available as open source under the terms of the [MIT License](https://github.com/marcoroth/reactionview/blob/main/LICENSE.txt).

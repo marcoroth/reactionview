@@ -22,9 +22,9 @@ module ReActionView
 
             # Disable all Herb escape functions - let ActionView::OutputBuffer handle escaping
             properties[:escapefunc] = ""
-            properties[:attrfunc] = ""
-            properties[:jsfunc] = ""
-            properties[:cssfunc] = ""
+            properties[:attrfunc] = nil
+            properties[:jsfunc] = nil
+            properties[:cssfunc] = nil
 
             super
           end
