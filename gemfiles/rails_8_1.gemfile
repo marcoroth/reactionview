@@ -2,10 +2,11 @@
 
 source "https://rubygems.org"
 
-gem "actionview", "~> 8.1.0"
 gem "appraisal"
+gem "actionview", "~> 8.1.0"
 gem "maxitest", "~> 7.0"
 gem "minitest-difftastic"
+gem "mocha", "~> 3.1.0"
 gem "railties", "~> 8.1.0"
 gem "rake", "~> 13.0"
 gem "readline", "~> 0.0.4"
