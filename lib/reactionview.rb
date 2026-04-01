@@ -21,7 +21,7 @@ require_relative "reactionview/template/handlers/erb"
 require_relative "reactionview/template/handlers/herb"
 require_relative "reactionview/template/handlers/herb/herb"
 
-require_relative "reactionview/engine" if defined?(Rails::Railtie)
+require_relative "reactionview/engine" if defined?(Rails::Engine)
 
 module ReActionView
 end
