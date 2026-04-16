@@ -9,6 +9,25 @@ module ReActionView
         class_attribute :erb_implementation, default: Handlers::Herb::Herb
 
         def call(template, source)
+          # Check cache before compiling (only for non-debug, when cache is enabled)
+          if ::ReActionView.config.cache && !::ReActionView.config.debug_mode_enabled?
+            cache_properties = {
+              filename: template.identifier,
+              validation_mode: ReActionView.config.validation_mode,
+              bufvar: "@output_buffer",
+              freeze_template_literals: !::ActionView::Template.frozen_string_literal,
+              escapefunc: "",
+            }
+
+            cache_key = ::ReActionView.cache.key_for(source, cache_properties)
+            cached = ::ReActionView.cache.fetch(cache_key)
+            if cached
+              return cached
+            else
+              puts "[ReActionView] Cache miss for #{template.identifier}"
+            end
+          end
+
           visitors = []
 
           if ::ReActionView.config.debug_mode_enabled? && local_template?(template)

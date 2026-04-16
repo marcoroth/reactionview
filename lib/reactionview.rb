@@ -2,6 +2,7 @@
 
 require_relative "reactionview/version"
 require_relative "reactionview/config"
+require_relative "reactionview/cache"
 
 # require_relative "reactionview/validation_error"
 # require_relative "reactionview/syntax_error_handler"
