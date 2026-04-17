@@ -31,15 +31,7 @@ namespace :reactionview do # rubocop:disable Metrics/BlockLength
         visitors: config.transform_visitors,
       }
 
-      cache_properties = {
-        filename: file,
-        validation_mode: config.validation_mode,
-        bufvar: "@output_buffer",
-        freeze_template_literals: !ActionView::Template.frozen_string_literal,
-        escapefunc: "",
-      }
-
-      cache_key = cache.key_for(source, cache_properties)
+      cache_key = cache.key_for(source, ReActionView::Template::Handlers::Herb.cache_properties)
 
       begin
         compiled_src = ReActionView::Template::Handlers::Herb::Herb.new(source, properties).src

@@ -8,17 +8,19 @@ module ReActionView
 
         class_attribute :erb_implementation, default: Handlers::Herb::Herb
 
-        def call(template, source) # rubocop:disable Metrics/MethodLength
+        def self.cache_properties
+          {
+            validation_mode: ReActionView.config.validation_mode,
+            bufvar: erb_implementation::DEFAULT_BUFVAR,
+            freeze_template_literals: erb_implementation.freeze_template_literals_default?,
+            escapefunc: erb_implementation::DEFAULT_ESCAPEFUNC,
+          }
+        end
+
+        def call(template, source)
           # Check cache before compiling (only for non-debug, when cache is enabled)
           if ::ReActionView.config.cache && !::ReActionView.config.debug_mode_enabled?
-            cache_properties = {
-              validation_mode: ReActionView.config.validation_mode,
-              bufvar: "@output_buffer",
-              freeze_template_literals: !::ActionView::Template.frozen_string_literal,
-              escapefunc: "",
-            }
-
-            cache_key = ::ReActionView.cache.key_for(source, cache_properties)
+            cache_key = ::ReActionView.cache.key_for(source, self.class.cache_properties)
             cached = ::ReActionView.cache.fetch(cache_key)
             return cached if cached
 
