@@ -24,7 +24,7 @@ module ReActionView
             if cached
               return cached
             else
-              puts "[ReActionView] Cache miss for #{template.identifier}"
+              ActiveSupport::Notifications.instrument("cache_miss.reactionview", identifier: template.identifier)
             end
           end
 

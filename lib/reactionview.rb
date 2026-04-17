@@ -22,6 +22,7 @@ require_relative "reactionview/template/handlers/erb"
 require_relative "reactionview/template/handlers/herb"
 require_relative "reactionview/template/handlers/herb/herb"
 
+require_relative "reactionview/log_subscriber"
 require_relative "reactionview/railtie" if defined?(Rails::Railtie)
 
 module ReActionView
