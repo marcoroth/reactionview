@@ -54,7 +54,6 @@ module ReActionView
         bufvar: properties[:bufvar] || "@output_buffer",
         freeze_template_literals: properties.fetch(:freeze_template_literals, true),
         escapefunc: properties.fetch(:escapefunc, ""),
-        filename: properties[:filename],
       }
 
       data = source + "\0" + JSON.generate(fingerprint.sort.to_h)

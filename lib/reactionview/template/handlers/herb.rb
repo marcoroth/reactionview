@@ -12,7 +12,6 @@ module ReActionView
           # Check cache before compiling (only for non-debug, when cache is enabled)
           if ::ReActionView.config.cache && !::ReActionView.config.debug_mode_enabled?
             cache_properties = {
-              filename: template.identifier,
               validation_mode: ReActionView.config.validation_mode,
               bufvar: "@output_buffer",
               freeze_template_literals: !::ActionView::Template.frozen_string_literal,
