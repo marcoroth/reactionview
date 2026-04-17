@@ -29,7 +29,7 @@ module ReActionView
     end
 
     def store(key, compiled_src)
-      FileUtils.mkdir_p(@directory) unless Dir.exist?(@directory)
+      FileUtils.mkdir_p(@directory)
 
       path = cache_path(key)
 
@@ -56,7 +56,7 @@ module ReActionView
         escapefunc: properties.fetch(:escapefunc, ""),
       }
 
-      data = source + "\0" + JSON.generate(fingerprint.sort.to_h)
+      data = "#{source}\0#{JSON.generate(fingerprint.sort.to_h)}"
       Digest::SHA256.hexdigest(data)
     end
 

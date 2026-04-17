@@ -8,7 +8,7 @@ module ReActionView
 
         class_attribute :erb_implementation, default: Handlers::Herb::Herb
 
-        def call(template, source)
+        def call(template, source) # rubocop:disable Metrics/MethodLength
           # Check cache before compiling (only for non-debug, when cache is enabled)
           if ::ReActionView.config.cache && !::ReActionView.config.debug_mode_enabled?
             cache_properties = {
@@ -20,11 +20,9 @@ module ReActionView
 
             cache_key = ::ReActionView.cache.key_for(source, cache_properties)
             cached = ::ReActionView.cache.fetch(cache_key)
-            if cached
-              return cached
-            else
-              ActiveSupport::Notifications.instrument("cache_miss.reactionview", identifier: template.identifier)
-            end
+            return cached if cached
+
+            ActiveSupport::Notifications.instrument("cache_miss.reactionview", identifier: template.identifier)
           end
 
           visitors = []

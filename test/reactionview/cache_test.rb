@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
+require "English"
 require "tmpdir"
 
 class ReActionView::CacheTest < Minitest::Spec
@@ -98,7 +99,7 @@ class ReActionView::CacheTest < Minitest::Spec
   end
 
   test "size returns 0 when directory does not exist" do
-    cache = ReActionView::Cache.new("/tmp/nonexistent_reactionview_cache_#{$$}")
+    cache = ReActionView::Cache.new("/tmp/nonexistent_reactionview_cache_#{$PID}")
     assert_equal 0, cache.size
   end
 

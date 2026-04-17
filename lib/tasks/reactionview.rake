@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-namespace :reactionview do
+namespace :reactionview do # rubocop:disable Metrics/BlockLength
   desc "Precompile all HTML ERB and Herb templates to the ReActionView cache"
-  task precompile: :environment do
+  task precompile: :environment do # rubocop:disable Metrics/BlockLength
     require "reactionview/template/handlers/herb/herb"
 
     cache = ReActionView.cache
@@ -56,7 +56,7 @@ namespace :reactionview do
     puts "Precompiled #{compiled} templates in #{format("%.2f", elapsed)}s"
     puts "  Cache directory: #{cache.directory}"
     puts "  Cache entries: #{cache.size}"
-    puts "  Errors: #{errors}" if errors > 0
+    puts "  Errors: #{errors}" if errors.positive?
   end
 
   namespace :cache do
