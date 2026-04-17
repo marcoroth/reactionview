@@ -63,8 +63,8 @@ class ReActionView::CacheTest < Minitest::Spec
   end
 
   test "key_for produces different keys for different properties" do
-    key1 = @cache.key_for("hello", { filename: "a.erb" })
-    key2 = @cache.key_for("hello", { filename: "b.erb" })
+    key1 = @cache.key_for("hello", { bufvar: "@output_buffer" })
+    key2 = @cache.key_for("hello", { bufvar: "@other_buffer" })
     refute_equal key1, key2
   end
 
