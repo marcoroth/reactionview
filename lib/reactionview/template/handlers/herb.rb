@@ -65,12 +65,17 @@ module ReActionView
           markup = +""
 
           if ::ReActionView.config.debug_mode_enabled?
+            dev_server_port = ::ReActionView.config.dev_server_port
+            port_meta = dev_server_port ? %(<meta name="herb-dev-server-port" content="#{dev_server_port}">) : ""
+
             markup << <<~HTML
               <meta name="herb-debug-mode" content="true">
               <meta name="herb-project-path" content="#{Rails.root}">
+              #{port_meta}
               #{editor_meta_tag}
 
               #{ActionController::Base.new.view_context.javascript_include_tag "reactionview-dev-tools.umd.js", defer: true}
+              #{ActionController::Base.new.view_context.javascript_include_tag "herb-client.umd.js", defer: true}
             HTML
           end
 
