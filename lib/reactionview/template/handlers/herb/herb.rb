@@ -7,21 +7,28 @@ module ReActionView
     module Handlers
       class Herb
         class Herb < ::Herb::Engine
+          DEFAULT_BUFVAR = "@output_buffer"
+          DEFAULT_ESCAPEFUNC = ""
+
+          def self.freeze_template_literals_default?
+            !::ActionView::Template.frozen_string_literal
+          end
+
           def initialize(input, properties = {})
             @newline_pending = 0
 
             # Dup properties so that we don't modify argument
             properties = properties.to_h
 
-            properties[:bufvar]     ||= "@output_buffer"
+            properties[:bufvar]     ||= DEFAULT_BUFVAR
             properties[:preamble]   ||= ""
             properties[:postamble]  ||= properties[:bufvar].to_s
 
             # Tell Herb whether the template will be compiled with `frozen_string_literal: true`
-            properties[:freeze_template_literals] = !::ActionView::Template.frozen_string_literal
+            properties[:freeze_template_literals] = self.class.freeze_template_literals_default?
 
             # Disable all Herb escape functions - let ActionView::OutputBuffer handle escaping
-            properties[:escapefunc] = ""
+            properties[:escapefunc] = DEFAULT_ESCAPEFUNC
             properties[:attrfunc] = nil
             properties[:jsfunc] = nil
             properties[:cssfunc] = nil

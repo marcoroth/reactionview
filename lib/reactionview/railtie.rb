@@ -14,6 +14,14 @@ module ReActionView
       reactionview-dev-tools.umd.js
     ].freeze
 
+    rake_tasks do
+      load "tasks/reactionview.rake"
+    end
+
+    initializer "reactionview.log_subscriber" do
+      ReActionView::LogSubscriber.attach_to(:reactionview)
+    end
+
     initializer "reactionview.assets" do |app|
       if ReActionView.config.development? && app.config.respond_to?(:assets)
         gem_root = Gem::Specification.find_by_name("reactionview").gem_dir
