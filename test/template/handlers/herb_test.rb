@@ -365,4 +365,25 @@ class Herb::TemplateHandlerTest < Minitest::Spec
 
     assert_compiled_snapshot(template)
   end
+
+  test "does not process templates that are not local" do
+    ReActionView.config.intercept_erb = true
+    Rails.stubs(:root).returns("/local/template")
+
+    template = %(<p><h2>I am invalid</h2></p>)
+    template_obj = ActionView::Template.new(
+      template,
+      "test_template",
+      ReActionView::Template::Handlers::ERB,
+      virtual_path: "test",
+      format: :html,
+      locals: []
+    )
+
+    compiled_source = template_obj.handler.call(template_obj, template)
+    result = @view_context.instance_eval(compiled_source).to_s
+
+    normalized_result = result.gsub(/>\s+</, "><").gsub(/\s+/, " ").strip
+    assert_equal "<p><h2>I am invalid</h2></p>", normalized_result
+  end
 end
