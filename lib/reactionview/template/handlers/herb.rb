@@ -14,13 +14,13 @@ module ReActionView
           if ::ReActionView.config.debug_mode_enabled? && local_template?(template)
             visitors << ::Herb::Engine::DebugVisitor.new(
               file_path: template.identifier,
-              project_path: Rails.root.to_s
+              project_path: project_path
             )
           end
 
           config = {
             filename: template.identifier,
-            project_path: Rails.root.to_s,
+            project_path: project_path,
             validation_mode: ReActionView.config.validation_mode,
             content_for_head: reactionview_dev_tools_markup(template),
             visitors: visitors + ReActionView.config.transform_visitors,
@@ -40,7 +40,7 @@ module ReActionView
         def local_template?(template)
           return true unless template.respond_to?(:identifier) && template.identifier
 
-          template.identifier.start_with?(Rails.root.to_s)
+          template.identifier.start_with?(project_path)
         end
 
         def active_support_editor
@@ -58,6 +58,10 @@ module ReActionView
           %(<meta name="herb-default-editor" content="#{editor_name}">)
         end
 
+        def project_path
+          ::ReActionView.config.project_path || Rails.root.to_s
+        end
+
         def reactionview_dev_tools_markup(template)
           return nil unless layout_template?(template)
           return nil unless local_template?(template)
@@ -67,7 +71,7 @@ module ReActionView
           if ::ReActionView.config.debug_mode_enabled?
             markup << <<~HTML
               <meta name="herb-debug-mode" content="true">
-              <meta name="herb-project-path" content="#{Rails.root}">
+              <meta name="herb-project-path" content="#{project_path}">
               #{editor_meta_tag}
 
               #{ActionController::Base.new.view_context.javascript_include_tag "reactionview-dev-tools.umd.js", defer: true}
