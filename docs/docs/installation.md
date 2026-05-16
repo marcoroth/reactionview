@@ -67,6 +67,34 @@ end
 
 This gives you all the benefits of Herb's validation, security features, and debugging tools for your existing templates.
 
+### Advanced Configuration
+
+#### Custom Project Path
+
+If your project path differs from `Rails.root` (e.g., Docker mounts, monorepos), you can configure a custom path:
+
+:::code-group
+```ruby [config/initializers/reactionview.rb]
+ReActionView.configure do |config|
+  # Custom project path for editor integration and dev tools
+  config.project_path = "/custom/path/to/project"
+  
+  # Docker example: map container path to host path
+  # config.project_path = "/Users/you/myapp"
+  
+  # Monorepo example: parent directory
+  # config.project_path = File.expand_path("../../", Rails.root)
+end
+```
+:::
+
+This affects:
+- Editor integration when clicking source locations in the browser
+- The `herb-project-path` meta tag for dev tools
+- Template path resolution in debug mode
+
+**Default**: `Rails.root.to_s`
+
 ## Verify Installation
 
 Create a test template to verify ReActionView is working:
