@@ -69,31 +69,32 @@ This gives you all the benefits of Herb's validation, security features, and deb
 
 ### Advanced Configuration
 
-#### Custom Project Path
+#### Custom Project Path for Editor Links
 
-If your project path differs from `Rails.root` (e.g., Docker mounts, monorepos), you can configure a custom path:
+If your project path differs from `Rails.root` (e.g., Docker mounts, monorepos), you can configure a custom path for editor "open in editor" links:
 
 :::code-group
 ```ruby [config/initializers/reactionview.rb]
 ReActionView.configure do |config|
-  # Custom project path for editor integration and dev tools
-  config.project_path = "/custom/path/to/project"
+  # Custom project path for editor integration (optional)
+  config.project_fullpath = "/custom/path/to/project"
   
   # Docker example: map container path to host path
-  # config.project_path = "/Users/you/myapp"
+  # config.project_fullpath = "/Users/you/myapp"
   
   # Monorepo example: parent directory
-  # config.project_path = File.expand_path("../../", Rails.root)
+  # config.project_fullpath = File.expand_path("../../", Rails.root)
 end
 ```
 :::
 
 This affects:
 - Editor integration when clicking source locations in the browser
-- The `herb-project-path` meta tag for dev tools
-- Template path resolution in debug mode
+- The `herb-rails-root` meta tag for dev tools
 
 **Default**: `Rails.root.to_s`
+
+**Note**: `project_path` (used for local template detection) is automatically set to `Rails.root` and cannot be configured.
 
 ## Verify Installation
 
