@@ -107,17 +107,17 @@ module SnapshotUtils # rubocop:disable Metrics/ModuleLength
       previous_content = snapshot_file(source, options).read
 
       if previous_content == content
-        Rails.logger.debug { "\n\nSnapshot for '#{self.class.name} #{name}' didn't change: \n#{snapshot_file(source, options)}\n" }
+        puts "\n\nSnapshot for '#{self.class.name} #{name}' didn't change: \n#{snapshot_file(source, options)}\n"
         false
       else
-        Rails.logger.debug { "\n\nSnapshot for '#{self.class.name} #{name}' changed:\n" }
+        puts "\n\nSnapshot for '#{self.class.name} #{name}' changed:\n"
 
-        Rails.logger.debug Difftastic::Differ.new(color: :always).diff_strings(previous_content, content)
-        Rails.logger.debug "==============="
+        puts Difftastic::Differ.new(color: :always).diff_strings(previous_content, content)
+        puts "==============="
         true
       end
     else
-      Rails.logger.debug { "\n\nSnapshot for '#{self.class.name} #{name}' doesn't exist at: \n#{snapshot_file(source, options)}\n" }
+      puts "\n\nSnapshot for '#{self.class.name} #{name}' doesn't exist at: \n#{snapshot_file(source, options)}\n"
       true
     end
   end
@@ -125,21 +125,21 @@ module SnapshotUtils # rubocop:disable Metrics/ModuleLength
   def save_failures_to_snapshot(content, source, options = {})
     return unless snapshot_changed?(content, source, options)
 
-    Rails.logger.debug { "\n==== [ Input for '#{self.class.name} #{name}' ] =====" }
-    Rails.logger.debug source
-    Rails.logger.debug "\n\n"
+    puts "\n==== [ Input for '#{self.class.name} #{name}' ] ====="
+    puts source
+    puts "\n\n"
 
     if !ENV["FORCE_UPDATE_SNAPSHOTS"].nil? ||
        ask?("Do you want to update (or create) the snapshot for '#{self.class.name} #{name}'?")
 
-      Rails.logger.debug { "\nUpdating Snapshot for '#{self.class.name} #{name}' at: \n#{snapshot_file(source, options)}\n" }
+      puts "\nUpdating Snapshot for '#{self.class.name} #{name}' at: \n#{snapshot_file(source, options)}\n"
 
       FileUtils.mkdir_p(snapshot_file(source, options).dirname)
       snapshot_file(source, options).write(content)
 
-      Rails.logger.debug { "\nSnapshot for '#{self.class.name} #{name}' written: \n#{snapshot_file(source, options)}\n" }
+      puts "\nSnapshot for '#{self.class.name} #{name}' written: \n#{snapshot_file(source, options)}\n"
     else
-      Rails.logger.debug { "\nNot updating snapshot for '#{self.class.name} #{name}' at: \n#{snapshot_file(source, options)}.\n" }
+      puts "\nNot updating snapshot for '#{self.class.name} #{name}' at: \n#{snapshot_file(source, options)}.\n"
     end
   end
 
@@ -157,7 +157,7 @@ module SnapshotUtils # rubocop:disable Metrics/ModuleLength
     raise unless snapshot_file(source, snapshot_opts).exist?
 
     if snapshot_file(source, snapshot_opts)&.read != actual
-      Rails.logger.debug
+      puts
 
       divider = "=" * `tput cols`.strip.to_i
 
@@ -191,7 +191,7 @@ module SnapshotUtils # rubocop:disable Metrics/ModuleLength
 
     opts_for_hash = options.except(:mode)
 
-    if opts_for_hash.present?
+    if opts_for_hash && !opts_for_hash.empty?
       options_hash = Digest::MD5.hexdigest(opts_for_hash.inspect)
       expected_snapshot_filename = "#{test_name}#{mode_suffix}_#{content_hash}-#{options_hash}.txt"
     else
@@ -203,7 +203,7 @@ module SnapshotUtils # rubocop:disable Metrics/ModuleLength
 
     return expected_snapshot_path if expected_snapshot_path.exist?
 
-    matching_md5_files = if opts_for_hash.present?
+    matching_md5_files = if opts_for_hash && !opts_for_hash.empty?
                            Dir[base_path / "*#{mode_suffix}_#{content_hash}-#{options_hash}.txt"]
                          else
                            Dir[base_path / "*#{mode_suffix}_#{content_hash}.txt"]
