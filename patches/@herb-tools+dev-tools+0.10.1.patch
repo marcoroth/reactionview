@@ -1,0 +1,615 @@
+diff --git a/node_modules/@herb-tools/dev-tools/dist/herb-dev-tools.esm.js b/node_modules/@herb-tools/dev-tools/dist/herb-dev-tools.esm.js
+index 956a691..897c040 100644
+--- a/node_modules/@herb-tools/dev-tools/dist/herb-dev-tools.esm.js
++++ b/node_modules/@herb-tools/dev-tools/dist/herb-dev-tools.esm.js
+@@ -25,7 +25,7 @@ function styleInject(css, ref) {
+   }
+ }
+ 
+-var css_248z = ".herb-overlay-label{background:rgba(0,0,0,.8);border-radius:3px;color:#fff;cursor:pointer;display:block;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,monospace;font-size:11px;font-weight:500;left:4px;line-height:1.2;padding:2px 6px;position:absolute;top:-18px;transition:all .2s ease;white-space:nowrap;z-index:1000}.herb-overlay-label:hover{background:rgba(0,0,0,.9);color:#374151;transform:scale(1.02);z-index:1001}[data-herb-debug-outline-type*=view]>.herb-overlay-label{background:#dbeafe;border-color:#93c5fd;color:#1e40af}[data-herb-debug-outline-type*=partial]>.herb-overlay-label{background:#d1fae5;border-color:#6ee7b7;color:#065f46}[data-herb-debug-outline-type*=component]>.herb-overlay-label{background:#fef3c7;border-color:#fcd34d;color:#92400e}[data-herb-debug-outline-type*=erb-output]{transition:all .3s ease}.herb-tooltip{background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.08);display:flex;flex-direction:column;font-family:SF Mono,Monaco,Inconsolata,Fira Code,monospace;font-size:14px;gap:12px;max-width:calc(100vw - 16px);opacity:0;overflow:visible;padding:16px 20px;pointer-events:none;position:fixed;transition:opacity .2s ease,visibility .2s ease;visibility:hidden;white-space:nowrap;z-index:10001}.herb-tooltip.visible{opacity:1;pointer-events:auto;visibility:visible}.herb-tooltip .herb-location{align-items:center;background:#f8f9fa;border-radius:12px 12px 0 0;color:#6b7280;cursor:pointer;display:flex;font-size:13px;font-weight:500;gap:12px;justify-content:space-between;margin:-16px -20px 0;padding:12px 20px;transition:all .2s ease}.herb-tooltip .herb-location:hover{background:#f1f3f4;color:#374151}.herb-copy-path-btn{background:transparent;border:none;border-radius:4px;color:#6b7280;cursor:pointer;flex-shrink:0;font-size:14px;padding:4px;position:relative;transition:all .2s ease}.herb-copy-path-btn:hover{background:hsla(220,9%,46%,.1);color:#374151}.herb-copy-path-btn:active{transform:scale(.95)}.herb-location:after{background:#1f2937;border-radius:6px;bottom:calc(100% + 8px);color:#fff;content:attr(data-tooltip);font-size:12px;padding:6px 10px;pointer-events:none;white-space:nowrap}.herb-location:after,.herb-location:before{left:50%;opacity:0;position:absolute;transform:translateX(-50%);transition:all .2s ease;visibility:hidden;z-index:10002}.herb-location:before{border:4px solid transparent;border-top-color:#1f2937;bottom:calc(100% + 2px);content:\"\"}.herb-location:hover:after,.herb-location:hover:before{opacity:1;visibility:visible}.herb-location:has(.herb-copy-path-btn:hover):after,.herb-location:has(.herb-copy-path-btn:hover):before{opacity:0!important;visibility:hidden!important}.herb-copy-path-btn:after{background:#1f2937;border-radius:6px;color:#fff;content:attr(data-tooltip);font-size:12px;padding:6px 10px;pointer-events:none;top:-36px;white-space:nowrap}.herb-copy-path-btn:after,.herb-copy-path-btn:before{left:50%;opacity:0;position:absolute;transform:translateX(-50%);transition:all .2s ease;visibility:hidden;z-index:10003}.herb-copy-path-btn:before{border:4px solid transparent;border-bottom-color:#1f2937;content:\"\";top:-6px}.herb-copy-path-btn:hover:after,.herb-copy-path-btn:hover:before{opacity:1;visibility:visible}.herb-tooltip .herb-erb-code{color:#111827;cursor:text;font-size:16px;font-weight:600;letter-spacing:-.025em;user-select:text}.herb-tooltip:before{bottom:-8px;content:\"\";height:8px;left:0;pointer-events:auto;position:absolute;right:0}.herb-tooltip:after{border:6px solid transparent;border-top-color:#e5e7eb;bottom:-6px;content:\"\";left:50%;pointer-events:none;position:absolute;transform:translateX(-50%);z-index:10000}.herb-floating-menu{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;position:fixed;right:0;top:0;z-index:2147483643}.herb-menu-trigger{align-items:center;background:#fff;border:1px solid silver;border-radius:0 0 0 10px;border-right:none;border-top:none;box-shadow:0 1px 3px rgba(0,0,0,.1);cursor:pointer;display:flex;font-size:12px;gap:4px;justify-content:center;padding:4px 7px;position:relative;transition:all .2s ease;z-index:2147483640}.herb-menu-trigger:hover{background:#f9fafb;border-color:#9ca3af;box-shadow:0 4px 12px rgba(0,0,0,.15)}.herb-menu-trigger:active{transform:scale(.98)}.herb-menu-trigger.has-active-options{background:#dbeafe;border-color:#3b82f6}.herb-menu-trigger.has-active-options:hover{background:#bfdbfe;border-color:#2563eb}.herb-menu-trigger.has-active-options .herb-text{color:#1d4ed8}.herb-icon{display:block;font-size:14px;line-height:1}.herb-text{color:#555;font-size:11px;font-weight:600;letter-spacing:.2px}.herb-connection-dot{background:#d1d5db;border-radius:50%;display:block;height:8px;transition:background .3s ease,box-shadow .3s ease;width:8px}@keyframes herb-dot-pulse{0%,to{opacity:1}50%{opacity:.5}}.herb-dev-server-section{align-items:center;border-bottom:1px solid #e5e7eb;display:flex;font-size:11px;gap:8px;min-height:32px;padding:8px 20px}.herb-dev-server-dot{background:#d1d5db;border-radius:50%;flex-shrink:0;height:8px;transition:background .3s ease;width:8px}.herb-dev-server-status{color:#6b7280}.herb-dev-server-retry{background:#fff;border:1px solid #d1d5db;border-radius:4px;color:#374151;cursor:pointer;display:none;font-size:10px;margin-left:auto;padding:2px 8px;transition:background .15s ease,border-color .15s ease}.herb-dev-server-retry:hover{background:#f3f4f6;border-color:#9ca3af}.herb-menu-panel{background:#fff;border:1px solid silver;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.1);min-width:280px;opacity:0;padding:0;position:absolute;right:10px;top:28px;transform:translateY(-10px) scale(.95);transform-origin:top right;transition:all .3s cubic-bezier(.4,0,.2,1);visibility:hidden}.herb-menu-panel.open{opacity:1;transform:translateY(0) scale(1);visibility:visible}.herb-menu-header{background:#f9fafb;border-bottom:1px solid #e5e7eb;border-radius:8px 8px 0 0;color:#374151;font-size:14px;font-weight:600;padding:16px 20px}.herb-toggle-item{border-bottom:1px solid #f3f4f6;padding:12px 20px}.herb-toggle-item:last-child{border-bottom:none;border-radius:0 0 8px 8px}.herb-nested-toggle{border-left:2px solid #f3f4f6;margin-top:8px;padding-left:24px;transition:all .3s ease}.herb-nested-label{opacity:.8}.herb-nested-label .herb-toggle-text{color:#6b7280;font-size:13px}.herb-nested-switch{background:#e5e7eb;height:20px;width:36px}.herb-nested-switch:after{height:14px;left:3px;top:3px;width:14px}.herb-toggle-input:checked+.herb-nested-switch:after{transform:translateX(16px)}.herb-toggle-label{align-items:center;cursor:pointer;display:flex;gap:12px;user-select:none}.herb-toggle-input{display:none}.herb-toggle-switch{background:#cbd5e1;border-radius:12px;flex-shrink:0;height:24px;position:relative;transition:background .3s ease;width:44px}.herb-toggle-switch:after{background:#fff;border-radius:50%;box-shadow:0 2px 4px rgba(0,0,0,.2);content:\"\";height:18px;left:3px;position:absolute;top:3px;transition:transform .3s ease;width:18px}.herb-toggle-input:checked+.herb-toggle-switch{background:#8b5cf6}.herb-toggle-input:checked+.herb-toggle-switch:after{transform:translateX(20px)}.herb-toggle-text{color:#374151;flex:1;font-size:14px}.herb-outline-preview{border:2px dotted transparent;border-radius:4px;padding:2px 8px}.herb-outline-view{background-color:#eff6ff;border-color:#3b82f6}.herb-outline-partial{background-color:#ecfdf5;border-color:#10b981}.herb-outline-component{background-color:#fffbeb;border-color:#f59e0b}.herb-outline-erb{background-color:#f5f3ff;border-color:#a78bfa}.herb-toggle-label:hover .herb-toggle-switch{background:#94a3b8}.herb-toggle-label:hover .herb-toggle-input:checked+.herb-toggle-switch{background:#7c3aed}.herb-editor-section{background:linear-gradient(135deg,#fafbfc,#f8f9fa);border-bottom:1px solid #f3f4f6;overflow:hidden;padding:16px 20px;position:relative}.herb-editor-section:before{background:linear-gradient(90deg,transparent,rgba(139,92,246,.2),transparent);content:\"\";height:2px;left:0;position:absolute;right:0;top:0}.herb-editor-label{cursor:default;display:flex;flex-direction:column;gap:10px}.herb-editor-text{align-items:center;color:#6b7280;display:flex;font-size:12px;font-weight:600;gap:6px;letter-spacing:.5px;text-transform:uppercase}.herb-editor-select{appearance:none;background:#fff;border:1.5px solid #e5e7eb;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.05);color:#1f2937;cursor:pointer;font-size:13.5px;font-weight:500;padding:10px 36px 10px 12px;transition:all .2s cubic-bezier(.4,0,.2,1);width:100%}.herb-editor-select,.herb-editor-select option{font-family:Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif}.herb-editor-select option{font-size:14px;font-weight:400;padding:8px 12px}.herb-editor-select:hover{background-color:#fafafa;border-color:#8b5cf6;box-shadow:0 2px 4px rgba(0,0,0,.08),0 0 0 1px rgba(139,92,246,.1);transform:translateY(-1px)}.herb-editor-select:focus{background-color:#fff;border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.15),0 2px 8px rgba(139,92,246,.1);outline:none;transform:translateY(-1px)}.herb-editor-select:active{box-shadow:0 1px 2px rgba(0,0,0,.05);transform:translateY(0)}.herb-disable-all-section{background:#f9fafb;border-radius:0 0 8px 8px;border-top:1px solid #f3f4f6;padding:16px 20px}.herb-disable-all-btn{background:#ef4444;border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:13px;font-weight:500;padding:8px 16px;transition:background .2s ease;width:100%}.herb-disable-all-btn:hover{background:#dc2626}.herb-disable-all-btn:active{background:#b91c1c}.herb-validation-overlay{align-items:center;backdrop-filter:blur(4px);background:rgba(0,0,0,.8);bottom:0;color:#e5e5e5;display:flex;font-family:SF Mono,Monaco,Cascadia Code,Roboto Mono,Consolas,Courier New,monospace;justify-content:center;left:0;line-height:1.6;overflow-y:auto;padding:20px;position:fixed;right:0;top:0;z-index:2147483640}.herb-validation-panel{background:#000;border:1px solid #374151;border-radius:12px;box-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04);display:flex;flex-direction:column;max-height:80vh;max-width:1200px;overflow:hidden;width:100%}.herb-validation-header{align-items:flex-start;background:linear-gradient(135deg,#dc2626,#b91c1c);border-bottom:1px solid #374151;border-radius:12px 12px 0 0;color:#fff;display:flex;flex-shrink:0;gap:16px;justify-content:space-between;padding:20px 24px}.herb-validation-title{font-size:18px;font-weight:600;margin:0}.herb-validation-close{align-items:center;background:hsla(0,0%,100%,.1);border:1px solid hsla(0,0%,100%,.2);border-radius:6px;color:#fff;cursor:pointer;display:flex;flex-shrink:0;font-size:16px;height:32px;justify-content:center;padding:0;transition:all .2s;width:32px}.herb-validation-close:hover{background:hsla(0,0%,100%,.2);border-color:hsla(0,0%,100%,.3)}.herb-file-tabs{background:#262626;border-bottom:1px solid #374151;display:flex;flex-shrink:0;overflow-x:auto}.herb-file-tab{background:none;border:none;border-bottom:3px solid transparent;color:#9ca3af;cursor:pointer;font-size:14px;font-weight:500;padding:12px 16px;transition:all .2s ease;white-space:nowrap}.herb-file-tab:hover{background:#2d2d2d;color:#e5e5e5}.herb-file-tab.active{background:#374151;border-bottom-color:#3b82f6;color:#fff}.herb-validation-content{flex:1;overflow-y:auto;padding:24px}.herb-validator-section{margin-bottom:32px}.herb-validator-section:last-child{margin-bottom:0}.herb-validator-section.hidden{display:none}.herb-validator-header{align-items:center;background:#262626;border-bottom:1px solid #374151;border-radius:8px 8px 0 0;color:#e5e5e5;display:flex;font-size:16px;font-weight:600;justify-content:space-between;padding:12px 16px}.herb-validator-count{background:hsla(0,0%,100%,.2);border-radius:12px;font-size:14px;font-weight:500;padding:2px 8px}.herb-validator-items{background:#111;border:1px solid #374151;border-radius:0 0 8px 8px;border-top:none}.herb-validation-item{background:#111;border-bottom:1px solid #374151;padding:20px}.herb-validation-item:last-child{border-bottom:none;border-radius:0 0 8px 8px}.herb-validation-item.hidden{display:none}.herb-validation-item .herb-validation-header{align-items:center;background:#1a1a1a;border:none;border-bottom:1px solid #374151;color:#9ca3af;display:flex;font-size:13px;gap:12px;margin:-20px -20px 16px;padding:12px 16px}.herb-validation-badge{border-radius:4px;color:#fff;font-size:12px;font-weight:600;letter-spacing:.025em;padding:4px 8px;text-transform:uppercase}.herb-validation-location{color:#9ca3af;font-family:SF Mono,Monaco,Inconsolata,Fira Code,monospace;font-size:13px}.herb-validation-message{background:#1a1a1a;border-bottom:1px solid #374151;color:#fbbf24;font-size:13px;font-weight:500;line-height:1.4;margin:-16px -16px 16px;padding:12px 16px}.herb-code-snippet{background:#1f2937;border-radius:6px;font-family:SF Mono,Monaco,Inconsolata,Fira Code,monospace;margin-bottom:16px;overflow:hidden}.herb-code-line{align-items:stretch;display:flex}.herb-code-line.herb-error-line{background:rgba(239,68,68,.1)}.herb-validation-overlay .herb-line-number{background:#374151;border-right:1px solid #4b5563;color:#9ca3af;flex-shrink:0;font-size:13px;padding:8px 12px;text-align:right;user-select:none;width:40px}.herb-validation-overlay .herb-error-line .herb-line-number{background:#dc2626;color:#fff}.herb-validation-overlay .herb-line-content{color:#e5e7eb;flex:1;font-size:13px;padding:8px 16px;white-space:pre-wrap}.herb-validation-overlay .herb-error-pointer{background:#1f2937;color:#dc2626;font-size:13px;font-weight:700;padding:4px 16px 8px 57px}.herb-validation-suggestion{align-items:flex-start;background:#111;border:1px solid #374151;border-radius:6px;color:#d1d5db;display:flex;font-size:14px;gap:8px;margin-top:16px;padding:12px 16px}.herb-suggestion-icon{color:#10b981;flex-shrink:0;font-size:16px;margin-top:1px}.herb-erb{color:#fbbf24;font-weight:600}.herb-erb-content{color:#34d399}.herb-tag{color:#60a5fa;font-weight:500}.herb-attr{color:#f472b6}.herb-value{color:#a78bfa}.herb-comment{color:#6b7280;font-style:italic}";
++var css_248z = ".herb-overlay-label{background:rgba(0,0,0,.8);border-radius:3px;color:#fff;cursor:pointer;display:block;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,monospace;font-size:11px;font-weight:500;left:4px;line-height:1.2;padding:2px 6px;position:absolute;top:-18px;transition:all .2s ease;white-space:nowrap;z-index:1000}.herb-overlay-label:hover{background:rgba(0,0,0,.9);color:#374151;transform:scale(1.02);z-index:1001}[data-herb-debug-outline-type*=view]>.herb-overlay-label{background:#dbeafe;border-color:#93c5fd;color:#1e40af}[data-herb-debug-outline-type*=partial]>.herb-overlay-label{background:#d1fae5;border-color:#6ee7b7;color:#065f46}[data-herb-debug-outline-type*=component]>.herb-overlay-label{background:#fef3c7;border-color:#fcd34d;color:#92400e}[data-herb-debug-outline-type*=erb-output]{transition:all .3s ease}.herb-tooltip{background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.08);display:flex;flex-direction:column;font-family:SF Mono,Monaco,Inconsolata,Fira Code,monospace;font-size:14px;gap:12px;max-width:calc(100vw - 16px);opacity:0;overflow:visible;padding:16px 20px;pointer-events:none;position:fixed;transition:opacity .2s ease,visibility .2s ease;visibility:hidden;white-space:nowrap;z-index:10001}.herb-tooltip.visible{opacity:1;pointer-events:auto;visibility:visible}.herb-tooltip .herb-location{align-items:center;background:#f8f9fa;border-radius:12px 12px 0 0;color:#6b7280;cursor:pointer;display:flex;font-size:13px;font-weight:500;gap:12px;justify-content:space-between;margin:-16px -20px 0;padding:12px 20px;transition:all .2s ease}.herb-tooltip .herb-location:hover{background:#f1f3f4;color:#374151}.herb-copy-path-btn{background:transparent;border:none;border-radius:4px;color:#6b7280;cursor:pointer;flex-shrink:0;font-size:14px;padding:4px;position:relative;transition:all .2s ease}.herb-copy-path-btn:hover{background:hsla(220,9%,46%,.1);color:#374151}.herb-copy-path-btn:active{transform:scale(.95)}.herb-location:after{background:#1f2937;border-radius:6px;bottom:calc(100% + 8px);color:#fff;content:attr(data-tooltip);font-size:12px;padding:6px 10px;pointer-events:none;white-space:nowrap}.herb-location:after,.herb-location:before{left:50%;opacity:0;position:absolute;transform:translateX(-50%);transition:all .2s ease;visibility:hidden;z-index:10002}.herb-location:before{border:4px solid transparent;border-top-color:#1f2937;bottom:calc(100% + 2px);content:\"\"}.herb-location:hover:after,.herb-location:hover:before{opacity:1;visibility:visible}.herb-location:has(.herb-copy-path-btn:hover):after,.herb-location:has(.herb-copy-path-btn:hover):before{opacity:0!important;visibility:hidden!important}.herb-copy-path-btn:after{background:#1f2937;border-radius:6px;color:#fff;content:attr(data-tooltip);font-size:12px;padding:6px 10px;pointer-events:none;top:-36px;white-space:nowrap}.herb-copy-path-btn:after,.herb-copy-path-btn:before{left:50%;opacity:0;position:absolute;transform:translateX(-50%);transition:all .2s ease;visibility:hidden;z-index:10003}.herb-copy-path-btn:before{border:4px solid transparent;border-bottom-color:#1f2937;content:\"\";top:-6px}.herb-copy-path-btn:hover:after,.herb-copy-path-btn:hover:before{opacity:1;visibility:visible}.herb-tooltip .herb-erb-code{color:#111827;cursor:text;font-size:16px;font-weight:600;letter-spacing:-.025em;user-select:text}.herb-tooltip:before{bottom:-8px;content:\"\";height:8px;left:0;pointer-events:auto;position:absolute;right:0}.herb-tooltip:after{border:6px solid transparent;border-top-color:#e5e7eb;bottom:-6px;content:\"\";left:50%;pointer-events:none;position:absolute;transform:translateX(-50%);z-index:10000}.herb-floating-menu{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;position:fixed;right:0;top:0;z-index:2147483643}.herb-menu-trigger{align-items:center;background:#fff;border:1px solid silver;border-radius:0 0 0 10px;border-right:none;border-top:none;box-shadow:0 1px 3px rgba(0,0,0,.1);cursor:pointer;display:flex;font-size:12px;gap:4px;justify-content:center;padding:4px 7px;position:relative;transition:all .2s ease;z-index:2147483640}.herb-menu-trigger:hover{background:#f9fafb;border-color:#9ca3af;box-shadow:0 4px 12px rgba(0,0,0,.15)}.herb-menu-trigger:active{transform:scale(.98)}.herb-menu-trigger.has-active-options{background:#dbeafe;border-color:#3b82f6}.herb-menu-trigger.has-active-options:hover{background:#bfdbfe;border-color:#2563eb}.herb-menu-trigger.has-active-options .herb-text{color:#1d4ed8}.herb-icon{display:block;font-size:14px;line-height:1}.herb-text{color:#555;font-size:11px;font-weight:600;letter-spacing:.2px}.herb-connection-dot{background:#d1d5db;border-radius:50%;display:block;height:8px;transition:background .3s ease,box-shadow .3s ease;width:8px}@keyframes herb-dot-pulse{0%,to{opacity:1}50%{opacity:.5}}.herb-dev-server-section{align-items:center;border-bottom:1px solid #e5e7eb;display:flex;font-size:11px;gap:8px;min-height:32px;padding:8px 20px}.herb-dev-server-dot{background:#d1d5db;border-radius:50%;flex-shrink:0;height:8px;transition:background .3s ease;width:8px}.herb-dev-server-status{color:#6b7280}.herb-dev-server-retry{background:#fff;border:1px solid #d1d5db;border-radius:4px;color:#374151;cursor:pointer;display:none;font-size:10px;margin-left:auto;padding:2px 8px;transition:background .15s ease,border-color .15s ease}.herb-dev-server-retry:hover{background:#f3f4f6;border-color:#9ca3af}.herb-menu-panel{background:#fff;border:1px solid silver;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.1);min-width:280px;opacity:0;padding:0;position:absolute;right:10px;top:28px;transform:translateY(-10px) scale(.95);transform-origin:top right;transition:all .3s cubic-bezier(.4,0,.2,1);visibility:hidden}.herb-menu-panel.open{opacity:1;transform:translateY(0) scale(1);visibility:visible}.herb-menu-header{background:#f9fafb;border-bottom:1px solid #e5e7eb;border-radius:8px 8px 0 0;color:#374151;font-size:14px;font-weight:600;padding:16px 20px}.herb-toggle-item{border-bottom:1px solid #f3f4f6;padding:12px 20px}.herb-toggle-item:last-child{border-bottom:none;border-radius:0 0 8px 8px}.herb-nested-toggle{border-left:2px solid #f3f4f6;margin-top:8px;padding-left:24px;transition:all .3s ease}.herb-nested-label{opacity:.8}.herb-nested-label .herb-toggle-text{color:#6b7280;font-size:13px}.herb-nested-switch{background:#e5e7eb;height:20px;width:36px}.herb-nested-switch:after{height:14px;left:3px;top:3px;width:14px}.herb-toggle-input:checked+.herb-nested-switch:after{transform:translateX(16px)}.herb-toggle-label{align-items:center;cursor:pointer;display:flex;gap:12px;user-select:none}.herb-toggle-input{display:none}.herb-toggle-switch{background:#cbd5e1;border-radius:12px;flex-shrink:0;height:24px;position:relative;transition:background .3s ease;width:44px}.herb-toggle-switch:after{background:#fff;border-radius:50%;box-shadow:0 2px 4px rgba(0,0,0,.2);content:\"\";height:18px;left:3px;position:absolute;top:3px;transition:transform .3s ease;width:18px}.herb-toggle-input:checked+.herb-toggle-switch{background:#8b5cf6}.herb-toggle-input:checked+.herb-toggle-switch:after{transform:translateX(20px)}.herb-toggle-text{color:#374151;flex:1;font-size:14px}.herb-outline-preview{border:2px dotted transparent;border-radius:4px;padding:2px 8px}.herb-outline-view{background-color:#eff6ff;border-color:#3b82f6}.herb-outline-partial{background-color:#ecfdf5;border-color:#10b981}.herb-outline-component{background-color:#fffbeb;border-color:#f59e0b}.herb-outline-erb{background-color:#f5f3ff;border-color:#a78bfa}.herb-debug-outline--view{outline:2px dotted #3b82f6;outline-offset:2px}.herb-debug-outline--partial{outline:2px dotted #10b981;outline-offset:2px}.herb-debug-outline--component{outline:2px dotted #f59e0b;outline-offset:2px}.herb-debug-outline--erb{outline:2px dotted #a78bfa;outline-offset:1px}.herb-debug-outline--component.herb-debug-outline--root,.herb-debug-outline--partial.herb-debug-outline--root,.herb-debug-outline--view.herb-debug-outline--root{outline-offset:-2px}.herb-debug-position-anchor{position:relative}.herb-toggle-label:hover .herb-toggle-switch{background:#94a3b8}.herb-toggle-label:hover .herb-toggle-input:checked+.herb-toggle-switch{background:#7c3aed}.herb-editor-section{background:linear-gradient(135deg,#fafbfc,#f8f9fa);border-bottom:1px solid #f3f4f6;overflow:hidden;padding:16px 20px;position:relative}.herb-editor-section:before{background:linear-gradient(90deg,transparent,rgba(139,92,246,.2),transparent);content:\"\";height:2px;left:0;position:absolute;right:0;top:0}.herb-editor-label{cursor:default;display:flex;flex-direction:column;gap:10px}.herb-editor-text{align-items:center;color:#6b7280;display:flex;font-size:12px;font-weight:600;gap:6px;letter-spacing:.5px;text-transform:uppercase}.herb-editor-select{appearance:none;background:#fff;border:1.5px solid #e5e7eb;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.05);color:#1f2937;cursor:pointer;font-size:13.5px;font-weight:500;padding:10px 36px 10px 12px;transition:all .2s cubic-bezier(.4,0,.2,1);width:100%}.herb-editor-select,.herb-editor-select option{font-family:Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif}.herb-editor-select option{font-size:14px;font-weight:400;padding:8px 12px}.herb-editor-select:hover{background-color:#fafafa;border-color:#8b5cf6;box-shadow:0 2px 4px rgba(0,0,0,.08),0 0 0 1px rgba(139,92,246,.1);transform:translateY(-1px)}.herb-editor-select:focus{background-color:#fff;border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.15),0 2px 8px rgba(139,92,246,.1);outline:none;transform:translateY(-1px)}.herb-editor-select:active{box-shadow:0 1px 2px rgba(0,0,0,.05);transform:translateY(0)}.herb-disable-all-section{background:#f9fafb;border-radius:0 0 8px 8px;border-top:1px solid #f3f4f6;padding:16px 20px}.herb-disable-all-btn{background:#ef4444;border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:13px;font-weight:500;padding:8px 16px;transition:background .2s ease;width:100%}.herb-disable-all-btn:hover{background:#dc2626}.herb-disable-all-btn:active{background:#b91c1c}.herb-validation-overlay{align-items:center;backdrop-filter:blur(4px);background:rgba(0,0,0,.8);bottom:0;color:#e5e5e5;display:flex;font-family:SF Mono,Monaco,Cascadia Code,Roboto Mono,Consolas,Courier New,monospace;justify-content:center;left:0;line-height:1.6;overflow-y:auto;padding:20px;position:fixed;right:0;top:0;z-index:2147483640}.herb-validation-panel{background:#000;border:1px solid #374151;border-radius:12px;box-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04);display:flex;flex-direction:column;max-height:80vh;max-width:1200px;overflow:hidden;width:100%}.herb-validation-header{align-items:flex-start;background:linear-gradient(135deg,#dc2626,#b91c1c);border-bottom:1px solid #374151;border-radius:12px 12px 0 0;color:#fff;display:flex;flex-shrink:0;gap:16px;justify-content:space-between;padding:20px 24px}.herb-validation-title{font-size:18px;font-weight:600;margin:0}.herb-validation-close{align-items:center;background:hsla(0,0%,100%,.1);border:1px solid hsla(0,0%,100%,.2);border-radius:6px;color:#fff;cursor:pointer;display:flex;flex-shrink:0;font-size:16px;height:32px;justify-content:center;padding:0;transition:all .2s;width:32px}.herb-validation-close:hover{background:hsla(0,0%,100%,.2);border-color:hsla(0,0%,100%,.3)}.herb-file-tabs{background:#262626;border-bottom:1px solid #374151;display:flex;flex-shrink:0;overflow-x:auto}.herb-file-tab{background:none;border:none;border-bottom:3px solid transparent;color:#9ca3af;cursor:pointer;font-size:14px;font-weight:500;padding:12px 16px;transition:all .2s ease;white-space:nowrap}.herb-file-tab:hover{background:#2d2d2d;color:#e5e5e5}.herb-file-tab.active{background:#374151;border-bottom-color:#3b82f6;color:#fff}.herb-validation-content{flex:1;overflow-y:auto;padding:24px}.herb-validator-section{margin-bottom:32px}.herb-validator-section:last-child{margin-bottom:0}.herb-validator-section.hidden{display:none}.herb-validator-header{align-items:center;background:#262626;border-bottom:1px solid #374151;border-radius:8px 8px 0 0;color:#e5e5e5;display:flex;font-size:16px;font-weight:600;justify-content:space-between;padding:12px 16px}.herb-validator-count{background:hsla(0,0%,100%,.2);border-radius:12px;font-size:14px;font-weight:500;padding:2px 8px}.herb-validator-items{background:#111;border:1px solid #374151;border-radius:0 0 8px 8px;border-top:none}.herb-validation-item{background:#111;border-bottom:1px solid #374151;padding:20px}.herb-validation-item:last-child{border-bottom:none;border-radius:0 0 8px 8px}.herb-validation-item.hidden{display:none}.herb-validation-item .herb-validation-header{align-items:center;background:#1a1a1a;border:none;border-bottom:1px solid #374151;color:#9ca3af;display:flex;font-size:13px;gap:12px;margin:-20px -20px 16px;padding:12px 16px}.herb-validation-badge{border-radius:4px;color:#fff;font-size:12px;font-weight:600;letter-spacing:.025em;padding:4px 8px;text-transform:uppercase}.herb-validation-location{color:#9ca3af;font-family:SF Mono,Monaco,Inconsolata,Fira Code,monospace;font-size:13px}.herb-validation-message{background:#1a1a1a;border-bottom:1px solid #374151;color:#fbbf24;font-size:13px;font-weight:500;line-height:1.4;margin:-16px -16px 16px;padding:12px 16px}.herb-code-snippet{background:#1f2937;border-radius:6px;font-family:SF Mono,Monaco,Inconsolata,Fira Code,monospace;margin-bottom:16px;overflow:hidden}.herb-code-line{align-items:stretch;display:flex}.herb-code-line.herb-error-line{background:rgba(239,68,68,.1)}.herb-validation-overlay .herb-line-number{background:#374151;border-right:1px solid #4b5563;color:#9ca3af;flex-shrink:0;font-size:13px;padding:8px 12px;text-align:right;user-select:none;width:40px}.herb-validation-overlay .herb-error-line .herb-line-number{background:#dc2626;color:#fff}.herb-validation-overlay .herb-line-content{color:#e5e7eb;flex:1;font-size:13px;padding:8px 16px;white-space:pre-wrap}.herb-validation-overlay .herb-error-pointer{background:#1f2937;color:#dc2626;font-size:13px;font-weight:700;padding:4px 16px 8px 57px}.herb-validation-suggestion{align-items:flex-start;background:#111;border:1px solid #374151;border-radius:6px;color:#d1d5db;display:flex;font-size:14px;gap:8px;margin-top:16px;padding:12px 16px}.herb-suggestion-icon{color:#10b981;flex-shrink:0;font-size:16px;margin-top:1px}.herb-erb{color:#fbbf24;font-weight:600}.herb-erb-content{color:#34d399}.herb-tag{color:#60a5fa;font-weight:500}.herb-attr{color:#f472b6}.herb-value{color:#a78bfa}.herb-comment{color:#6b7280;font-style:italic}";
+ styleInject(css_248z);
+ 
+ const optimizationMismatches = new Set();
+@@ -1048,6 +1048,31 @@ class ErrorOverlay {
+ }
+ 
+ class HerbOverlay {
++    applyDebugOutline(element, type) {
++        element.classList.add(HerbOverlay.DEBUG_OUTLINE_CLASS[type]);
++        if (element.tagName.toLowerCase() === 'html') {
++            element.classList.add('herb-debug-outline--root');
++        }
++    }
++    removeDebugOutline(element, type) {
++        element.classList.remove(HerbOverlay.DEBUG_OUTLINE_CLASS[type]);
++        element.classList.remove('herb-debug-outline--root');
++    }
++    clearAllDebugOutlineClasses(element) {
++        element.classList.remove(HerbOverlay.DEBUG_OUTLINE_CLASS.view, HerbOverlay.DEBUG_OUTLINE_CLASS.partial, HerbOverlay.DEBUG_OUTLINE_CLASS.component, HerbOverlay.DEBUG_OUTLINE_CLASS.erb, 'herb-debug-outline--root');
++    }
++    ensurePositionAnchor(element) {
++        if (window.getComputedStyle(element).position === 'static') {
++            element.classList.add('herb-debug-position-anchor');
++            element.setAttribute('data-herb-debug-position-anchored', 'true');
++        }
++    }
++    removePositionAnchor(element) {
++        if (element.getAttribute('data-herb-debug-position-anchored') === 'true') {
++            element.classList.remove('herb-debug-position-anchor');
++            element.removeAttribute('data-herb-debug-position-anchored');
++        }
++    }
+     constructor(options = {}) {
+         this.options = options;
+         this.showingERB = false;
+@@ -1421,15 +1446,11 @@ class HerbOverlay {
+         viewOutlines.forEach((outline) => {
+             const element = outline;
+             if (this.showingViewOutlines) {
+-                element.style.outline = '2px dotted #3b82f6';
+-                element.style.outlineOffset = element.tagName.toLowerCase() === 'html' ? '-2px' : '2px';
+-                element.classList.add('show-outline');
++                this.applyDebugOutline(element, 'view');
+                 this.createOverlayLabel(element, 'view');
+             }
+             else {
+-                element.style.outline = 'none';
+-                element.style.outlineOffset = '0';
+-                element.classList.remove('show-outline');
++                this.removeDebugOutline(element, 'view');
+                 this.removeOverlayLabel(element);
+             }
+         });
+@@ -1441,15 +1462,11 @@ class HerbOverlay {
+         partialOutlines.forEach((outline) => {
+             const element = outline;
+             if (this.showingPartialOutlines) {
+-                element.style.outline = '2px dotted #10b981';
+-                element.style.outlineOffset = element.tagName.toLowerCase() === 'html' ? '-2px' : '2px';
+-                element.classList.add('show-outline');
++                this.applyDebugOutline(element, 'partial');
+                 this.createOverlayLabel(element, 'partial');
+             }
+             else {
+-                element.style.outline = 'none';
+-                element.style.outlineOffset = '0';
+-                element.classList.remove('show-outline');
++                this.removeDebugOutline(element, 'partial');
+                 this.removeOverlayLabel(element);
+             }
+         });
+@@ -1461,15 +1478,11 @@ class HerbOverlay {
+         componentOutlines.forEach((outline) => {
+             const element = outline;
+             if (this.showingComponentOutlines) {
+-                element.style.outline = '2px dotted #f59e0b';
+-                element.style.outlineOffset = element.tagName.toLowerCase() === 'html' ? '-2px' : '2px';
+-                element.classList.add('show-outline');
++                this.applyDebugOutline(element, 'component');
+                 this.createOverlayLabel(element, 'component');
+             }
+             else {
+-                element.style.outline = 'none';
+-                element.style.outlineOffset = '0';
+-                element.classList.remove('show-outline');
++                this.removeDebugOutline(element, 'component');
+                 this.removeOverlayLabel(element);
+             }
+         });
+@@ -1504,16 +1517,10 @@ class HerbOverlay {
+         const shouldAttachToParent = element.getAttribute('data-herb-debug-attach-to-parent') === 'true';
+         if (shouldAttachToParent && element.parentElement) {
+             const parent = element.parentElement;
+-            element.style.outline = 'none';
+-            element.classList.remove('show-outline');
+-            const outlineColor = type === 'component' ? '#f59e0b' : type === 'partial' ? '#10b981' : '#3b82f6';
+-            parent.style.outline = `2px dotted ${outlineColor}`;
+-            parent.style.outlineOffset = parent.tagName.toLowerCase() === 'html' ? '-2px' : '2px';
+-            parent.classList.add('show-outline');
++            this.clearAllDebugOutlineClasses(element);
++            this.applyDebugOutline(parent, type);
+             parent.setAttribute('data-herb-debug-attached-outline-type', type);
+-            if (window.getComputedStyle(parent).position === 'static') {
+-                parent.style.position = 'relative';
+-            }
++            this.ensurePositionAnchor(parent);
+             label.style.position = 'absolute';
+             label.style.top = '0';
+             label.style.left = '0';
+@@ -1523,9 +1530,7 @@ class HerbOverlay {
+         if (element.localName === 'html' || window.getComputedStyle(element).overflowY !== 'visible') {
+             label.style.top = '0';
+         }
+-        if (window.getComputedStyle(element).position === 'static') {
+-            element.style.position = 'relative';
+-        }
++        this.ensurePositionAnchor(element);
+         element.appendChild(label);
+     }
+     removeOverlayLabel(element) {
+@@ -1536,16 +1541,22 @@ class HerbOverlay {
+             if (label) {
+                 label.remove();
+             }
+-            parent.style.outline = 'none';
+-            parent.style.outlineOffset = '0';
+-            parent.classList.remove('show-outline');
++            const attachedType = parent.getAttribute('data-herb-debug-attached-outline-type');
++            if (attachedType) {
++                this.removeDebugOutline(parent, attachedType);
++            }
++            else {
++                this.clearAllDebugOutlineClasses(parent);
++            }
+             parent.removeAttribute('data-herb-debug-attached-outline-type');
++            this.removePositionAnchor(parent);
+         }
+         else {
+             const label = element.querySelector('.herb-overlay-label');
+             if (label) {
+                 label.remove();
+             }
++            this.removePositionAnchor(element);
+         }
+     }
+     resetShowingERB() {
+@@ -1597,8 +1608,7 @@ class HerbOverlay {
+             const needsWrapperToggled = (inserted && !element.children[0]);
+             const realElement = element.children[0] || element;
+             if (this.showingERBOutlines) {
+-                realElement.style.outline = '2px dotted #a78bfa';
+-                realElement.style.outlineOffset = '1px';
++                this.applyDebugOutline(realElement, 'erb');
+                 if (needsWrapperToggled) {
+                     element.style.display = 'inline';
+                 }
+@@ -1610,8 +1620,7 @@ class HerbOverlay {
+                 }
+             }
+             else {
+-                realElement.style.outline = 'none';
+-                realElement.style.outlineOffset = '0';
++                this.removeDebugOutline(realElement, 'erb');
+                 if (needsWrapperToggled) {
+                     element.style.display = 'contents';
+                 }
+@@ -1990,6 +1999,12 @@ HerbOverlay.EDITOR_OPTIONS = [
+     { value: 'windsurf', label: 'Windsurf' },
+     { value: 'zed', label: 'Zed' },
+ ];
++HerbOverlay.DEBUG_OUTLINE_CLASS = {
++    view: 'herb-debug-outline--view',
++    partial: 'herb-debug-outline--partial',
++    component: 'herb-debug-outline--component',
++    erb: 'herb-debug-outline--erb',
++};
+ 
+ function initHerbDevTools(options = {}) {
+     const overlay = new HerbOverlay(options);
+diff --git a/node_modules/@herb-tools/dev-tools/dist/herb-dev-tools.umd.js b/node_modules/@herb-tools/dev-tools/dist/herb-dev-tools.umd.js
+index 50e14d3..deb3024 100644
+--- a/node_modules/@herb-tools/dev-tools/dist/herb-dev-tools.umd.js
++++ b/node_modules/@herb-tools/dev-tools/dist/herb-dev-tools.umd.js
+@@ -31,7 +31,7 @@
+     }
+   }
+ 
+-  var css_248z = ".herb-overlay-label{background:rgba(0,0,0,.8);border-radius:3px;color:#fff;cursor:pointer;display:block;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,monospace;font-size:11px;font-weight:500;left:4px;line-height:1.2;padding:2px 6px;position:absolute;top:-18px;transition:all .2s ease;white-space:nowrap;z-index:1000}.herb-overlay-label:hover{background:rgba(0,0,0,.9);color:#374151;transform:scale(1.02);z-index:1001}[data-herb-debug-outline-type*=view]>.herb-overlay-label{background:#dbeafe;border-color:#93c5fd;color:#1e40af}[data-herb-debug-outline-type*=partial]>.herb-overlay-label{background:#d1fae5;border-color:#6ee7b7;color:#065f46}[data-herb-debug-outline-type*=component]>.herb-overlay-label{background:#fef3c7;border-color:#fcd34d;color:#92400e}[data-herb-debug-outline-type*=erb-output]{transition:all .3s ease}.herb-tooltip{background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.08);display:flex;flex-direction:column;font-family:SF Mono,Monaco,Inconsolata,Fira Code,monospace;font-size:14px;gap:12px;max-width:calc(100vw - 16px);opacity:0;overflow:visible;padding:16px 20px;pointer-events:none;position:fixed;transition:opacity .2s ease,visibility .2s ease;visibility:hidden;white-space:nowrap;z-index:10001}.herb-tooltip.visible{opacity:1;pointer-events:auto;visibility:visible}.herb-tooltip .herb-location{align-items:center;background:#f8f9fa;border-radius:12px 12px 0 0;color:#6b7280;cursor:pointer;display:flex;font-size:13px;font-weight:500;gap:12px;justify-content:space-between;margin:-16px -20px 0;padding:12px 20px;transition:all .2s ease}.herb-tooltip .herb-location:hover{background:#f1f3f4;color:#374151}.herb-copy-path-btn{background:transparent;border:none;border-radius:4px;color:#6b7280;cursor:pointer;flex-shrink:0;font-size:14px;padding:4px;position:relative;transition:all .2s ease}.herb-copy-path-btn:hover{background:hsla(220,9%,46%,.1);color:#374151}.herb-copy-path-btn:active{transform:scale(.95)}.herb-location:after{background:#1f2937;border-radius:6px;bottom:calc(100% + 8px);color:#fff;content:attr(data-tooltip);font-size:12px;padding:6px 10px;pointer-events:none;white-space:nowrap}.herb-location:after,.herb-location:before{left:50%;opacity:0;position:absolute;transform:translateX(-50%);transition:all .2s ease;visibility:hidden;z-index:10002}.herb-location:before{border:4px solid transparent;border-top-color:#1f2937;bottom:calc(100% + 2px);content:\"\"}.herb-location:hover:after,.herb-location:hover:before{opacity:1;visibility:visible}.herb-location:has(.herb-copy-path-btn:hover):after,.herb-location:has(.herb-copy-path-btn:hover):before{opacity:0!important;visibility:hidden!important}.herb-copy-path-btn:after{background:#1f2937;border-radius:6px;color:#fff;content:attr(data-tooltip);font-size:12px;padding:6px 10px;pointer-events:none;top:-36px;white-space:nowrap}.herb-copy-path-btn:after,.herb-copy-path-btn:before{left:50%;opacity:0;position:absolute;transform:translateX(-50%);transition:all .2s ease;visibility:hidden;z-index:10003}.herb-copy-path-btn:before{border:4px solid transparent;border-bottom-color:#1f2937;content:\"\";top:-6px}.herb-copy-path-btn:hover:after,.herb-copy-path-btn:hover:before{opacity:1;visibility:visible}.herb-tooltip .herb-erb-code{color:#111827;cursor:text;font-size:16px;font-weight:600;letter-spacing:-.025em;user-select:text}.herb-tooltip:before{bottom:-8px;content:\"\";height:8px;left:0;pointer-events:auto;position:absolute;right:0}.herb-tooltip:after{border:6px solid transparent;border-top-color:#e5e7eb;bottom:-6px;content:\"\";left:50%;pointer-events:none;position:absolute;transform:translateX(-50%);z-index:10000}.herb-floating-menu{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;position:fixed;right:0;top:0;z-index:2147483643}.herb-menu-trigger{align-items:center;background:#fff;border:1px solid silver;border-radius:0 0 0 10px;border-right:none;border-top:none;box-shadow:0 1px 3px rgba(0,0,0,.1);cursor:pointer;display:flex;font-size:12px;gap:4px;justify-content:center;padding:4px 7px;position:relative;transition:all .2s ease;z-index:2147483640}.herb-menu-trigger:hover{background:#f9fafb;border-color:#9ca3af;box-shadow:0 4px 12px rgba(0,0,0,.15)}.herb-menu-trigger:active{transform:scale(.98)}.herb-menu-trigger.has-active-options{background:#dbeafe;border-color:#3b82f6}.herb-menu-trigger.has-active-options:hover{background:#bfdbfe;border-color:#2563eb}.herb-menu-trigger.has-active-options .herb-text{color:#1d4ed8}.herb-icon{display:block;font-size:14px;line-height:1}.herb-text{color:#555;font-size:11px;font-weight:600;letter-spacing:.2px}.herb-connection-dot{background:#d1d5db;border-radius:50%;display:block;height:8px;transition:background .3s ease,box-shadow .3s ease;width:8px}@keyframes herb-dot-pulse{0%,to{opacity:1}50%{opacity:.5}}.herb-dev-server-section{align-items:center;border-bottom:1px solid #e5e7eb;display:flex;font-size:11px;gap:8px;min-height:32px;padding:8px 20px}.herb-dev-server-dot{background:#d1d5db;border-radius:50%;flex-shrink:0;height:8px;transition:background .3s ease;width:8px}.herb-dev-server-status{color:#6b7280}.herb-dev-server-retry{background:#fff;border:1px solid #d1d5db;border-radius:4px;color:#374151;cursor:pointer;display:none;font-size:10px;margin-left:auto;padding:2px 8px;transition:background .15s ease,border-color .15s ease}.herb-dev-server-retry:hover{background:#f3f4f6;border-color:#9ca3af}.herb-menu-panel{background:#fff;border:1px solid silver;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.1);min-width:280px;opacity:0;padding:0;position:absolute;right:10px;top:28px;transform:translateY(-10px) scale(.95);transform-origin:top right;transition:all .3s cubic-bezier(.4,0,.2,1);visibility:hidden}.herb-menu-panel.open{opacity:1;transform:translateY(0) scale(1);visibility:visible}.herb-menu-header{background:#f9fafb;border-bottom:1px solid #e5e7eb;border-radius:8px 8px 0 0;color:#374151;font-size:14px;font-weight:600;padding:16px 20px}.herb-toggle-item{border-bottom:1px solid #f3f4f6;padding:12px 20px}.herb-toggle-item:last-child{border-bottom:none;border-radius:0 0 8px 8px}.herb-nested-toggle{border-left:2px solid #f3f4f6;margin-top:8px;padding-left:24px;transition:all .3s ease}.herb-nested-label{opacity:.8}.herb-nested-label .herb-toggle-text{color:#6b7280;font-size:13px}.herb-nested-switch{background:#e5e7eb;height:20px;width:36px}.herb-nested-switch:after{height:14px;left:3px;top:3px;width:14px}.herb-toggle-input:checked+.herb-nested-switch:after{transform:translateX(16px)}.herb-toggle-label{align-items:center;cursor:pointer;display:flex;gap:12px;user-select:none}.herb-toggle-input{display:none}.herb-toggle-switch{background:#cbd5e1;border-radius:12px;flex-shrink:0;height:24px;position:relative;transition:background .3s ease;width:44px}.herb-toggle-switch:after{background:#fff;border-radius:50%;box-shadow:0 2px 4px rgba(0,0,0,.2);content:\"\";height:18px;left:3px;position:absolute;top:3px;transition:transform .3s ease;width:18px}.herb-toggle-input:checked+.herb-toggle-switch{background:#8b5cf6}.herb-toggle-input:checked+.herb-toggle-switch:after{transform:translateX(20px)}.herb-toggle-text{color:#374151;flex:1;font-size:14px}.herb-outline-preview{border:2px dotted transparent;border-radius:4px;padding:2px 8px}.herb-outline-view{background-color:#eff6ff;border-color:#3b82f6}.herb-outline-partial{background-color:#ecfdf5;border-color:#10b981}.herb-outline-component{background-color:#fffbeb;border-color:#f59e0b}.herb-outline-erb{background-color:#f5f3ff;border-color:#a78bfa}.herb-toggle-label:hover .herb-toggle-switch{background:#94a3b8}.herb-toggle-label:hover .herb-toggle-input:checked+.herb-toggle-switch{background:#7c3aed}.herb-editor-section{background:linear-gradient(135deg,#fafbfc,#f8f9fa);border-bottom:1px solid #f3f4f6;overflow:hidden;padding:16px 20px;position:relative}.herb-editor-section:before{background:linear-gradient(90deg,transparent,rgba(139,92,246,.2),transparent);content:\"\";height:2px;left:0;position:absolute;right:0;top:0}.herb-editor-label{cursor:default;display:flex;flex-direction:column;gap:10px}.herb-editor-text{align-items:center;color:#6b7280;display:flex;font-size:12px;font-weight:600;gap:6px;letter-spacing:.5px;text-transform:uppercase}.herb-editor-select{appearance:none;background:#fff;border:1.5px solid #e5e7eb;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.05);color:#1f2937;cursor:pointer;font-size:13.5px;font-weight:500;padding:10px 36px 10px 12px;transition:all .2s cubic-bezier(.4,0,.2,1);width:100%}.herb-editor-select,.herb-editor-select option{font-family:Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif}.herb-editor-select option{font-size:14px;font-weight:400;padding:8px 12px}.herb-editor-select:hover{background-color:#fafafa;border-color:#8b5cf6;box-shadow:0 2px 4px rgba(0,0,0,.08),0 0 0 1px rgba(139,92,246,.1);transform:translateY(-1px)}.herb-editor-select:focus{background-color:#fff;border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.15),0 2px 8px rgba(139,92,246,.1);outline:none;transform:translateY(-1px)}.herb-editor-select:active{box-shadow:0 1px 2px rgba(0,0,0,.05);transform:translateY(0)}.herb-disable-all-section{background:#f9fafb;border-radius:0 0 8px 8px;border-top:1px solid #f3f4f6;padding:16px 20px}.herb-disable-all-btn{background:#ef4444;border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:13px;font-weight:500;padding:8px 16px;transition:background .2s ease;width:100%}.herb-disable-all-btn:hover{background:#dc2626}.herb-disable-all-btn:active{background:#b91c1c}.herb-validation-overlay{align-items:center;backdrop-filter:blur(4px);background:rgba(0,0,0,.8);bottom:0;color:#e5e5e5;display:flex;font-family:SF Mono,Monaco,Cascadia Code,Roboto Mono,Consolas,Courier New,monospace;justify-content:center;left:0;line-height:1.6;overflow-y:auto;padding:20px;position:fixed;right:0;top:0;z-index:2147483640}.herb-validation-panel{background:#000;border:1px solid #374151;border-radius:12px;box-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04);display:flex;flex-direction:column;max-height:80vh;max-width:1200px;overflow:hidden;width:100%}.herb-validation-header{align-items:flex-start;background:linear-gradient(135deg,#dc2626,#b91c1c);border-bottom:1px solid #374151;border-radius:12px 12px 0 0;color:#fff;display:flex;flex-shrink:0;gap:16px;justify-content:space-between;padding:20px 24px}.herb-validation-title{font-size:18px;font-weight:600;margin:0}.herb-validation-close{align-items:center;background:hsla(0,0%,100%,.1);border:1px solid hsla(0,0%,100%,.2);border-radius:6px;color:#fff;cursor:pointer;display:flex;flex-shrink:0;font-size:16px;height:32px;justify-content:center;padding:0;transition:all .2s;width:32px}.herb-validation-close:hover{background:hsla(0,0%,100%,.2);border-color:hsla(0,0%,100%,.3)}.herb-file-tabs{background:#262626;border-bottom:1px solid #374151;display:flex;flex-shrink:0;overflow-x:auto}.herb-file-tab{background:none;border:none;border-bottom:3px solid transparent;color:#9ca3af;cursor:pointer;font-size:14px;font-weight:500;padding:12px 16px;transition:all .2s ease;white-space:nowrap}.herb-file-tab:hover{background:#2d2d2d;color:#e5e5e5}.herb-file-tab.active{background:#374151;border-bottom-color:#3b82f6;color:#fff}.herb-validation-content{flex:1;overflow-y:auto;padding:24px}.herb-validator-section{margin-bottom:32px}.herb-validator-section:last-child{margin-bottom:0}.herb-validator-section.hidden{display:none}.herb-validator-header{align-items:center;background:#262626;border-bottom:1px solid #374151;border-radius:8px 8px 0 0;color:#e5e5e5;display:flex;font-size:16px;font-weight:600;justify-content:space-between;padding:12px 16px}.herb-validator-count{background:hsla(0,0%,100%,.2);border-radius:12px;font-size:14px;font-weight:500;padding:2px 8px}.herb-validator-items{background:#111;border:1px solid #374151;border-radius:0 0 8px 8px;border-top:none}.herb-validation-item{background:#111;border-bottom:1px solid #374151;padding:20px}.herb-validation-item:last-child{border-bottom:none;border-radius:0 0 8px 8px}.herb-validation-item.hidden{display:none}.herb-validation-item .herb-validation-header{align-items:center;background:#1a1a1a;border:none;border-bottom:1px solid #374151;color:#9ca3af;display:flex;font-size:13px;gap:12px;margin:-20px -20px 16px;padding:12px 16px}.herb-validation-badge{border-radius:4px;color:#fff;font-size:12px;font-weight:600;letter-spacing:.025em;padding:4px 8px;text-transform:uppercase}.herb-validation-location{color:#9ca3af;font-family:SF Mono,Monaco,Inconsolata,Fira Code,monospace;font-size:13px}.herb-validation-message{background:#1a1a1a;border-bottom:1px solid #374151;color:#fbbf24;font-size:13px;font-weight:500;line-height:1.4;margin:-16px -16px 16px;padding:12px 16px}.herb-code-snippet{background:#1f2937;border-radius:6px;font-family:SF Mono,Monaco,Inconsolata,Fira Code,monospace;margin-bottom:16px;overflow:hidden}.herb-code-line{align-items:stretch;display:flex}.herb-code-line.herb-error-line{background:rgba(239,68,68,.1)}.herb-validation-overlay .herb-line-number{background:#374151;border-right:1px solid #4b5563;color:#9ca3af;flex-shrink:0;font-size:13px;padding:8px 12px;text-align:right;user-select:none;width:40px}.herb-validation-overlay .herb-error-line .herb-line-number{background:#dc2626;color:#fff}.herb-validation-overlay .herb-line-content{color:#e5e7eb;flex:1;font-size:13px;padding:8px 16px;white-space:pre-wrap}.herb-validation-overlay .herb-error-pointer{background:#1f2937;color:#dc2626;font-size:13px;font-weight:700;padding:4px 16px 8px 57px}.herb-validation-suggestion{align-items:flex-start;background:#111;border:1px solid #374151;border-radius:6px;color:#d1d5db;display:flex;font-size:14px;gap:8px;margin-top:16px;padding:12px 16px}.herb-suggestion-icon{color:#10b981;flex-shrink:0;font-size:16px;margin-top:1px}.herb-erb{color:#fbbf24;font-weight:600}.herb-erb-content{color:#34d399}.herb-tag{color:#60a5fa;font-weight:500}.herb-attr{color:#f472b6}.herb-value{color:#a78bfa}.herb-comment{color:#6b7280;font-style:italic}";
++  var css_248z = ".herb-overlay-label{background:rgba(0,0,0,.8);border-radius:3px;color:#fff;cursor:pointer;display:block;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,monospace;font-size:11px;font-weight:500;left:4px;line-height:1.2;padding:2px 6px;position:absolute;top:-18px;transition:all .2s ease;white-space:nowrap;z-index:1000}.herb-overlay-label:hover{background:rgba(0,0,0,.9);color:#374151;transform:scale(1.02);z-index:1001}[data-herb-debug-outline-type*=view]>.herb-overlay-label{background:#dbeafe;border-color:#93c5fd;color:#1e40af}[data-herb-debug-outline-type*=partial]>.herb-overlay-label{background:#d1fae5;border-color:#6ee7b7;color:#065f46}[data-herb-debug-outline-type*=component]>.herb-overlay-label{background:#fef3c7;border-color:#fcd34d;color:#92400e}[data-herb-debug-outline-type*=erb-output]{transition:all .3s ease}.herb-tooltip{background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.08);display:flex;flex-direction:column;font-family:SF Mono,Monaco,Inconsolata,Fira Code,monospace;font-size:14px;gap:12px;max-width:calc(100vw - 16px);opacity:0;overflow:visible;padding:16px 20px;pointer-events:none;position:fixed;transition:opacity .2s ease,visibility .2s ease;visibility:hidden;white-space:nowrap;z-index:10001}.herb-tooltip.visible{opacity:1;pointer-events:auto;visibility:visible}.herb-tooltip .herb-location{align-items:center;background:#f8f9fa;border-radius:12px 12px 0 0;color:#6b7280;cursor:pointer;display:flex;font-size:13px;font-weight:500;gap:12px;justify-content:space-between;margin:-16px -20px 0;padding:12px 20px;transition:all .2s ease}.herb-tooltip .herb-location:hover{background:#f1f3f4;color:#374151}.herb-copy-path-btn{background:transparent;border:none;border-radius:4px;color:#6b7280;cursor:pointer;flex-shrink:0;font-size:14px;padding:4px;position:relative;transition:all .2s ease}.herb-copy-path-btn:hover{background:hsla(220,9%,46%,.1);color:#374151}.herb-copy-path-btn:active{transform:scale(.95)}.herb-location:after{background:#1f2937;border-radius:6px;bottom:calc(100% + 8px);color:#fff;content:attr(data-tooltip);font-size:12px;padding:6px 10px;pointer-events:none;white-space:nowrap}.herb-location:after,.herb-location:before{left:50%;opacity:0;position:absolute;transform:translateX(-50%);transition:all .2s ease;visibility:hidden;z-index:10002}.herb-location:before{border:4px solid transparent;border-top-color:#1f2937;bottom:calc(100% + 2px);content:\"\"}.herb-location:hover:after,.herb-location:hover:before{opacity:1;visibility:visible}.herb-location:has(.herb-copy-path-btn:hover):after,.herb-location:has(.herb-copy-path-btn:hover):before{opacity:0!important;visibility:hidden!important}.herb-copy-path-btn:after{background:#1f2937;border-radius:6px;color:#fff;content:attr(data-tooltip);font-size:12px;padding:6px 10px;pointer-events:none;top:-36px;white-space:nowrap}.herb-copy-path-btn:after,.herb-copy-path-btn:before{left:50%;opacity:0;position:absolute;transform:translateX(-50%);transition:all .2s ease;visibility:hidden;z-index:10003}.herb-copy-path-btn:before{border:4px solid transparent;border-bottom-color:#1f2937;content:\"\";top:-6px}.herb-copy-path-btn:hover:after,.herb-copy-path-btn:hover:before{opacity:1;visibility:visible}.herb-tooltip .herb-erb-code{color:#111827;cursor:text;font-size:16px;font-weight:600;letter-spacing:-.025em;user-select:text}.herb-tooltip:before{bottom:-8px;content:\"\";height:8px;left:0;pointer-events:auto;position:absolute;right:0}.herb-tooltip:after{border:6px solid transparent;border-top-color:#e5e7eb;bottom:-6px;content:\"\";left:50%;pointer-events:none;position:absolute;transform:translateX(-50%);z-index:10000}.herb-floating-menu{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;position:fixed;right:0;top:0;z-index:2147483643}.herb-menu-trigger{align-items:center;background:#fff;border:1px solid silver;border-radius:0 0 0 10px;border-right:none;border-top:none;box-shadow:0 1px 3px rgba(0,0,0,.1);cursor:pointer;display:flex;font-size:12px;gap:4px;justify-content:center;padding:4px 7px;position:relative;transition:all .2s ease;z-index:2147483640}.herb-menu-trigger:hover{background:#f9fafb;border-color:#9ca3af;box-shadow:0 4px 12px rgba(0,0,0,.15)}.herb-menu-trigger:active{transform:scale(.98)}.herb-menu-trigger.has-active-options{background:#dbeafe;border-color:#3b82f6}.herb-menu-trigger.has-active-options:hover{background:#bfdbfe;border-color:#2563eb}.herb-menu-trigger.has-active-options .herb-text{color:#1d4ed8}.herb-icon{display:block;font-size:14px;line-height:1}.herb-text{color:#555;font-size:11px;font-weight:600;letter-spacing:.2px}.herb-connection-dot{background:#d1d5db;border-radius:50%;display:block;height:8px;transition:background .3s ease,box-shadow .3s ease;width:8px}@keyframes herb-dot-pulse{0%,to{opacity:1}50%{opacity:.5}}.herb-dev-server-section{align-items:center;border-bottom:1px solid #e5e7eb;display:flex;font-size:11px;gap:8px;min-height:32px;padding:8px 20px}.herb-dev-server-dot{background:#d1d5db;border-radius:50%;flex-shrink:0;height:8px;transition:background .3s ease;width:8px}.herb-dev-server-status{color:#6b7280}.herb-dev-server-retry{background:#fff;border:1px solid #d1d5db;border-radius:4px;color:#374151;cursor:pointer;display:none;font-size:10px;margin-left:auto;padding:2px 8px;transition:background .15s ease,border-color .15s ease}.herb-dev-server-retry:hover{background:#f3f4f6;border-color:#9ca3af}.herb-menu-panel{background:#fff;border:1px solid silver;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.1);min-width:280px;opacity:0;padding:0;position:absolute;right:10px;top:28px;transform:translateY(-10px) scale(.95);transform-origin:top right;transition:all .3s cubic-bezier(.4,0,.2,1);visibility:hidden}.herb-menu-panel.open{opacity:1;transform:translateY(0) scale(1);visibility:visible}.herb-menu-header{background:#f9fafb;border-bottom:1px solid #e5e7eb;border-radius:8px 8px 0 0;color:#374151;font-size:14px;font-weight:600;padding:16px 20px}.herb-toggle-item{border-bottom:1px solid #f3f4f6;padding:12px 20px}.herb-toggle-item:last-child{border-bottom:none;border-radius:0 0 8px 8px}.herb-nested-toggle{border-left:2px solid #f3f4f6;margin-top:8px;padding-left:24px;transition:all .3s ease}.herb-nested-label{opacity:.8}.herb-nested-label .herb-toggle-text{color:#6b7280;font-size:13px}.herb-nested-switch{background:#e5e7eb;height:20px;width:36px}.herb-nested-switch:after{height:14px;left:3px;top:3px;width:14px}.herb-toggle-input:checked+.herb-nested-switch:after{transform:translateX(16px)}.herb-toggle-label{align-items:center;cursor:pointer;display:flex;gap:12px;user-select:none}.herb-toggle-input{display:none}.herb-toggle-switch{background:#cbd5e1;border-radius:12px;flex-shrink:0;height:24px;position:relative;transition:background .3s ease;width:44px}.herb-toggle-switch:after{background:#fff;border-radius:50%;box-shadow:0 2px 4px rgba(0,0,0,.2);content:\"\";height:18px;left:3px;position:absolute;top:3px;transition:transform .3s ease;width:18px}.herb-toggle-input:checked+.herb-toggle-switch{background:#8b5cf6}.herb-toggle-input:checked+.herb-toggle-switch:after{transform:translateX(20px)}.herb-toggle-text{color:#374151;flex:1;font-size:14px}.herb-outline-preview{border:2px dotted transparent;border-radius:4px;padding:2px 8px}.herb-outline-view{background-color:#eff6ff;border-color:#3b82f6}.herb-outline-partial{background-color:#ecfdf5;border-color:#10b981}.herb-outline-component{background-color:#fffbeb;border-color:#f59e0b}.herb-outline-erb{background-color:#f5f3ff;border-color:#a78bfa}.herb-debug-outline--view{outline:2px dotted #3b82f6;outline-offset:2px}.herb-debug-outline--partial{outline:2px dotted #10b981;outline-offset:2px}.herb-debug-outline--component{outline:2px dotted #f59e0b;outline-offset:2px}.herb-debug-outline--erb{outline:2px dotted #a78bfa;outline-offset:1px}.herb-debug-outline--component.herb-debug-outline--root,.herb-debug-outline--partial.herb-debug-outline--root,.herb-debug-outline--view.herb-debug-outline--root{outline-offset:-2px}.herb-debug-position-anchor{position:relative}.herb-toggle-label:hover .herb-toggle-switch{background:#94a3b8}.herb-toggle-label:hover .herb-toggle-input:checked+.herb-toggle-switch{background:#7c3aed}.herb-editor-section{background:linear-gradient(135deg,#fafbfc,#f8f9fa);border-bottom:1px solid #f3f4f6;overflow:hidden;padding:16px 20px;position:relative}.herb-editor-section:before{background:linear-gradient(90deg,transparent,rgba(139,92,246,.2),transparent);content:\"\";height:2px;left:0;position:absolute;right:0;top:0}.herb-editor-label{cursor:default;display:flex;flex-direction:column;gap:10px}.herb-editor-text{align-items:center;color:#6b7280;display:flex;font-size:12px;font-weight:600;gap:6px;letter-spacing:.5px;text-transform:uppercase}.herb-editor-select{appearance:none;background:#fff;border:1.5px solid #e5e7eb;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.05);color:#1f2937;cursor:pointer;font-size:13.5px;font-weight:500;padding:10px 36px 10px 12px;transition:all .2s cubic-bezier(.4,0,.2,1);width:100%}.herb-editor-select,.herb-editor-select option{font-family:Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif}.herb-editor-select option{font-size:14px;font-weight:400;padding:8px 12px}.herb-editor-select:hover{background-color:#fafafa;border-color:#8b5cf6;box-shadow:0 2px 4px rgba(0,0,0,.08),0 0 0 1px rgba(139,92,246,.1);transform:translateY(-1px)}.herb-editor-select:focus{background-color:#fff;border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.15),0 2px 8px rgba(139,92,246,.1);outline:none;transform:translateY(-1px)}.herb-editor-select:active{box-shadow:0 1px 2px rgba(0,0,0,.05);transform:translateY(0)}.herb-disable-all-section{background:#f9fafb;border-radius:0 0 8px 8px;border-top:1px solid #f3f4f6;padding:16px 20px}.herb-disable-all-btn{background:#ef4444;border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:13px;font-weight:500;padding:8px 16px;transition:background .2s ease;width:100%}.herb-disable-all-btn:hover{background:#dc2626}.herb-disable-all-btn:active{background:#b91c1c}.herb-validation-overlay{align-items:center;backdrop-filter:blur(4px);background:rgba(0,0,0,.8);bottom:0;color:#e5e5e5;display:flex;font-family:SF Mono,Monaco,Cascadia Code,Roboto Mono,Consolas,Courier New,monospace;justify-content:center;left:0;line-height:1.6;overflow-y:auto;padding:20px;position:fixed;right:0;top:0;z-index:2147483640}.herb-validation-panel{background:#000;border:1px solid #374151;border-radius:12px;box-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04);display:flex;flex-direction:column;max-height:80vh;max-width:1200px;overflow:hidden;width:100%}.herb-validation-header{align-items:flex-start;background:linear-gradient(135deg,#dc2626,#b91c1c);border-bottom:1px solid #374151;border-radius:12px 12px 0 0;color:#fff;display:flex;flex-shrink:0;gap:16px;justify-content:space-between;padding:20px 24px}.herb-validation-title{font-size:18px;font-weight:600;margin:0}.herb-validation-close{align-items:center;background:hsla(0,0%,100%,.1);border:1px solid hsla(0,0%,100%,.2);border-radius:6px;color:#fff;cursor:pointer;display:flex;flex-shrink:0;font-size:16px;height:32px;justify-content:center;padding:0;transition:all .2s;width:32px}.herb-validation-close:hover{background:hsla(0,0%,100%,.2);border-color:hsla(0,0%,100%,.3)}.herb-file-tabs{background:#262626;border-bottom:1px solid #374151;display:flex;flex-shrink:0;overflow-x:auto}.herb-file-tab{background:none;border:none;border-bottom:3px solid transparent;color:#9ca3af;cursor:pointer;font-size:14px;font-weight:500;padding:12px 16px;transition:all .2s ease;white-space:nowrap}.herb-file-tab:hover{background:#2d2d2d;color:#e5e5e5}.herb-file-tab.active{background:#374151;border-bottom-color:#3b82f6;color:#fff}.herb-validation-content{flex:1;overflow-y:auto;padding:24px}.herb-validator-section{margin-bottom:32px}.herb-validator-section:last-child{margin-bottom:0}.herb-validator-section.hidden{display:none}.herb-validator-header{align-items:center;background:#262626;border-bottom:1px solid #374151;border-radius:8px 8px 0 0;color:#e5e5e5;display:flex;font-size:16px;font-weight:600;justify-content:space-between;padding:12px 16px}.herb-validator-count{background:hsla(0,0%,100%,.2);border-radius:12px;font-size:14px;font-weight:500;padding:2px 8px}.herb-validator-items{background:#111;border:1px solid #374151;border-radius:0 0 8px 8px;border-top:none}.herb-validation-item{background:#111;border-bottom:1px solid #374151;padding:20px}.herb-validation-item:last-child{border-bottom:none;border-radius:0 0 8px 8px}.herb-validation-item.hidden{display:none}.herb-validation-item .herb-validation-header{align-items:center;background:#1a1a1a;border:none;border-bottom:1px solid #374151;color:#9ca3af;display:flex;font-size:13px;gap:12px;margin:-20px -20px 16px;padding:12px 16px}.herb-validation-badge{border-radius:4px;color:#fff;font-size:12px;font-weight:600;letter-spacing:.025em;padding:4px 8px;text-transform:uppercase}.herb-validation-location{color:#9ca3af;font-family:SF Mono,Monaco,Inconsolata,Fira Code,monospace;font-size:13px}.herb-validation-message{background:#1a1a1a;border-bottom:1px solid #374151;color:#fbbf24;font-size:13px;font-weight:500;line-height:1.4;margin:-16px -16px 16px;padding:12px 16px}.herb-code-snippet{background:#1f2937;border-radius:6px;font-family:SF Mono,Monaco,Inconsolata,Fira Code,monospace;margin-bottom:16px;overflow:hidden}.herb-code-line{align-items:stretch;display:flex}.herb-code-line.herb-error-line{background:rgba(239,68,68,.1)}.herb-validation-overlay .herb-line-number{background:#374151;border-right:1px solid #4b5563;color:#9ca3af;flex-shrink:0;font-size:13px;padding:8px 12px;text-align:right;user-select:none;width:40px}.herb-validation-overlay .herb-error-line .herb-line-number{background:#dc2626;color:#fff}.herb-validation-overlay .herb-line-content{color:#e5e7eb;flex:1;font-size:13px;padding:8px 16px;white-space:pre-wrap}.herb-validation-overlay .herb-error-pointer{background:#1f2937;color:#dc2626;font-size:13px;font-weight:700;padding:4px 16px 8px 57px}.herb-validation-suggestion{align-items:flex-start;background:#111;border:1px solid #374151;border-radius:6px;color:#d1d5db;display:flex;font-size:14px;gap:8px;margin-top:16px;padding:12px 16px}.herb-suggestion-icon{color:#10b981;flex-shrink:0;font-size:16px;margin-top:1px}.herb-erb{color:#fbbf24;font-weight:600}.herb-erb-content{color:#34d399}.herb-tag{color:#60a5fa;font-weight:500}.herb-attr{color:#f472b6}.herb-value{color:#a78bfa}.herb-comment{color:#6b7280;font-style:italic}";
+   styleInject(css_248z);
+ 
+   const optimizationMismatches = new Set();
+@@ -1054,6 +1054,31 @@
+   }
+ 
+   class HerbOverlay {
++      applyDebugOutline(element, type) {
++          element.classList.add(HerbOverlay.DEBUG_OUTLINE_CLASS[type]);
++          if (element.tagName.toLowerCase() === 'html') {
++              element.classList.add('herb-debug-outline--root');
++          }
++      }
++      removeDebugOutline(element, type) {
++          element.classList.remove(HerbOverlay.DEBUG_OUTLINE_CLASS[type]);
++          element.classList.remove('herb-debug-outline--root');
++      }
++      clearAllDebugOutlineClasses(element) {
++          element.classList.remove(HerbOverlay.DEBUG_OUTLINE_CLASS.view, HerbOverlay.DEBUG_OUTLINE_CLASS.partial, HerbOverlay.DEBUG_OUTLINE_CLASS.component, HerbOverlay.DEBUG_OUTLINE_CLASS.erb, 'herb-debug-outline--root');
++      }
++      ensurePositionAnchor(element) {
++          if (window.getComputedStyle(element).position === 'static') {
++              element.classList.add('herb-debug-position-anchor');
++              element.setAttribute('data-herb-debug-position-anchored', 'true');
++          }
++      }
++      removePositionAnchor(element) {
++          if (element.getAttribute('data-herb-debug-position-anchored') === 'true') {
++              element.classList.remove('herb-debug-position-anchor');
++              element.removeAttribute('data-herb-debug-position-anchored');
++          }
++      }
+       constructor(options = {}) {
+           this.options = options;
+           this.showingERB = false;
+@@ -1427,15 +1452,11 @@
+           viewOutlines.forEach((outline) => {
+               const element = outline;
+               if (this.showingViewOutlines) {
+-                  element.style.outline = '2px dotted #3b82f6';
+-                  element.style.outlineOffset = element.tagName.toLowerCase() === 'html' ? '-2px' : '2px';
+-                  element.classList.add('show-outline');
++                  this.applyDebugOutline(element, 'view');
+                   this.createOverlayLabel(element, 'view');
+               }
+               else {
+-                  element.style.outline = 'none';
+-                  element.style.outlineOffset = '0';
+-                  element.classList.remove('show-outline');
++                  this.removeDebugOutline(element, 'view');
+                   this.removeOverlayLabel(element);
+               }
+           });
+@@ -1447,15 +1468,11 @@
+           partialOutlines.forEach((outline) => {
+               const element = outline;
+               if (this.showingPartialOutlines) {
+-                  element.style.outline = '2px dotted #10b981';
+-                  element.style.outlineOffset = element.tagName.toLowerCase() === 'html' ? '-2px' : '2px';
+-                  element.classList.add('show-outline');
++                  this.applyDebugOutline(element, 'partial');
+                   this.createOverlayLabel(element, 'partial');
+               }
+               else {
+-                  element.style.outline = 'none';
+-                  element.style.outlineOffset = '0';
+-                  element.classList.remove('show-outline');
++                  this.removeDebugOutline(element, 'partial');
+                   this.removeOverlayLabel(element);
+               }
+           });
+@@ -1467,15 +1484,11 @@
+           componentOutlines.forEach((outline) => {
+               const element = outline;
+               if (this.showingComponentOutlines) {
+-                  element.style.outline = '2px dotted #f59e0b';
+-                  element.style.outlineOffset = element.tagName.toLowerCase() === 'html' ? '-2px' : '2px';
+-                  element.classList.add('show-outline');
++                  this.applyDebugOutline(element, 'component');
+                   this.createOverlayLabel(element, 'component');
+               }
+               else {
+-                  element.style.outline = 'none';
+-                  element.style.outlineOffset = '0';
+-                  element.classList.remove('show-outline');
++                  this.removeDebugOutline(element, 'component');
+                   this.removeOverlayLabel(element);
+               }
+           });
+@@ -1510,16 +1523,10 @@
+           const shouldAttachToParent = element.getAttribute('data-herb-debug-attach-to-parent') === 'true';
+           if (shouldAttachToParent && element.parentElement) {
+               const parent = element.parentElement;
+-              element.style.outline = 'none';
+-              element.classList.remove('show-outline');
+-              const outlineColor = type === 'component' ? '#f59e0b' : type === 'partial' ? '#10b981' : '#3b82f6';
+-              parent.style.outline = `2px dotted ${outlineColor}`;
+-              parent.style.outlineOffset = parent.tagName.toLowerCase() === 'html' ? '-2px' : '2px';
+-              parent.classList.add('show-outline');
++              this.clearAllDebugOutlineClasses(element);
++              this.applyDebugOutline(parent, type);
+               parent.setAttribute('data-herb-debug-attached-outline-type', type);
+-              if (window.getComputedStyle(parent).position === 'static') {
+-                  parent.style.position = 'relative';
+-              }
++              this.ensurePositionAnchor(parent);
+               label.style.position = 'absolute';
+               label.style.top = '0';
+               label.style.left = '0';
+@@ -1529,9 +1536,7 @@
+           if (element.localName === 'html' || window.getComputedStyle(element).overflowY !== 'visible') {
+               label.style.top = '0';
+           }
+-          if (window.getComputedStyle(element).position === 'static') {
+-              element.style.position = 'relative';
+-          }
++          this.ensurePositionAnchor(element);
+           element.appendChild(label);
+       }
+       removeOverlayLabel(element) {
+@@ -1542,16 +1547,22 @@
+               if (label) {
+                   label.remove();
+               }
+-              parent.style.outline = 'none';
+-              parent.style.outlineOffset = '0';
+-              parent.classList.remove('show-outline');
++              const attachedType = parent.getAttribute('data-herb-debug-attached-outline-type');
++              if (attachedType) {
++                  this.removeDebugOutline(parent, attachedType);
++              }
++              else {
++                  this.clearAllDebugOutlineClasses(parent);
++              }
+               parent.removeAttribute('data-herb-debug-attached-outline-type');
++              this.removePositionAnchor(parent);
+           }
+           else {
+               const label = element.querySelector('.herb-overlay-label');
+               if (label) {
+                   label.remove();
+               }
++              this.removePositionAnchor(element);
+           }
+       }
+       resetShowingERB() {
+@@ -1603,8 +1614,7 @@
+               const needsWrapperToggled = (inserted && !element.children[0]);
+               const realElement = element.children[0] || element;
+               if (this.showingERBOutlines) {
+-                  realElement.style.outline = '2px dotted #a78bfa';
+-                  realElement.style.outlineOffset = '1px';
++                  this.applyDebugOutline(realElement, 'erb');
+                   if (needsWrapperToggled) {
+                       element.style.display = 'inline';
+                   }
+@@ -1616,8 +1626,7 @@
+                   }
+               }
+               else {
+-                  realElement.style.outline = 'none';
+-                  realElement.style.outlineOffset = '0';
++                  this.removeDebugOutline(realElement, 'erb');
+                   if (needsWrapperToggled) {
+                       element.style.display = 'contents';
+                   }
+@@ -1996,6 +2005,12 @@
+       { value: 'windsurf', label: 'Windsurf' },
+       { value: 'zed', label: 'Zed' },
+   ];
++  HerbOverlay.DEBUG_OUTLINE_CLASS = {
++      view: 'herb-debug-outline--view',
++      partial: 'herb-debug-outline--partial',
++      component: 'herb-debug-outline--component',
++      erb: 'herb-debug-outline--erb',
++  };
+ 
+   function initHerbDevTools(options = {}) {
+       const overlay = new HerbOverlay(options);
+diff --git a/node_modules/@herb-tools/dev-tools/src/herb-overlay.ts b/node_modules/@herb-tools/dev-tools/src/herb-overlay.ts
+index 4b8ddee..a60412a 100644
+--- a/node_modules/@herb-tools/dev-tools/src/herb-overlay.ts
++++ b/node_modules/@herb-tools/dev-tools/src/herb-overlay.ts
+@@ -40,6 +40,50 @@ export class HerbOverlay {
+     { value: 'zed', label: 'Zed' },
+   ];
+ 
++  private static readonly DEBUG_OUTLINE_CLASS = {
++    view: 'herb-debug-outline--view',
++    partial: 'herb-debug-outline--partial',
++    component: 'herb-debug-outline--component',
++    erb: 'herb-debug-outline--erb',
++  } as const;
++
++  private applyDebugOutline(element: HTMLElement, type: keyof typeof HerbOverlay.DEBUG_OUTLINE_CLASS) {
++    element.classList.add(HerbOverlay.DEBUG_OUTLINE_CLASS[type]);
++
++    if (element.tagName.toLowerCase() === 'html') {
++      element.classList.add('herb-debug-outline--root');
++    }
++  }
++
++  private removeDebugOutline(element: HTMLElement, type: keyof typeof HerbOverlay.DEBUG_OUTLINE_CLASS) {
++    element.classList.remove(HerbOverlay.DEBUG_OUTLINE_CLASS[type]);
++    element.classList.remove('herb-debug-outline--root');
++  }
++
++  private clearAllDebugOutlineClasses(element: HTMLElement) {
++    element.classList.remove(
++      HerbOverlay.DEBUG_OUTLINE_CLASS.view,
++      HerbOverlay.DEBUG_OUTLINE_CLASS.partial,
++      HerbOverlay.DEBUG_OUTLINE_CLASS.component,
++      HerbOverlay.DEBUG_OUTLINE_CLASS.erb,
++      'herb-debug-outline--root'
++    );
++  }
++
++  private ensurePositionAnchor(element: HTMLElement) {
++    if (window.getComputedStyle(element).position === 'static') {
++      element.classList.add('herb-debug-position-anchor');
++      element.setAttribute('data-herb-debug-position-anchored', 'true');
++    }
++  }
++
++  private removePositionAnchor(element: HTMLElement) {
++    if (element.getAttribute('data-herb-debug-position-anchored') === 'true') {
++      element.classList.remove('herb-debug-position-anchor');
++      element.removeAttribute('data-herb-debug-position-anchored');
++    }
++  }
++
+   constructor(private options: HerbDevToolsOptions = {}) {
+     if (options.autoInit !== false) {
+       this.init();
+@@ -437,16 +481,10 @@ export class HerbOverlay {
+       const element = outline as HTMLElement;
+ 
+       if (this.showingViewOutlines) {
+-        element.style.outline = '2px dotted #3b82f6';
+-        element.style.outlineOffset = element.tagName.toLowerCase() === 'html' ? '-2px' : '2px';
+-        element.classList.add('show-outline');
+-
++        this.applyDebugOutline(element, 'view');
+         this.createOverlayLabel(element, 'view');
+       } else {
+-        element.style.outline = 'none';
+-        element.style.outlineOffset = '0';
+-        element.classList.remove('show-outline');
+-
++        this.removeDebugOutline(element, 'view');
+         this.removeOverlayLabel(element);
+       }
+     });
+@@ -462,16 +500,10 @@ export class HerbOverlay {
+       const element = outline as HTMLElement;
+ 
+       if (this.showingPartialOutlines) {
+-        element.style.outline = '2px dotted #10b981';
+-        element.style.outlineOffset = element.tagName.toLowerCase() === 'html' ? '-2px' : '2px';
+-        element.classList.add('show-outline');
+-
++        this.applyDebugOutline(element, 'partial');
+         this.createOverlayLabel(element, 'partial');
+       } else {
+-        element.style.outline = 'none';
+-        element.style.outlineOffset = '0';
+-        element.classList.remove('show-outline');
+-
++        this.removeDebugOutline(element, 'partial');
+         this.removeOverlayLabel(element);
+       }
+     });
+@@ -487,16 +519,10 @@ export class HerbOverlay {
+       const element = outline as HTMLElement;
+ 
+       if (this.showingComponentOutlines) {
+-        element.style.outline = '2px dotted #f59e0b';
+-        element.style.outlineOffset = element.tagName.toLowerCase() === 'html' ? '-2px' : '2px';
+-        element.classList.add('show-outline');
+-
++        this.applyDebugOutline(element, 'component');
+         this.createOverlayLabel(element, 'component');
+       } else {
+-        element.style.outline = 'none';
+-        element.style.outlineOffset = '0';
+-        element.classList.remove('show-outline');
+-
++        this.removeDebugOutline(element, 'component');
+         this.removeOverlayLabel(element);
+       }
+     });
+@@ -543,19 +569,12 @@ export class HerbOverlay {
+     if (shouldAttachToParent && element.parentElement) {
+       const parent = element.parentElement;
+ 
+-      element.style.outline = 'none';
+-      element.classList.remove('show-outline');
+-
+-      const outlineColor = type === 'component' ? '#f59e0b' : type === 'partial' ? '#10b981' : '#3b82f6';
+-      parent.style.outline = `2px dotted ${outlineColor}`;
+-      parent.style.outlineOffset = parent.tagName.toLowerCase() === 'html' ? '-2px' : '2px';
+-      parent.classList.add('show-outline');
++      this.clearAllDebugOutlineClasses(element);
++      this.applyDebugOutline(parent, type);
+ 
+       parent.setAttribute('data-herb-debug-attached-outline-type', type);
+ 
+-      if (window.getComputedStyle(parent).position === 'static') {
+-        parent.style.position = 'relative';
+-      }
++      this.ensurePositionAnchor(parent);
+       label.style.position = 'absolute';
+       label.style.top = '0';
+       label.style.left = '0';
+@@ -568,9 +587,7 @@ export class HerbOverlay {
+       label.style.top = '0';
+     }
+ 
+-    if (window.getComputedStyle(element).position === 'static') {
+-      element.style.position = 'relative';
+-    }
++    this.ensurePositionAnchor(element);
+     element.appendChild(label);
+   }
+ 
+@@ -585,16 +602,24 @@ export class HerbOverlay {
+         label.remove();
+       }
+ 
+-      parent.style.outline = 'none';
+-      parent.style.outlineOffset = '0';
+-      parent.classList.remove('show-outline');
++      const attachedType = parent.getAttribute('data-herb-debug-attached-outline-type') as 'view' | 'partial' | 'component' | null;
++
++      if (attachedType) {
++        this.removeDebugOutline(parent, attachedType);
++      } else {
++        this.clearAllDebugOutlineClasses(parent);
++      }
++
+       parent.removeAttribute('data-herb-debug-attached-outline-type');
++      this.removePositionAnchor(parent);
+     } else {
+       const label = element.querySelector('.herb-overlay-label');
+ 
+       if (label) {
+         label.remove();
+       }
++
++      this.removePositionAnchor(element);
+     }
+   }
+ 
+@@ -665,9 +690,7 @@ export class HerbOverlay {
+       const realElement = (element.children[0] as HTMLElement) || element
+ 
+       if (this.showingERBOutlines) {
+-
+-        realElement.style.outline = '2px dotted #a78bfa';
+-        realElement.style.outlineOffset = '1px';
++        this.applyDebugOutline(realElement, 'erb');
+ 
+         if (needsWrapperToggled) {
+           element.style.display = 'inline';
+@@ -681,8 +704,7 @@ export class HerbOverlay {
+           this.addERBHoverReveal(element);
+         }
+       } else {
+-        realElement.style.outline = 'none';
+-        realElement.style.outlineOffset = '0';
++        this.removeDebugOutline(realElement, 'erb');
+ 
+         if (needsWrapperToggled) {
+           element.style.display = 'contents';
+diff --git a/node_modules/@herb-tools/dev-tools/src/styles.css b/node_modules/@herb-tools/dev-tools/src/styles.css
+index 5eb2fa1..14bea6e 100644
+--- a/node_modules/@herb-tools/dev-tools/src/styles.css
++++ b/node_modules/@herb-tools/dev-tools/src/styles.css
+@@ -502,6 +502,37 @@
+   background-color: #f5f3ff;
+ }
+ 
++/* Debug outlines use classes (not inline styles) so user outline utilities are preserved */
++.herb-debug-outline--view {
++  outline: 2px dotted #3b82f6;
++  outline-offset: 2px;
++}
++
++.herb-debug-outline--partial {
++  outline: 2px dotted #10b981;
++  outline-offset: 2px;
++}
++
++.herb-debug-outline--component {
++  outline: 2px dotted #f59e0b;
++  outline-offset: 2px;
++}
++
++.herb-debug-outline--erb {
++  outline: 2px dotted #a78bfa;
++  outline-offset: 1px;
++}
++
++.herb-debug-outline--view.herb-debug-outline--root,
++.herb-debug-outline--partial.herb-debug-outline--root,
++.herb-debug-outline--component.herb-debug-outline--root {
++  outline-offset: -2px;
++}
++
++.herb-debug-position-anchor {
++  position: relative;
++}
++
+ .herb-toggle-label:hover .herb-toggle-switch {
+   background: #94a3b8;
+ }
