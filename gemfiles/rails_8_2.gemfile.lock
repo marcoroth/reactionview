@@ -47,7 +47,7 @@ PATH
   specs:
     reactionview (0.3.0)
       actionview (>= 7.0)
-      herb (>= 0.10.0, < 1.0.0)
+      herb (>= 0.10.0, < 0.11.0)
 
 GEM
   remote: https://rubygems.org/
