@@ -45,7 +45,7 @@ GIT
 PATH
   remote: ..
   specs:
-    reactionview (0.3.0)
+    reactionview (0.4.0)
       actionview (>= 7.0)
       herb (>= 0.10.0, < 0.11.0)
 
