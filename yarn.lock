@@ -180,7 +180,7 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.25.9.tgz#585624dc829cfb6e7c0aa6c3ca7d7e6daa87e34f"
   integrity sha512-PPOl1mi6lpLNQxnGoyAfschAodRFYXJ+9fs6WHXz7CSWKbOqiMZsubC+BQsVKuul+3vKLuwTHsS2c2y9EoKwxQ==
 
-"@herb-tools/client@^0.10.3":
+"@herb-tools/client@0.10.3":
   version "0.10.3"
   resolved "https://registry.yarnpkg.com/@herb-tools/client/-/client-0.10.3.tgz#87b01a6d86b50891819624f67184718f21c5e6d4"
   integrity sha512-0bZCDlrWz9x9d5amgwY28AEcdI4ng7n4W1mDA/bzKO0JZPP66r6zhi3S8g+CWyInOW2QJk1IcfbASe6W6CB7DQ==
@@ -192,7 +192,7 @@
   dependencies:
     "@ruby/prism" "^1.9.0"
 
-"@herb-tools/dev-tools@^0.10.3":
+"@herb-tools/dev-tools@0.10.3":
   version "0.10.3"
   resolved "https://registry.yarnpkg.com/@herb-tools/dev-tools/-/dev-tools-0.10.3.tgz#9f6d1281692079b6cb68ffad2b4dbc65673d18a3"
   integrity sha512-j0kXJGXDdcYRnci1OImvlViRqnPt+ACpfQbp9tL4EI1Bjtr/HW5oQu1ADuchar7lVKwamBG9L6BEuxOy5tjvmg==
