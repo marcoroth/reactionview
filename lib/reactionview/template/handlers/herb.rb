@@ -50,6 +50,15 @@ module ReActionView
           ActiveSupport::Editor.current.instance_variable_get(:@url_pattern).split("://").first
         end
 
+        def translate_path_for_editor(template_path)
+          rails_root = Rails.root.to_s
+          project_path = ::ReActionView.config.project_path
+
+          return template_path if project_path == rails_root
+
+          template_path.to_s.sub(rails_root, project_path)
+        end
+
         def editor_meta_tag
           editor_name = active_support_editor || ENV["RAILS_EDITOR"] || ENV.fetch("EDITOR", nil)
 
@@ -58,13 +67,12 @@ module ReActionView
           %(<meta name="herb-default-editor" content="#{editor_name}">)
         end
 
-        def translate_path_for_editor(template_path)
-          rails_root = Rails.root.to_s
-          project_path = ::ReActionView.config.project_path
+        def dev_server_port_meta_tag
+          port = ::ReActionView.config.dev_server_port
 
-          return template_path if project_path == rails_root
+          return if port.blank?
 
-          template_path.to_s.sub(rails_root, project_path)
+          %(<meta name="herb-dev-server-port" content="#{port}">)
         end
 
         def reactionview_dev_tools_markup(template)
@@ -77,6 +85,7 @@ module ReActionView
             markup << <<~HTML
               <meta name="herb-debug-mode" content="true">
               <meta name="herb-project-path" content="#{Rails.root}">
+              #{dev_server_port_meta_tag}
               #{editor_meta_tag}
 
               #{ActionController::Base.new.view_context.javascript_include_tag "reactionview-dev-tools.umd.js", defer: true}

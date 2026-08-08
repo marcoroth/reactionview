@@ -3,6 +3,7 @@ PATH
   specs:
     reactionview (0.3.0)
       actionview (>= 7.0)
+      cruise
       herb (>= 0.10.0, < 0.11.0)
 
 GEM
@@ -48,6 +49,14 @@ GEM
     concurrent-ruby (1.3.8)
     connection_pool (3.0.2)
     crass (1.0.7)
+    cruise (0.2.0)
+    cruise (0.2.0-aarch64-linux-gnu)
+    cruise (0.2.0-aarch64-linux-musl)
+    cruise (0.2.0-arm-linux-gnu)
+    cruise (0.2.0-arm64-darwin)
+    cruise (0.2.0-x86_64-darwin)
+    cruise (0.2.0-x86_64-linux-gnu)
+    cruise (0.2.0-x86_64-linux-musl)
     difftastic (0.8.0)
       pretty_please
     difftastic (0.8.0-aarch64-linux)

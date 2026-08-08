@@ -180,17 +180,24 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.25.9.tgz#585624dc829cfb6e7c0aa6c3ca7d7e6daa87e34f"
   integrity sha512-PPOl1mi6lpLNQxnGoyAfschAodRFYXJ+9fs6WHXz7CSWKbOqiMZsubC+BQsVKuul+3vKLuwTHsS2c2y9EoKwxQ==
 
-"@herb-tools/core@0.10.1":
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/@herb-tools/core/-/core-0.10.1.tgz#81845d6128f0c3a6a13ff1112c4fef7dcd3696d9"
-  integrity sha512-zFVhWGvqC7b5KHtp4LNlCt4ExLInuRZJxvcNp9kcHCAwnVux+EiXnJz8rsiiF8pU1z2gjq3w6q/g7ayjOetpAg==
+"@herb-tools/client@^0.10.3":
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/@herb-tools/client/-/client-0.10.3.tgz#87b01a6d86b50891819624f67184718f21c5e6d4"
+  integrity sha512-0bZCDlrWz9x9d5amgwY28AEcdI4ng7n4W1mDA/bzKO0JZPP66r6zhi3S8g+CWyInOW2QJk1IcfbASe6W6CB7DQ==
 
-"@herb-tools/dev-tools@^0.10.1":
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/@herb-tools/dev-tools/-/dev-tools-0.10.1.tgz#2230de0966f820596f8df0e3b6565f74597b22e7"
-  integrity sha512-l2U+3AePrW2mBwN7fFSSR/xCDppXfYqq2tlfAZwsV5jmFLYRnq34IfIhsrD2MLAv545WnqQZwVTTOVbPvNOr5A==
+"@herb-tools/core@0.10.3":
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/@herb-tools/core/-/core-0.10.3.tgz#03b1bf1a5d0c5acf9841209cf0c26dae3e2d85bb"
+  integrity sha512-rtDoh6C/EMYLEtFwYpuY+IlnV7PLsF5hQszq7uMDE/bwEpLVBlPFd2Wlk9E0RB31PVQKV1MwgGqstte87XqF9g==
   dependencies:
-    "@herb-tools/core" "0.10.1"
+    "@ruby/prism" "^1.9.0"
+
+"@herb-tools/dev-tools@^0.10.3":
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/@herb-tools/dev-tools/-/dev-tools-0.10.3.tgz#9f6d1281692079b6cb68ffad2b4dbc65673d18a3"
+  integrity sha512-j0kXJGXDdcYRnci1OImvlViRqnPt+ACpfQbp9tL4EI1Bjtr/HW5oQu1ADuchar7lVKwamBG9L6BEuxOy5tjvmg==
+  dependencies:
+    "@herb-tools/core" "0.10.3"
 
 "@iconify-json/logos@^1.2.4":
   version "1.2.9"
@@ -503,6 +510,11 @@
   version "4.50.1"
   resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.50.1.tgz#13f758c97b9fbbac56b6928547a3ff384e7cfb3e"
   integrity sha512-StxAO/8ts62KZVRAm4JZYq9+NqNsV7RvimNK+YM7ry//zebEH6meuugqW/P5OFUCjyQgui+9fUxT6d5NShvMvA==
+
+"@ruby/prism@^1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@ruby/prism/-/prism-1.9.0.tgz#064f599caf2288e8f0738875abbdd4bc4755df95"
+  integrity sha512-/j+JfP1eA0nCjx6c/8L6K/ENErmsqc6RMAba8rKYNz4RadrT7AW20u4WrjpWYWzdlk6k1YWHxoW9OS68w02+Vw==
 
 "@shikijs/core@3.12.1", "@shikijs/core@^3.9.2":
   version "3.12.1"
