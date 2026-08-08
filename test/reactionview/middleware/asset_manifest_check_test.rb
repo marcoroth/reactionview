@@ -137,7 +137,7 @@ class ReActionView::Middleware::AssetManifestCheckTest < Minitest::Spec
       build_middleware(assets: build_assets(resolver: DynamicResolver.new([])), logger: logger).call({})
 
       assert_equal 1, logger.messages.size
-      assert_includes logger.messages.first, "booted before the manifest existed"
+      assert_includes logger.messages.first, "booted before public/assets/.manifest.json existed"
       assert_includes logger.messages.first, manifest_path
       assert_includes logger.messages.first, "bin/rails assets:clobber"
     end

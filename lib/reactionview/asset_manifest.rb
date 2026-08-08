@@ -46,22 +46,21 @@ module ReActionView
 
     def explanation
       <<~MESSAGE
-        ReActionView's dev tools assets are missing from the precompiled asset manifest.
+        ReActionView's dev tools assets are missing from your precompiled assets.
         #{status}
 
         To fix this, delete the precompiled assets:
 
             bin/rails assets:clobber
 
-        That is safe in development. Without a manifest, Propshaft serves assets straight from the
-        load path, where these files already are.
+        That is safe in development. Without public/assets/, Propshaft serves each asset straight from
+        the directory it lives in, including ReActionView's.
 
             Missing:  #{missing_assets.join(", ")}
             Manifest: #{path}
 
-        The manifest was most likely left behind by `RAILS_ENV=production bin/rails assets:precompile`.
-        A production precompile doesn't include ReActionView's dev tools, and Propshaft stops scanning
-        the load path as soon as a manifest exists.
+        public/assets/ was most likely left behind by `RAILS_ENV=production bin/rails assets:precompile`,
+        and a production precompile doesn't include ReActionView's dev tools.
       MESSAGE
     end
 
@@ -69,11 +68,12 @@ module ReActionView
 
     def status
       if in_use?
-        "Propshaft is resolving assets from that manifest instead of the load path, which is why the\n" \
-          "lookup failed."
+        "Because public/assets/.manifest.json exists, Propshaft serves every asset from public/assets/\n" \
+          "and doesn't look anywhere else, which is why the lookup failed."
       else
-        "This server booted before the manifest existed, so pages still render for now. Propshaft will\n" \
-          "resolve assets from the manifest after the next restart, and rendering will fail then."
+        "This server booted before public/assets/.manifest.json existed, so pages still render for now.\n" \
+          "After the next restart Propshaft will serve assets from public/assets/ only, and rendering\n" \
+          "will fail then."
       end
     end
 
