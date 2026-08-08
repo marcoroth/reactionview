@@ -77,13 +77,13 @@ If your project path differs from `Rails.root` (e.g., Docker mounts, monorepos),
 ```ruby [config/initializers/reactionview.rb]
 ReActionView.configure do |config|
   # Custom project path for editor integration (optional)
-  config.project_fullpath = "/custom/path/to/project"
-  
+  config.project_path = "/custom/path/to/project"
+
   # Docker example: map container path to host path
-  # config.project_fullpath = "/Users/you/myapp"
-  
+  # config.project_path = "/Users/you/myapp"
+
   # Monorepo example: parent directory
-  # config.project_fullpath = File.expand_path("../../", Rails.root)
+  # config.project_path = File.expand_path("../../", Rails.root)
 end
 ```
 :::
@@ -94,7 +94,7 @@ This affects:
 
 **Default**: `Rails.root.to_s`
 
-**Note**: `project_path` (used for local template detection) is automatically set to `Rails.root` and cannot be configured.
+**Note**: local template detection always uses `Rails.root` and is unaffected by this setting.
 
 ## Verify Installation
 
