@@ -69,32 +69,29 @@ This gives you all the benefits of Herb's validation, security features, and deb
 
 ### Advanced Configuration
 
-#### Custom Project Path for Editor Links
+#### Custom Project Path for Editor Links <Badge type="info" text="^0.4.0" />
 
-If your project path differs from `Rails.root` (e.g., Docker mounts, monorepos), you can configure a custom path for editor "open in editor" links:
+When your app runs somewhere other than where its files live, such as a Docker bind mount, a devcontainer, or a VM, the paths Rails sees aren't paths your editor can open. `config.project_path` says where `Rails.root` is mounted on the machine running your editor, and rewrites "open in editor" links to match:
 
 :::code-group
 ```ruby [config/initializers/reactionview.rb]
 ReActionView.configure do |config|
-  # Custom project path for editor integration (optional)
-  config.project_path = "/custom/path/to/project"
+  # Where Rails.root is mounted on the machine running your editor
+  config.project_path = "/Users/you/myapp"
 
-  # Docker example: map container path to host path
-  # config.project_path = "/Users/you/myapp"
-
-  # Monorepo example: parent directory
-  # config.project_path = File.expand_path("../../", Rails.root)
+  # Or take it from the environment
+  # config.project_path = ENV.fetch("PROJECT_PATH", Rails.root.to_s)
 end
 ```
 :::
 
-This affects:
-- Editor integration when clicking source locations in the browser
-- The `herb-project-path` meta tag for dev tools
+With `Rails.root` at `/app` inside the container, a template at `/app/app/views/users/show.html.erb` then opens as `/Users/you/myapp/app/views/users/show.html.erb`.
 
 **Default**: `Rails.root.to_s`
 
-**Note**: local template detection always uses `Rails.root` and is unaffected by this setting.
+::: info Only editor links are affected
+Local template detection and the `herb-project-path` meta tag stay on `Rails.root`. The meta tag is compared against the path the `herb dev` server reports, so overriding it would make the dev tools treat the page as a different project and ignore it.
+:::
 
 ## Verify Installation
 
