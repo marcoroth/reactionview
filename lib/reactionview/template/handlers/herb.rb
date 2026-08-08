@@ -76,29 +76,27 @@ module ReActionView
         end
 
         def reactionview_dev_tools_markup(template)
+          return nil unless ::ReActionView.config.debug_mode_enabled?
           return nil unless layout_template?(template)
           return nil unless local_template?(template)
 
-          markup = +""
+          <<~HTML
+            <meta name="herb-debug-mode" content="true">
+            <meta name="herb-project-path" content="#{Rails.root}">
+            #{dev_server_port_meta_tag}
+            #{editor_meta_tag}
 
-          if ::ReActionView.config.debug_mode_enabled?
-            markup << <<~HTML
-              <meta name="herb-debug-mode" content="true">
-              <meta name="herb-project-path" content="#{Rails.root}">
-              #{dev_server_port_meta_tag}
-              #{editor_meta_tag}
+            #{ActionController::Base.new.view_context.javascript_include_tag "reactionview-dev-tools.umd.js", defer: true}
+            #{dismiss_hint_template}
+          HTML
+        end
 
-              #{ActionController::Base.new.view_context.javascript_include_tag "reactionview-dev-tools.umd.js", defer: true}
-            HTML
-          end
+        def dismiss_hint_template
+          return unless ::ReActionView.config.validation_mode == :overlay
 
-          if ::ReActionView.config.validation_mode == :overlay
-            markup << <<~HTML
-              <template data-herb-dismiss-hint>You can also disable this overlay by setting <code style="color: #ffeb3b; font-family: monospace; font-size: 12pt;">config.validation_mode = :none</code> in <code style="color: #ffeb3b; font-family: monospace; font-size: 12pt;">config/initializers/reactionview.rb</code>.</template>
-            HTML
-          end
-
-          markup.presence
+          <<~HTML.chomp
+            <template data-herb-dismiss-hint>You can also disable this overlay by setting <code style="color: #ffeb3b; font-family: monospace; font-size: 12pt;">config.validation_mode = :none</code> in <code style="color: #ffeb3b; font-family: monospace; font-size: 12pt;">config/initializers/reactionview.rb</code>.</template>
+          HTML
         end
       end
     end
