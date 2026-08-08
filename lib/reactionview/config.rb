@@ -6,10 +6,26 @@ module ReActionView
     attr_accessor :debug_mode
     attr_accessor :transform_visitors
 
+    attr_writer :dev_server_port
+    attr_writer :project_path
+    attr_writer :validation_mode
+
     def initialize
       @intercept_erb = false
       @debug_mode = nil
+      @dev_server_port = nil
       @transform_visitors = []
+      @project_path = nil
+    end
+
+    def project_path
+      @project_path || Rails.root.to_s
+    end
+
+    def validation_mode
+      return @validation_mode unless @validation_mode.nil?
+
+      test? ? :raise : :overlay
     end
 
     def development?
@@ -28,6 +44,13 @@ module ReActionView
       return @debug_mode unless @debug_mode.nil?
 
       development?
+    end
+
+    def dev_server_port
+      return @dev_server_port if @dev_server_port
+      return nil unless development?
+
+      ::Herb.dev_server_port(Rails.root.to_s)
     end
   end
 

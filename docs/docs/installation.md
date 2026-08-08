@@ -67,6 +67,32 @@ end
 
 This gives you all the benefits of Herb's validation, security features, and debugging tools for your existing templates.
 
+### Advanced Configuration
+
+#### Custom Project Path for Editor Links <Badge type="info" text="^0.4.0" />
+
+When your app runs somewhere other than where its files live, such as a Docker bind mount, a devcontainer, or a VM, the paths Rails sees aren't paths your editor can open. `config.project_path` says where `Rails.root` is mounted on the machine running your editor, and rewrites "open in editor" links to match:
+
+:::code-group
+```ruby [config/initializers/reactionview.rb]
+ReActionView.configure do |config|
+  # Where Rails.root is mounted on the machine running your editor
+  config.project_path = "/Users/you/myapp"
+
+  # Or take it from the environment
+  # config.project_path = ENV.fetch("PROJECT_PATH", Rails.root.to_s)
+end
+```
+:::
+
+With `Rails.root` at `/app` inside the container, a template at `/app/app/views/users/show.html.erb` then opens as `/Users/you/myapp/app/views/users/show.html.erb`.
+
+**Default**: `Rails.root.to_s`
+
+::: info Only editor links are affected
+Local template detection and the `herb-project-path` meta tag stay on `Rails.root`. The meta tag is compared against the path the `herb dev` server reports, so overriding it would make the dev tools treat the page as a different project and ignore it.
+:::
+
 ## Verify Installation
 
 Create a test template to verify ReActionView is working:

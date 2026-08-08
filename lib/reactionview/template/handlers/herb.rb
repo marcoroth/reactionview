@@ -13,15 +13,15 @@ module ReActionView
 
           if ::ReActionView.config.debug_mode_enabled? && local_template?(template)
             visitors << ::Herb::Engine::DebugVisitor.new(
-              file_path: template.identifier,
-              project_path: Rails.root.to_s
+              file_path: translate_path_for_editor(template.identifier),
+              project_path: ::ReActionView.config.project_path
             )
           end
 
           config = {
             filename: template.identifier,
             project_path: Rails.root.to_s,
-            validation_mode: :overlay,
+            validation_mode: ReActionView.config.validation_mode,
             content_for_head: reactionview_dev_tools_markup(template),
             visitors: visitors + ReActionView.config.transform_visitors,
           }
@@ -40,9 +40,7 @@ module ReActionView
         def local_template?(template)
           return true unless template.respond_to?(:identifier) && template.identifier
 
-          ActionController::Base.view_paths
-                                .select { |view_path| view_path.path.start_with?(Rails.root.to_s) }
-                                .any? { |view_path| template.identifier.start_with?(view_path.path) }
+          template.identifier.start_with?(Rails.root.to_s)
         end
 
         def active_support_editor
@@ -50,6 +48,15 @@ module ReActionView
           return if ActiveSupport::Editor.current.blank?
 
           ActiveSupport::Editor.current.instance_variable_get(:@url_pattern).split("://").first
+        end
+
+        def translate_path_for_editor(template_path)
+          rails_root = Rails.root.to_s
+          project_path = ::ReActionView.config.project_path
+
+          return template_path if project_path == rails_root
+
+          template_path.to_s.sub(rails_root, project_path)
         end
 
         def editor_meta_tag
@@ -60,17 +67,38 @@ module ReActionView
           %(<meta name="herb-default-editor" content="#{editor_name}">)
         end
 
+        def dev_server_port_meta_tag
+          port = ::ReActionView.config.dev_server_port
+
+          return if port.blank?
+
+          %(<meta name="herb-dev-server-port" content="#{port}">)
+        end
+
         def reactionview_dev_tools_markup(template)
-          return nil unless layout_template?(template) && ::ReActionView.config.debug_mode_enabled?
+          return nil unless layout_template?(template)
           return nil unless local_template?(template)
 
-          <<~HTML
-            <meta name="herb-debug-mode" content="true">
-            <meta name="herb-project-path" content="#{Rails.root}">
-            #{editor_meta_tag}
+          markup = +""
 
-            #{ActionController::Base.new.view_context.javascript_include_tag "reactionview-dev-tools.umd.js", defer: true}
-          HTML
+          if ::ReActionView.config.debug_mode_enabled?
+            markup << <<~HTML
+              <meta name="herb-debug-mode" content="true">
+              <meta name="herb-project-path" content="#{Rails.root}">
+              #{dev_server_port_meta_tag}
+              #{editor_meta_tag}
+
+              #{ActionController::Base.new.view_context.javascript_include_tag "reactionview-dev-tools.umd.js", defer: true}
+            HTML
+          end
+
+          if ::ReActionView.config.validation_mode == :overlay
+            markup << <<~HTML
+              <template data-herb-dismiss-hint>You can also disable this overlay by setting <code style="color: #ffeb3b; font-family: monospace; font-size: 12pt;">config.validation_mode = :none</code> in <code style="color: #ffeb3b; font-family: monospace; font-size: 12pt;">config/initializers/reactionview.rb</code>.</template>
+            HTML
+          end
+
+          markup.presence
         end
       end
     end
