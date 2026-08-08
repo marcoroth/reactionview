@@ -416,8 +416,9 @@ class Herb::TemplateHandlerTest < Minitest::Spec
 
   test "processes application templates when gems are vendored inside the application" do
     ReActionView.config.intercept_erb = true
+    ReActionView.config.debug_mode = true
 
-    template = %(<p><h2>I am invalid</h2></p>)
+    template = %(<div><h1>Hello</h1></div>)
     template_object = ActionView::Template.new(
       template,
       "/app/app/views/users/show.html.erb",
@@ -433,6 +434,6 @@ class Herb::TemplateHandlerTest < Minitest::Spec
       end
     end
 
-    assert_includes compiled_source, "data-herb-validation-error"
+    assert_includes compiled_source, %(data-herb-debug-file-full-path="/app/app/views/users/show.html.erb")
   end
 end
