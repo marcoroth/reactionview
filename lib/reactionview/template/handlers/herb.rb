@@ -4,6 +4,8 @@ module ReActionView
   class Template
     module Handlers
       class Herb < ActionView::Template::Handlers::ERB
+        include ReActionView::Template::LocalTemplate
+
         autoload :Herb, "reactionview/template/handlers/herb/herb"
 
         class_attribute :erb_implementation, default: Handlers::Herb::Herb
@@ -21,7 +23,7 @@ module ReActionView
           config = {
             filename: template.identifier,
             project_path: Rails.root.to_s,
-            validation_mode: ReActionView.config.validation_mode,
+            validation_mode: validation_mode_for(template),
             content_for_head: reactionview_dev_tools_markup(template),
             visitors: visitors + ReActionView.config.transform_visitors,
           }
@@ -37,10 +39,11 @@ module ReActionView
           template.identifier.include?("/layouts/")
         end
 
-        def local_template?(template)
-          return true unless template.respond_to?(:identifier) && template.identifier
+        def validation_mode_for(template)
+          return ReActionView.config.validation_mode if local_template?(template)
+          return ReActionView.config.validation_mode if ReActionView.config.external_template_mode == :compile
 
-          template.identifier.start_with?(Rails.root.to_s)
+          :raise
         end
 
         def active_support_editor

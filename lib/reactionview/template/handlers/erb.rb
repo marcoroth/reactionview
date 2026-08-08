@@ -4,33 +4,41 @@ module ReActionView
   class Template
     module Handlers
       class ERB < ActionView::Template::Handlers::ERB
+        include ReActionView::Template::LocalTemplate
+
         autoload :Herb, "reactionview/template/handlers/herb/herb"
 
         def call(template, source)
-          if intercept_template?(template)
-            ::ReActionView::Template::Handlers::Herb.call(template, source)
-          else
-            super
-          end
+          return super unless intercept_template?(template)
+
+          ::ReActionView::Template::Handlers::Herb.call(template, source)
+        rescue StandardError => e
+          raise unless fall_back_to_erb?(template)
+
+          log_external_template_error(template, e)
+
+          super
         end
 
         private
 
         def intercept_template?(template)
-          template.format == :html && ReActionView.config.intercept_erb && local_template?(template)
+          return false unless template.format == :html && ReActionView.config.intercept_erb
+
+          local_template?(template) || ReActionView.config.external_template_mode != :skip
         end
 
-        def local_template?(template)
-          return true unless template.respond_to?(:identifier) && template.identifier
-          return false if vendored_template?(template)
-
-          template.identifier.start_with?(Rails.root.to_s)
+        def fall_back_to_erb?(template)
+          !local_template?(template) && ReActionView.config.external_template_mode == :fallback
         end
 
-        def vendored_template?(template)
-          return false unless defined?(Bundler)
+        def log_external_template_error(template, error)
+          return unless defined?(Rails.logger) && Rails.logger
 
-          template.identifier.start_with?(Bundler.bundle_path.to_s)
+          Rails.logger.warn(
+            "[ReActionView] #{template.identifier} could not be compiled by Herb, " \
+            "falling back to ActionView::Template::Handlers::ERB: #{error.message.strip.lines.first}"
+          )
         end
       end
     end
