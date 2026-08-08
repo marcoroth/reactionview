@@ -2,8 +2,8 @@
 
 source "https://rubygems.org"
 
-gem "appraisal"
 gem "actionview", "~> 8.0.0"
+gem "appraisal"
 gem "maxitest", "~> 7.0"
 gem "minitest-difftastic"
 gem "minitest-mock"
