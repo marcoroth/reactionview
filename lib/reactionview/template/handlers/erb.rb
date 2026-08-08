@@ -11,7 +11,9 @@ module ReActionView
         def call(template, source)
           return super unless intercept_template?(template)
 
-          ::ReActionView::Template::Handlers::Herb.call(template, source)
+          ::ReActionView::Template::Handlers::Herb.call(
+            template, source, validation_mode: herb_validation_mode(template)
+          )
         rescue StandardError => e
           raise unless fall_back_to_erb?(template)
 
@@ -26,6 +28,13 @@ module ReActionView
           return false unless template.format == :html && ReActionView.config.intercept_erb
 
           local_template?(template) || ReActionView.config.external_template_mode != :skip
+        end
+
+        def herb_validation_mode(template)
+          return nil if local_template?(template)
+          return nil unless ReActionView.config.external_template_mode == :fallback
+
+          :raise
         end
 
         def fall_back_to_erb?(template)

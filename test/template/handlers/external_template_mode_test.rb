@@ -127,6 +127,28 @@ class ReActionView::ExternalTemplateModeTest < Minitest::Spec
     ReActionView.config.validation_mode = nil
   end
 
+  test "external .herb templates use the configured validation mode" do
+    ReActionView.config.external_template_mode = :fallback
+    ReActionView.config.validation_mode = :overlay
+
+    template = ActionView::Template.new(
+      INVALID,
+      "/gems/some_gem/app/views/x.html.herb",
+      ReActionView::Template::Handlers::Herb,
+      virtual_path: "x",
+      format: :html,
+      locals: []
+    )
+
+    compiled = Rails.stub(:root, Pathname.new(RAILS_ROOT)) do
+      ReActionView::Template::Handlers::Herb.call(template, INVALID)
+    end
+
+    assert_includes compiled, "data-herb-validation-error"
+  ensure
+    ReActionView.config.validation_mode = nil
+  end
+
   test "local template failures always raise, whatever the mode" do
     ReActionView.config.external_template_mode = :fallback
     ReActionView.config.validation_mode = :raise
