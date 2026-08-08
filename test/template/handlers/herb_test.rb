@@ -366,6 +366,19 @@ class Herb::TemplateHandlerTest < Minitest::Spec
     assert_compiled_snapshot(template)
   end
 
+  test "heredoc with trailing arguments compiles to valid Ruby" do
+    template = <<~ERB
+      <%= method_call <<~GRAPHQL, variables
+        query {
+          field
+        }
+      GRAPHQL
+      %>
+    ERB
+
+    assert_compiled_snapshot(template)
+  end
+
   test "renders templates that are not local with ActionView's ERB handler" do
     ReActionView.config.intercept_erb = true
 
