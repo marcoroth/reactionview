@@ -46,6 +46,9 @@ ReActionView.configure do |config|
   # Enable debug mode
   config.debug_mode = Rails.env.development?
 
+  # Custom path for editor "open in editor" links (optional, defaults to Rails.root)
+  # config.project_path = ENV.fetch('PROJECT_PATH', Rails.root.to_s)
+
   # Validation mode (:raise, :overlay, or :none) — defaults to :raise in test, :overlay otherwise
   # config.validation_mode = :overlay
 end

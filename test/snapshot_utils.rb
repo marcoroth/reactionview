@@ -15,10 +15,10 @@ def ask?(prompt = "")
 end
 
 module SnapshotUtils # rubocop:disable Metrics/ModuleLength
-  def assert_compiled_snapshot(source, handler: ReActionView::Template::Handlers::ERB, virtual_path: "test", format: :html, locals: [], options: {}) # rubocop:disable Metrics/ParameterLists
+  def assert_compiled_snapshot(source, handler: ReActionView::Template::Handlers::ERB, virtual_path: "test", identifier: "test_template", format: :html, locals: [], options: {}) # rubocop:disable Metrics/ParameterLists,Layout/LineLength
     template = ActionView::Template.new(
       source,
-      "test_template",
+      identifier,
       handler,
       virtual_path: virtual_path,
       format: format,
@@ -53,10 +53,10 @@ module SnapshotUtils # rubocop:disable Metrics/ModuleLength
     compiled_source
   end
 
-  def assert_evaluated_snapshot(source, ivars: {}, options: {}, handler: ReActionView::Template::Handlers::ERB, virtual_path: "test", format: :html, locals: []) # rubocop:disable Metrics/ParameterLists,Layout/LineLength,Metrics/MethodLength
+  def assert_evaluated_snapshot(source, ivars: {}, options: {}, handler: ReActionView::Template::Handlers::ERB, virtual_path: "test", identifier: "test_template", format: :html, locals: []) # rubocop:disable Metrics/ParameterLists,Layout/LineLength,Metrics/MethodLength
     template = ActionView::Template.new(
       source,
-      "test_template",
+      identifier,
       handler,
       virtual_path: virtual_path,
       format: format,

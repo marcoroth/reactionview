@@ -59,6 +59,33 @@ class ReActionView::ConfigTest < Minitest::Spec
     assert_equal :raise, config.validation_mode
   end
 
+  test "project_path defaults to Rails.root" do
+    config = ReActionView::Config.new
+
+    Rails.stub(:root, Pathname.new("/app")) do
+      assert_equal "/app", config.project_path
+    end
+  end
+
+  test "project_path returns the configured value" do
+    config = ReActionView::Config.new
+    config.project_path = "/Users/you/myapp"
+
+    Rails.stub(:root, Pathname.new("/app")) do
+      assert_equal "/Users/you/myapp", config.project_path
+    end
+  end
+
+  test "project_path falls back to Rails.root when reset to nil" do
+    config = ReActionView::Config.new
+    config.project_path = "/Users/you/myapp"
+    config.project_path = nil
+
+    Rails.stub(:root, Pathname.new("/app")) do
+      assert_equal "/app", config.project_path
+    end
+  end
+
   test "dev_server_port is nil outside of development" do
     config = ReActionView::Config.new
 

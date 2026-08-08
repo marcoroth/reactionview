@@ -13,8 +13,8 @@ module ReActionView
 
           if ::ReActionView.config.debug_mode_enabled? && local_template?(template)
             visitors << ::Herb::Engine::DebugVisitor.new(
-              file_path: template.identifier,
-              project_path: Rails.root.to_s
+              file_path: translate_path_for_editor(template.identifier),
+              project_path: ::ReActionView.config.project_path
             )
           end
 
@@ -48,6 +48,15 @@ module ReActionView
           return if ActiveSupport::Editor.current.blank?
 
           ActiveSupport::Editor.current.instance_variable_get(:@url_pattern).split("://").first
+        end
+
+        def translate_path_for_editor(template_path)
+          rails_root = Rails.root.to_s
+          project_path = ::ReActionView.config.project_path
+
+          return template_path if project_path == rails_root
+
+          template_path.to_s.sub(rails_root, project_path)
         end
 
         def editor_meta_tag

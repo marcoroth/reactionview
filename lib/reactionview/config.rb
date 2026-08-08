@@ -5,7 +5,9 @@ module ReActionView
     attr_accessor :intercept_erb
     attr_accessor :debug_mode
     attr_accessor :transform_visitors
+
     attr_writer :dev_server_port
+    attr_writer :project_path
     attr_writer :validation_mode
 
     def initialize
@@ -13,6 +15,11 @@ module ReActionView
       @debug_mode = nil
       @dev_server_port = nil
       @transform_visitors = []
+      @project_path = nil
+    end
+
+    def project_path
+      @project_path || Rails.root.to_s
     end
 
     def validation_mode
