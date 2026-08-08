@@ -83,7 +83,7 @@ module ReActionView
           if ::ReActionView.config.debug_mode_enabled?
             markup << <<~HTML
               <meta name="herb-debug-mode" content="true">
-              <meta name="herb-rails-root" content="#{project_fullpath}">
+              <meta name="herb-project-path" content="#{project_path}">
               #{editor_meta_tag}
 
               #{ActionController::Base.new.view_context.javascript_include_tag "reactionview-dev-tools.umd.js", defer: true}

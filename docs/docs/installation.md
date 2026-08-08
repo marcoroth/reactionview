@@ -90,7 +90,7 @@ end
 
 This affects:
 - Editor integration when clicking source locations in the browser
-- The `herb-rails-root` meta tag for dev tools
+- The `herb-project-path` meta tag for dev tools
 
 **Default**: `Rails.root.to_s`
 
