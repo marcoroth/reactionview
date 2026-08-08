@@ -14,13 +14,13 @@ module ReActionView
           if ::ReActionView.config.debug_mode_enabled? && local_template?(template)
             visitors << ::Herb::Engine::DebugVisitor.new(
               file_path: translate_path_for_editor(template.identifier),
-              project_path: project_fullpath
+              project_path: project_path
             )
           end
 
           config = {
             filename: template.identifier,
-            project_path: project_fullpath,
+            project_path: project_path,
             validation_mode: ReActionView.config.validation_mode,
             content_for_head: reactionview_dev_tools_markup(template),
             visitors: visitors + ReActionView.config.transform_visitors,
@@ -40,7 +40,7 @@ module ReActionView
         def local_template?(template)
           return true unless template.respond_to?(:identifier) && template.identifier
 
-          template.identifier.start_with?(project_path)
+          template.identifier.start_with?(rails_root)
         end
 
         def active_support_editor
@@ -58,20 +58,19 @@ module ReActionView
           %(<meta name="herb-default-editor" content="#{editor_name}">)
         end
 
-        def project_path
-          ::ReActionView.config.project_path
+        def rails_root
+          ::ReActionView.config.rails_root
         end
 
-        def project_fullpath
-          ::ReActionView.config.project_fullpath || project_path
+        def project_path
+          ::ReActionView.config.project_path || rails_root
         end
 
         def translate_path_for_editor(template_path)
-          return template_path unless project_fullpath && project_path
-          return template_path if project_fullpath == project_path
+          return template_path unless project_path && rails_root
+          return template_path if project_path == rails_root
 
-          # Replace Rails.root (container path) with project_fullpath (host path)
-          template_path.to_s.sub(project_path, project_fullpath)
+          template_path.to_s.sub(rails_root, project_path)
         end
 
         def reactionview_dev_tools_markup(template)

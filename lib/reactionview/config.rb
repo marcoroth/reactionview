@@ -5,17 +5,17 @@ module ReActionView
     attr_accessor :intercept_erb
     attr_accessor :debug_mode
     attr_accessor :transform_visitors
-    attr_accessor :project_fullpath
+    attr_accessor :project_path
     attr_writer :validation_mode
 
     def initialize
       @intercept_erb = false
       @debug_mode = nil
       @transform_visitors = []
-      @project_fullpath = nil
+      @project_path = nil
     end
 
-    def project_path
+    def rails_root
       return nil unless defined?(Rails)
 
       Rails.root.to_s
