@@ -366,7 +366,7 @@ class Herb::TemplateHandlerTest < Minitest::Spec
     assert_compiled_snapshot(template)
   end
 
-  test "does not process templates that are not local" do
+  test "renders templates that are not local with ActionView's ERB handler" do
     ReActionView.config.intercept_erb = true
 
     template = %(<p><h2>I am invalid</h2></p>)
@@ -389,7 +389,7 @@ class Herb::TemplateHandlerTest < Minitest::Spec
     assert_equal "<p><h2>I am invalid</h2></p>", normalized_result
   end
 
-  test "does not process templates from gems vendored inside the application" do
+  test "renders templates from gems vendored inside the application with ActionView's ERB handler" do
     ReActionView.config.intercept_erb = true
 
     template = %(<p><h2>I am invalid</h2></p>)

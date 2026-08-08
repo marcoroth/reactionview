@@ -17,6 +17,8 @@ require_relative "reactionview/config"
 
 # require_relative "reactionview/source_annotation_extractor"
 
+require_relative "reactionview/template/local_template"
+
 require_relative "reactionview/template/handlers/erb"
 require_relative "reactionview/template/handlers/herb"
 require_relative "reactionview/template/handlers/herb/herb"

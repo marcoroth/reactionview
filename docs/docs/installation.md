@@ -93,6 +93,41 @@ With `Rails.root` at `/app` inside the container, a template at `/app/app/views/
 Local template detection and the `herb-project-path` meta tag stay on `Rails.root`. The meta tag is compared against the path the `herb dev` server reports, so overriding it would make the dev tools treat the page as a different project and ignore it.
 :::
 
+#### Templates From Gems <Badge type="info" text="^0.4.0" />
+
+With `intercept_erb` enabled, ReActionView sees every `.html.erb` template Rails renders, including ones shipped inside gems. Those are not yours to fix, so they get their own handling:
+
+:::code-group
+```ruby [config/initializers/reactionview.rb]
+ReActionView.configure do |config|
+  config.external_template_mode = :fallback
+end
+```
+:::
+
+| Mode | Behavior |
+| --- | --- |
+| `:fallback` (default) | Compile with Herb. If that fails, log a warning and fall back to Rails' own ERB handler, so the template renders exactly as it would without ReActionView. |
+| `:skip` | Never compile templates from gems. |
+| `:compile` | No special treatment. Your `validation_mode` applies to them just as it does to your own templates, and nothing is rescued. |
+
+Templates are considered external when they live outside `Rails.root`, or inside `Bundler.bundle_path` for applications that vendor their gems with `bundle config set --local path vendor/bundle`.
+
+Anything other than these three values raises an `ArgumentError` when you set it, so a typo fails at boot rather than changing how your templates compile:
+
+```ruby
+config.external_template_mode = :warm
+# => ArgumentError: external_template_mode must be one of :fallback, :skip, or :compile, got :warm
+```
+
+::: info Why :fallback rather than :skip
+Skipping silently means you never find out that a gem's templates cannot be compiled, which matters if you later want to rely on Herb processing them. `:fallback` keeps every environment behaving the same way and tells you which templates fell back. See [herb#1508](https://github.com/marcoroth/herb/issues/1508).
+:::
+
+::: warning
+In `:fallback` mode, external templates are always compiled with `validation_mode: :raise` regardless of your `validation_mode` setting, so a gem template can never put a validation overlay on your page over markup you cannot change.
+:::
+
 ## Verify Installation
 
 Create a test template to verify ReActionView is working:
