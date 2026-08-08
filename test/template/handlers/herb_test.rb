@@ -99,7 +99,7 @@ class Herb::TemplateHandlerTest < Minitest::Spec
       "/users/#{id}"
     end
 
-    template_obj = ActionView::Template.new(
+    template_object = ActionView::Template.new(
       template,
       "test_template",
       ReActionView::Template::Handlers::ERB,
@@ -107,7 +107,7 @@ class Herb::TemplateHandlerTest < Minitest::Spec
       format: :html,
       locals: []
     )
-    compiled_source = template_obj.handler.call(template_obj, template)
+    compiled_source = template_object.handler.call(template_object, template)
 
     @view_context.instance_variable_set(:@user, {
       name: "John Doe",
@@ -160,7 +160,7 @@ class Herb::TemplateHandlerTest < Minitest::Spec
       "<span class=\"badge\">#{count}</span>".html_safe
     end
 
-    template_obj = ActionView::Template.new(
+    template_object = ActionView::Template.new(
       template,
       "test_template",
       ReActionView::Template::Handlers::ERB,
@@ -168,7 +168,7 @@ class Herb::TemplateHandlerTest < Minitest::Spec
       format: :html,
       locals: []
     )
-    compiled_source = template_obj.handler.call(template_obj, template)
+    compiled_source = template_object.handler.call(template_object, template)
 
     @view_context.instance_variable_set(:@show_countries, true)
     result = @view_context.instance_eval(compiled_source).to_s
@@ -364,5 +364,76 @@ class Herb::TemplateHandlerTest < Minitest::Spec
     template = %(<%= render(component) # rubocop:disable Some/Rule %>)
 
     assert_compiled_snapshot(template)
+  end
+
+  test "does not process templates that are not local" do
+    ReActionView.config.intercept_erb = true
+
+    template = %(<p><h2>I am invalid</h2></p>)
+    template_object = ActionView::Template.new(
+      template,
+      "test_template",
+      ReActionView::Template::Handlers::ERB,
+      virtual_path: "test",
+      format: :html,
+      locals: []
+    )
+
+    compiled_source = Rails.stub(:root, Pathname.new("/local/template")) do
+      template_object.handler.call(template_object, template)
+    end
+
+    result = @view_context.instance_eval(compiled_source).to_s
+
+    normalized_result = result.gsub(/>\s+</, "><").gsub(/\s+/, " ").strip
+    assert_equal "<p><h2>I am invalid</h2></p>", normalized_result
+  end
+
+  test "does not process templates from gems vendored inside the application" do
+    ReActionView.config.intercept_erb = true
+
+    template = %(<p><h2>I am invalid</h2></p>)
+    template_object = ActionView::Template.new(
+      template,
+      "/app/vendor/bundle/ruby/3.4.0/gems/actionpack-8.1.2/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb",
+      ReActionView::Template::Handlers::ERB,
+      virtual_path: "rescues/routing_error",
+      format: :html,
+      locals: []
+    )
+
+    compiled_source = Rails.stub(:root, Pathname.new("/app")) do
+      Bundler.stub(:bundle_path, Pathname.new("/app/vendor/bundle")) do
+        template_object.handler.call(template_object, template)
+      end
+    end
+
+    result = @view_context.instance_eval(compiled_source).to_s
+
+    normalized_result = result.gsub(/>\s+</, "><").gsub(/\s+/, " ").strip
+    assert_equal "<p><h2>I am invalid</h2></p>", normalized_result
+  end
+
+  test "processes application templates when gems are vendored inside the application" do
+    ReActionView.config.intercept_erb = true
+    ReActionView.config.debug_mode = true
+
+    template = %(<div><h1>Hello</h1></div>)
+    template_object = ActionView::Template.new(
+      template,
+      "/app/app/views/users/show.html.erb",
+      ReActionView::Template::Handlers::ERB,
+      virtual_path: "users/show",
+      format: :html,
+      locals: []
+    )
+
+    compiled_source = Rails.stub(:root, Pathname.new("/app")) do
+      Bundler.stub(:bundle_path, Pathname.new("/app/vendor/bundle")) do
+        template_object.handler.call(template_object, template)
+      end
+    end
+
+    assert_includes compiled_source, %(data-herb-debug-file-full-path="/app/app/views/users/show.html.erb")
   end
 end
