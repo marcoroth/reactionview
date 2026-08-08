@@ -85,6 +85,7 @@ GEM
       prism (~> 1.5)
     minitest-difftastic (0.2.1)
       difftastic (~> 0.6)
+    minitest-mock (5.27.0)
     mutex_m (0.3.0)
     nokogiri (1.19.4-aarch64-linux-gnu)
       racc (~> 1.4)
@@ -175,6 +176,7 @@ DEPENDENCIES
   appraisal
   maxitest (~> 7.0)
   minitest-difftastic
+  minitest-mock
   railties (~> 7.0.0)
   rake (~> 13.0)
   reactionview!
