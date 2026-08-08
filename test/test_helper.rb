@@ -10,7 +10,7 @@ require "pathname"
 
 require "maxitest/autorun"
 require "minitest/spec"
-require "mocha/minitest"
+require "minitest/mock"
 
 require_relative "snapshot_utils"
 

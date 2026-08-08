@@ -9,7 +9,7 @@
       <span class="event-name">🇨🇭 Switzerland</span>
       '.freeze; @output_buffer.append=(ui_badge(5, kind: :secondary, class: "event-count")); @output_buffer.safe_append='
 '.freeze;     end 
- @output_buffer.safe_append='  '.freeze; end; @output_buffer.safe_append='
-</div>
+   end 
+ @output_buffer.safe_append='</div>
 '.freeze;
 @output_buffer
