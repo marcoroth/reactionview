@@ -58,4 +58,67 @@ class ReActionView::ConfigTest < Minitest::Spec
 
     assert_equal :raise, config.validation_mode
   end
+
+  test "dev_server_port is nil outside of development" do
+    config = ReActionView::Config.new
+
+    def config.development?
+      false
+    end
+
+    assert_nil config.dev_server_port
+  end
+
+  test "explicit dev_server_port is used without consulting Herb" do
+    config = ReActionView::Config.new
+
+    def config.development?
+      raise "should not be called"
+    end
+
+    config.dev_server_port = 1234
+
+    assert_equal 1234, config.dev_server_port
+  end
+
+  test "dev_server_port is detected from Herb in development" do
+    config = ReActionView::Config.new
+
+    def config.development?
+      true
+    end
+
+    with_detected_dev_server_port(8592) do |calls|
+      assert_equal 8592, config.dev_server_port
+      assert_equal [Rails.root.to_s], calls
+    end
+  end
+
+  private
+
+  def with_detected_dev_server_port(port)
+    calls = []
+    original = ::Herb.method(:dev_server_port)
+
+    silence_warnings do
+      ::Herb.define_singleton_method(:dev_server_port) do |project_path = nil|
+        calls << project_path
+
+        port
+      end
+    end
+
+    yield calls
+  ensure
+    silence_warnings { ::Herb.define_singleton_method(:dev_server_port, original) }
+  end
+
+  def silence_warnings
+    original = $VERBOSE
+    $VERBOSE = nil
+
+    yield
+  ensure
+    $VERBOSE = original
+  end
 end

@@ -1,6 +1,5 @@
 import { nodeResolve } from "@rollup/plugin-node-resolve"
 import typescript from "@rollup/plugin-typescript"
-import postcss from "rollup-plugin-postcss"
 
 export default {
   input: "src/index.ts",
@@ -31,10 +30,6 @@ export default {
   external: [],
   plugins: [
     nodeResolve(),
-    postcss({
-      inject: true,
-      minimize: true,
-    }),
     typescript({
       tsconfig: "./tsconfig.json"
     })

@@ -4,8 +4,8 @@ module ReActionView
   class Config
     attr_accessor :intercept_erb
     attr_accessor :debug_mode
-    attr_accessor :dev_server_port
     attr_accessor :transform_visitors
+    attr_writer :dev_server_port
     attr_writer :validation_mode
 
     def initialize
@@ -43,10 +43,7 @@ module ReActionView
       return @dev_server_port if @dev_server_port
       return nil unless development?
 
-      project_path = defined?(Rails) ? Rails.root.to_s : Dir.pwd
-      Herb.dev_server_port(project_path)
-    rescue StandardError
-      nil
+      ::Herb.dev_server_port(Rails.root.to_s)
     end
   end
 

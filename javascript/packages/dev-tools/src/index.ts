@@ -1,3 +1,5 @@
+import "@herb-tools/client"
+
 import { initHerbDevTools, HerbOverlay, type HerbDevToolsOptions } from "@herb-tools/dev-tools"
 
 export interface ReActionViewDevToolsOptions extends HerbDevToolsOptions {

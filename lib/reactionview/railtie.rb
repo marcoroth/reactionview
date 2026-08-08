@@ -12,7 +12,6 @@ module ReActionView
     PRECOMPILE_ASSETS = %w[
       reactionview-dev-tools.esm.js
       reactionview-dev-tools.umd.js
-      herb-client.umd.js
     ].freeze
 
     initializer "reactionview.assets" do |app|
