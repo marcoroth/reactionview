@@ -10,7 +10,11 @@ module ReActionView
 
         class_attribute :erb_implementation, default: Handlers::Herb::Herb
 
-        def call(template, source)
+        def self.call(template, source, validation_mode: nil)
+          new.call(template, source, validation_mode: validation_mode)
+        end
+
+        def call(template, source, validation_mode: nil)
           visitors = []
 
           if ::ReActionView.config.debug_mode_enabled? && local_template?(template)
@@ -23,7 +27,7 @@ module ReActionView
           config = {
             filename: template.identifier,
             project_path: Rails.root.to_s,
-            validation_mode: validation_mode_for(template),
+            validation_mode: validation_mode || ReActionView.config.validation_mode,
             content_for_head: reactionview_dev_tools_markup(template),
             visitors: visitors + ReActionView.config.transform_visitors,
           }
@@ -37,13 +41,6 @@ module ReActionView
           return false unless template.respond_to?(:identifier) && template.identifier
 
           template.identifier.include?("/layouts/")
-        end
-
-        def validation_mode_for(template)
-          return ReActionView.config.validation_mode if local_template?(template)
-          return ReActionView.config.validation_mode if ReActionView.config.external_template_mode == :compile
-
-          :raise
         end
 
         def active_support_editor
