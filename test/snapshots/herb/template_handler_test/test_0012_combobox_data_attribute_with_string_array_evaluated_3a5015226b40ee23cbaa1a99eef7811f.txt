@@ -1,0 +1,1 @@
+<div data-controller="combobox" data-combobox-choices-value="[&quot;Volkslied&quot;,&quot;Weihnachtslied&quot;,&quot;foo&quot;]"></div>

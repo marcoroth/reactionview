@@ -1,0 +1,7 @@
+<canvas
+data-controller="chart"
+data-chart-unit-type-value="yes/no"
+data-chart-data-value="[true,true,true,true,true,true]"
+data-chart-labels-value="[&quot;2025-05-16&quot;,&quot;2025-05-17&quot;,&quot;2025-05-19&quot;,&quot;2025-05-20&quot;,&quot;2025-07-28&quot;,&quot;2025-09-12&quot;]"
+data-chart-unit-value="sessions"
+></canvas>

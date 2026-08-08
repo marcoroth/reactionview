@@ -23,6 +23,14 @@ module ReActionView
       end
     end
 
+    initializer "reactionview.asset_manifest_check" do |app|
+      next unless ReActionView.config.development?
+
+      require_relative "middleware/asset_manifest_check"
+
+      app.middleware.use ReActionView::Middleware::AssetManifestCheck
+    end
+
     initializer "reactionview.register_herb_handler" do
       ActiveSupport.on_load(:action_view) do
         ActionView::Template.register_template_handler :herb, ReActionView::Template::Handlers::Herb

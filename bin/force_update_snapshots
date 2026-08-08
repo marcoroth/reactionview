@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e  # Exit on error
+
+FORCE_UPDATE_SNAPSHOTS=true bundle exec rake test
+
+echo ""
+echo "Force updated snapshots!"

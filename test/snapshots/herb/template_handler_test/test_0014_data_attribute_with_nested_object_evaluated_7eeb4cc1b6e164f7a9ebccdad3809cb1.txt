@@ -1,0 +1,1 @@
+<div data-config="{&quot;name&quot;:&quot;Test&quot;,&quot;options&quot;:{&quot;enabled&quot;:true,&quot;count&quot;:42},&quot;items&quot;:[&quot;a&quot;,&quot;b&quot;]}"></div>

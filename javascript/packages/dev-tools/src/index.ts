@@ -1,3 +1,5 @@
+import "@herb-tools/client"
+
 import { initHerbDevTools, HerbOverlay, type HerbDevToolsOptions } from "@herb-tools/dev-tools"
 
 export interface ReActionViewDevToolsOptions extends HerbDevToolsOptions {
@@ -86,11 +88,7 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
     isInitializing = true
 
     try {
-      let projectPath: string | undefined
-      const railsRoot = document.querySelector(`meta[name="herb-rails-root"]`)?.getAttribute("content")
-      if (railsRoot) {
-        projectPath = railsRoot
-      }
+      const projectPath = document.querySelector(`meta[name="herb-project-path"]`)?.getAttribute("content") ?? undefined
 
       initReActionViewDevTools({
         projectPath,
