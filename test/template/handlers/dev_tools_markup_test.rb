@@ -16,9 +16,6 @@ class ReActionView::DevToolsMarkupTest < Minitest::Spec
 
   before do
     @previous_debug_mode = ReActionView.config.debug_mode
-    @previous_validation_mode = ReActionView.config.validation_mode
-
-    ReActionView.config.intercept_erb = true
   end
 
   after do
