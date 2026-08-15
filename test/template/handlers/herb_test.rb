@@ -18,11 +18,16 @@ class Herb::TemplateHandlerTest < Minitest::Spec
     assert_evaluated_snapshot(template, format: :text, ivars: { name: "User" })
   end
 
+  # A template that does not parse raises now. It used to compile with an overlay written into
+  # the page instead, which is gone along with the rest of the overlays.
   test "error for invalid html" do
     template = "Plain text: <%= 1 + 1 %> (<with_an_invalid_bracket>)"
 
-    assert_compiled_snapshot(template, format: :html)
-    assert_evaluated_snapshot(template, format: :html, ivars: { name: "User" })
+    error = assert_raises(::Herb::Engine::ParseError) do
+      assert_compiled_snapshot(template, format: :html)
+    end
+
+    assert_match(/MissingClosingTag/, error.message)
   end
 
   test "template with expression" do
