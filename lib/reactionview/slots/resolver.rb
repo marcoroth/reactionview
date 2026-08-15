@@ -16,8 +16,6 @@ module ReActionView
     # built, and an `:html` request falls straight through, because a template whose details say
     # `:slots` matches no other format.
     class Resolver < ActionView::FileSystemResolver
-      LAYOUTS = "layouts/"
-
       private
 
       def build_unbound_template(template)
@@ -25,7 +23,6 @@ module ReActionView
         details = unbound.details
 
         return unbound unless details.format == :html
-        return unbound if unbound.virtual_path.start_with?(LAYOUTS)
 
         ActionView::UnboundTemplate.new(
           source_for_template(template),
@@ -35,9 +32,7 @@ module ReActionView
         )
       end
 
-      # A layout has values of its own and no business carrying the action's, since it is rendered
-      # around them and would be the outermost payload rather than the one that was asked for.
-      # Dropping everything this did not convert is what keeps it out, along with every other format.
+      # Dropping everything this did not convert is what keeps every other format out.
       def unbound_templates_from_path(path)
         super.select { |unbound| unbound.format == Slots::FORMAT }
       end

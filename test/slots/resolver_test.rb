@@ -56,10 +56,10 @@ class ReActionView::Slots::ResolverTest < Minitest::Spec
     assert_empty find(@resolver, "show", "users", formats: [:html])
   end
 
-  # A layout is rendered around the action, so its values would be the outermost payload rather
-  # than the one that was asked for, and it would quietly replace the action's.
-  test "resolves no layout" do
-    assert_empty find(@resolver, "application", "layouts", formats: [:slots])
+  # Keeping a layout out is the renderer's job, not this one's: a values request is rendered with
+  # `layout: false`, so nothing ever asks for one.
+  test "special cases no path, since nothing asks it for a layout" do
+    assert_equal :slots, find(@resolver, "application", "layouts", formats: [:slots]).first.format
   end
 
   test "resolves nothing for a format that was never markup" do
