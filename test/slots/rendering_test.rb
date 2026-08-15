@@ -97,6 +97,25 @@ class ReActionView::Slots::RenderingTest < Minitest::Spec
     prepend ReActionView::Slots::Rendering
   end
 
+  Format = Struct.new(:symbol)
+  Request = Struct.new(:format)
+
+  class Normalizing
+    attr_reader :request
+
+    def initialize(format)
+      @request = Request.new(Format.new(format))
+    end
+
+    def _normalize_options(options)
+      options
+    end
+  end
+
+  class NormalizingWithSlots < Normalizing
+    prepend ReActionView::Slots::Rendering
+  end
+
   describe "handing the payload to the response" do
     test "serializes the values, which nothing below here would do" do
       body = Serializing.new.render_to_body(body: { template: "a", slots: { 0 => "x" } })
@@ -106,6 +125,22 @@ class ReActionView::Slots::RenderingTest < Minitest::Spec
 
     test "leaves a rendered page alone" do
       assert_equal "<p>hi</p>", Serializing.new.render_to_body(body: "<p>hi</p>")
+    end
+  end
+
+  # A layout is chrome, it is where `content_for` lives, and rendering it means rendering every
+  # partial in it. Anything outside the action that does need updating is a region of its own.
+  describe "the layout a values request does not get" do
+    test "renders the action and nothing around it" do
+      options = NormalizingWithSlots.new(ReActionView::Slots::FORMAT)._normalize_options({})
+
+      assert_equal false, options[:layout]
+    end
+
+    test "leaves a page request to render its layout as usual" do
+      options = NormalizingWithSlots.new(:html)._normalize_options({})
+
+      refute_includes options.keys, :layout
     end
   end
 end
