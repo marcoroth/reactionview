@@ -121,7 +121,7 @@ class ReActionView::ExternalTemplateModeTest < Minitest::Spec
 
     compiled = compile(INVALID, EXTERNAL)
 
-    assert_includes compiled, "data-herb-validation-error"
+    assert_includes compiled, "record_compile_diagnostics"
     assert_empty @log.string
   ensure
     ReActionView.config.validation_mode = nil
@@ -144,7 +144,7 @@ class ReActionView::ExternalTemplateModeTest < Minitest::Spec
       ReActionView::Template::Handlers::Herb.call(template, INVALID)
     end
 
-    assert_includes compiled, "data-herb-validation-error"
+    assert_includes compiled, "record_compile_diagnostics"
   ensure
     ReActionView.config.validation_mode = nil
   end

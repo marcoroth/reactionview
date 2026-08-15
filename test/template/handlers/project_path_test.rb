@@ -64,8 +64,10 @@ class ReActionView::ProjectPathTest < Minitest::Spec
 
     compiled = compile("<html><head></head><body></body></html>", identifier: LAYOUT, virtual_path: "layouts/application")
 
-    assert_includes compiled, %(<meta name="herb-project-path" content="/app">)
-    refute_includes compiled, %(<meta name="herb-project-path" content="#{HOST_PATH}">)
+    # The head markup is compiled as a Ruby string literal now rather than written into the
+    # template as text, so what appears in the source is the escaped form of it.
+    assert_includes compiled, %(<meta name="herb-project-path" content="/app">).dump[1..-2]
+    refute_includes compiled, %(<meta name="herb-project-path" content="#{HOST_PATH}">).dump[1..-2]
   end
 
   test "templates outside Rails.root stay undecorated even when project_path matches them" do

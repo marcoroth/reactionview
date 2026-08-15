@@ -6,6 +6,11 @@ module ReActionView
       class ERB < ActionView::Template::Handlers::ERB
         include ReActionView::Template::LocalTemplate
 
+        # A values request is the same `.erb` file asked a different question, so it has to be
+        # intercepted for the same reason markup is. Left out, it compiles as ordinary ERB and
+        # answers with the markup the client already has.
+        INTERCEPTED_FORMATS = [:html, ::ReActionView::Slots::FORMAT].freeze
+
         autoload :Herb, "reactionview/template/handlers/herb/herb"
 
         def call(template, source)
@@ -25,7 +30,7 @@ module ReActionView
         private
 
         def intercept_template?(template)
-          return false unless template.format == :html && ReActionView.config.intercept_erb
+          return false unless INTERCEPTED_FORMATS.include?(template.format) && ReActionView.config.intercept_erb
 
           local_template?(template) || ReActionView.config.external_template_mode != :skip
         end
