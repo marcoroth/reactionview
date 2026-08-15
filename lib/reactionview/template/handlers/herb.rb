@@ -1,5 +1,16 @@
 # frozen_string_literal: true
 
+require "herb"
+require "herb/engine"
+require "herb/engine/dynamics_compiler"
+
+# Visitors the engine does not load for itself. `Herb::Engine` stopped requiring the optional ones
+# when they became opt-in, so anything that names one has to ask for it.
+require "herb/engine/debug_visitor"
+require "herb/engine/slot_visitor"
+require "herb/engine/content_for_visitor"
+require "herb/engine/validators"
+
 module ReActionView
   class Template
     module Handlers
@@ -10,32 +21,119 @@ module ReActionView
 
         class_attribute :erb_implementation, default: Handlers::Herb::Herb
 
+        # A value has to arrive escaped the way it would have been written, or the browser writes
+        # different bytes into the page than the server would have. ActionView escapes on the way
+        # into its buffer rather than in the compiled template, so the values compile has to do it
+        # itself: `ERB::Util.h` escapes what `OutputBuffer#append=` escapes and leaves anything
+        # already marked html_safe alone.
+        #
+        # Every context escapes the same way for the same reason. Herb would escape an attribute as
+        # an attribute and a `<script>` as JavaScript, but ActionView does neither, so a `>` in an
+        # attribute would come back escaped by one half and not the other.
+        VALUES_ESCAPING = {
+          escape: true,
+          escapefunc: "::ERB::Util.h",
+          attrfunc: nil,
+          jsfunc: nil,
+          cssfunc: nil,
+        }.freeze
+
         def self.call(template, source, validation_mode: nil)
           new.call(template, source, validation_mode: validation_mode)
         end
 
         def call(template, source, validation_mode: nil)
-          visitors = []
+          mode = validation_mode || ReActionView.config.validation_mode
 
-          if ::ReActionView.config.debug_mode_enabled? && local_template?(template)
-            visitors << ::Herb::Engine::DebugVisitor.new(
-              file_path: translate_path_for_editor(template.identifier),
-              project_path: ::ReActionView.config.project_path
-            )
-          end
+          # Everything the engine used to take as an option is a visitor on the stack now, so what
+          # was configuration here is a list of what this template is compiled with.
+          visitors = [
+            *validation_visitors(mode),
+            *debug_visitors(template),
+            *head_visitors(template),
+            *ReActionView.config.transform_visitors
+          ]
 
+          # `DebugVisitor` used to be told the path to write into its markers. It reads the one the
+          # engine was compiled with now, so the translation for the editor has to be what the
+          # engine is given, and the project path has to be the one it is relative to.
           config = {
-            filename: template.identifier,
-            project_path: Rails.root.to_s,
-            validation_mode: validation_mode || ReActionView.config.validation_mode,
-            content_for_head: reactionview_dev_tools_markup(template),
-            visitors: visitors + ReActionView.config.transform_visitors,
+            filename: translate_path_for_editor(template.identifier),
+            project_path: ::ReActionView.config.project_path,
+            visitors: visitors,
           }
+
+          return values_source(template, source, config) if values_format?(template)
+
+          config[:visitors] = [*visitors, *slot_visitors(template, source)]
 
           erb_implementation.new(source, config).src
         end
 
         private
+
+        # The same template compiled to say what its slots evaluated to rather than to markup, for a
+        # request that asked for values. Everything before the slot visitor is the stack the HTML
+        # compile runs, because the numbering has to be over the same tree both times: a visitor
+        # that adds a dynamic node to one and not the other moves every index after it.
+        #
+        # The slot visitor writes no markers here. Its markers are nodes in the tree, and the values
+        # compiler walking them would claim indices for markup rather than for the template.
+        def values_source(template, source, config)
+          visitor = slot_visitors(template, source, mark: false).first
+
+          return "{}" unless visitor
+
+          ::Herb::Engine::DynamicsCompiler.new(source, config.merge(slot_visitor: visitor, **VALUES_ESCAPING)).src
+        end
+
+        def values_format?(template)
+          template.respond_to?(:format) && template.format == :slots
+        end
+
+        # The engine holds no opinion about validation, so asking for it is asking for the visitors.
+        #
+        # `:raise` stops the compile at the first finding. `:overlay` collects instead, and the
+        # findings reach the browser through `Herb::Engine::Report::Middleware` rather than through
+        # markup the engine writes into the page.
+        def validation_visitors(mode)
+          case mode
+          when :raise then ::Herb::Engine::Validators.all(fatal: true).to_a
+          when :overlay then ::Herb::Engine::Validators.all(fatal: false).to_a
+          else []
+          end
+        end
+
+        def debug_visitors(template)
+          return [] unless ::ReActionView.config.debug_mode_enabled? && local_template?(template)
+
+          [::Herb::Engine::DebugVisitor.new]
+        end
+
+        # What `content_for_head` used to do. The markup goes into `<head>`, so it is only ever
+        # added to a template that has one.
+        def head_visitors(template)
+          markup = reactionview_dev_tools_markup(template)
+
+          return [] if markup.nil? || markup.empty?
+
+          [::Herb::Engine::ContentForVisitor.new(markup, tag_name: "head")]
+        end
+
+        # Slot markers go on last, so what they mark is the template as everything else left it.
+        #
+        # Unlike the debug visitor this is not development only, because the markers are what the
+        # browser addresses a template's dynamic parts by and they ship with the page. Only HTML
+        # gets them, since a marker in a text template would be output rather than structure.
+        def slot_visitors(template, source, mark: true)
+          return [] unless values_format?(template) || (template.respond_to?(:format) && template.format == :html)
+
+          mode = ::ReActionView.config.slot_mode_for(source)
+
+          return [] unless mode
+
+          [::Herb::Engine::SlotVisitor.new(mode: mode, mark: mark)]
+        end
 
         def layout_template?(template)
           return false unless template.respond_to?(:identifier) && template.identifier
