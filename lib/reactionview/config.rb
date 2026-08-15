@@ -7,6 +7,9 @@ module ReActionView
     attr_accessor :transform_visitors
 
     EXTERNAL_TEMPLATE_MODES = %i[fallback skip compile].freeze
+    SLOT_MODES = %i[server client].freeze
+
+    attr_reader :slots
 
     attr_writer :dev_server_port
     attr_writer :project_path
@@ -19,6 +22,38 @@ module ReActionView
       @external_template_mode = nil
       @transform_visitors = []
       @project_path = nil
+      @slots = false
+    end
+
+    # Whether templates are compiled with slot markers, which is what lets the browser find a
+    # template's dynamic parts again after the page has rendered.
+    #
+    #   config.slots = false     only a template that asks for them itself gets them
+    #   config.slots = true      every template gets them, and the server renders its branches
+    #   config.slots = :client   every template also sends the branches that did not render
+    #
+    # `:client` sends the client the markup of branches a request did not take, so a template
+    # with a branch worth keeping off the page says `<%# herb:slots server %>` and keeps it.
+    def slots=(value)
+      unless [nil, true, false].include?(value) || SLOT_MODES.include?(value)
+        raise ArgumentError, "slots must be true, false, or one of #{SLOT_MODES.inspect}, got #{value.inspect}"
+      end
+
+      @slots = value
+    end
+
+    # Which mode a template compiles with, or nil when it gets no markers at all.
+    #
+    # A template that names a mode itself wins over the project setting, so slots can be on
+    # everywhere while one template still says who renders its branches.
+    def slot_mode_for(source)
+      ::Herb::Engine::SlotVisitor.directive_mode(source) || default_slot_mode
+    end
+
+    def default_slot_mode
+      return nil unless slots
+
+      slots == true ? :server : slots
     end
 
     def external_template_mode
