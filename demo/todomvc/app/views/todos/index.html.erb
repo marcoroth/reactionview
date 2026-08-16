@@ -1,0 +1,51 @@
+<%# herb:slots client %>
+
+<section class="todoapp">
+  <header class="header">
+    <h1>todos</h1>
+
+    <form data-role="new">
+      <input class="new-todo" name="title" placeholder="What needs to be done?" autocomplete="off" autofocus>
+    </form>
+  </header>
+
+  <%# Hidden by a class rather than wrapped in a conditional, because a branch holding a collection
+      is captured with its rows still in it. The class is also the whole attribute rather than
+      a word interpolated into one, because a marker says which attribute a slot is and not which
+      stretch of it, so a slot covering part of an attribute cannot be written at all. %>
+  <section class="<%= @main_class %>">
+    <input id="toggle-all" class="toggle-all" type="checkbox" data-role="toggle-all" data-checked="<%= @all_done %>">
+    <label for="toggle-all">Mark all as complete</label>
+
+    <ul class="todo-list">
+      <% @visible.each do |todo| %>
+        <li id="<%= todo[:id] %>" class="<%= todo[:css] %>">
+          <div class="view">
+            <input class="toggle" type="checkbox" data-role="toggle" data-checked="<%= todo[:done] %>">
+            <label data-role="title"><%= todo[:title] %></label>
+            <button class="destroy" data-role="destroy"></button>
+          </div>
+
+          <input class="edit" value="<%= todo[:title] %>" data-role="edit">
+        </li>
+      <% end %>
+    </ul>
+  </section>
+
+  <footer class="<%= @footer_class %>">
+    <span class="todo-count"><strong><%= @remaining %></strong> <%= @noun %> left</span>
+
+    <ul class="filters">
+      <li><a href="/?filter=all" class="<%= @selected["all"] %>" data-role="filter">All</a></li>
+      <li><a href="/?filter=active" class="<%= @selected["active"] %>" data-role="filter">Active</a></li>
+      <li><a href="/?filter=completed" class="<%= @selected["completed"] %>" data-role="filter">Completed</a></li>
+    </ul>
+
+    <button class="<%= @clear_class %>" data-role="clear">Clear completed</button>
+  </footer>
+</section>
+
+<footer class="info">
+  <p>Double-click a todo to edit it</p>
+  <p>Every change asks the server what this page renders now, and writes back only the values that differ.</p>
+</footer>

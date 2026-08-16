@@ -6,6 +6,19 @@ PATH
       cruise
       herb (>= 0.10.0, < 0.11.0)
 
+PATH
+  remote: /Users/marcoroth/Development/herb-worktree
+  specs:
+    herb (0.10.3)
+    herb (0.10.3-aarch64-linux-gnu)
+    herb (0.10.3-aarch64-linux-musl)
+    herb (0.10.3-arm-linux-gnu)
+    herb (0.10.3-arm-linux-musl)
+    herb (0.10.3-arm64-darwin)
+    herb (0.10.3-x86_64-darwin)
+    herb (0.10.3-x86_64-linux-gnu)
+    herb (0.10.3-x86_64-linux-musl)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -72,14 +85,6 @@ GEM
     drb (2.2.3)
     erb (6.0.7)
     erubi (1.13.1)
-    herb (0.10.3-aarch64-linux-gnu)
-    herb (0.10.3-aarch64-linux-musl)
-    herb (0.10.3-arm-linux-gnu)
-    herb (0.10.3-arm-linux-musl)
-    herb (0.10.3-arm64-darwin)
-    herb (0.10.3-x86_64-darwin)
-    herb (0.10.3-x86_64-linux-gnu)
-    herb (0.10.3-x86_64-linux-musl)
     i18n (1.15.2)
       concurrent-ruby (~> 1.0)
     io-console (0.8.2)
@@ -103,6 +108,7 @@ GEM
     minitest-difftastic (0.2.1)
       difftastic (~> 0.6)
     minitest-mock (5.27.0)
+    nio4r (2.7.5)
     nokogiri (1.19.4-aarch64-linux-gnu)
       racc (~> 1.4)
     nokogiri (1.19.4-aarch64-linux-musl)
@@ -129,6 +135,8 @@ GEM
       dispersion (~> 0.2)
     prettyprint (0.2.0)
     prism (1.9.0)
+    puma (8.0.2)
+      nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.6)
     rack-session (2.1.2)
@@ -209,11 +217,15 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  actionpack (~> 8.1)
   actionview (~> 8.1)
   appraisal
+  herb!
   maxitest (~> 7.0)
   minitest-difftastic
   minitest-mock
+  puma
+  rackup
   railties (~> 8.1)
   rake (~> 13.0)
   reactionview!
