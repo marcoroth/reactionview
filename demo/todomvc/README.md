@@ -47,12 +47,6 @@ knowing before writing your own:
 A fourth is a limit rather than a choice: `checked` is presence, not value, and no slot can say
 "absent". The server sends the state as an ordinary attribute and the client sets the checkbox.
 
-## The same demo on Rails
-
-`demo/todomvc` in the ReActionView repo is this application again, as a Rails app. The template is
-the same and the client is the same; what changes is that the four things wired by hand here are
-the gem's. Comparing them is the clearest way to see what that gem is for.
-
 ## What it is not
 
 No database, so the todos live in memory and reset with the server. No authentication, no CSRF, and
