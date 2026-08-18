@@ -1,6 +1,6 @@
 {
   "name": "@reactionview/dev-tools",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Development tools for ReActionView with Herb integration",
   "type": "module",
   "license": "MIT",
