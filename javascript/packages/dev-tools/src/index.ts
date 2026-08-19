@@ -72,6 +72,10 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   let isInitializing = false
 
   const initializeDevTools = () => {
+    if (ReActionViewDevTools.getInstance()) {
+      return
+    }
+
     if (isInitializing) {
       console.log("ReActionView dev tools initialization already in progress, skipping...")
 
@@ -109,8 +113,6 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   }
 
   document.addEventListener("turbo:load", initializeDevTools)
-  document.addEventListener("turbo:render", initializeDevTools)
-  document.addEventListener("turbo:visit", initializeDevTools)
 }
 
 declare global {
