@@ -45,7 +45,7 @@ class ReActionView::SlotsTest < Minitest::Spec
     compiled = compile("<%# herb:slots %>\n<p><%= @name %></p>")
 
     assert_includes compiled, "herb-region:app/views/users/show.html.erb"
-    assert_includes compiled, "data-herb-child"
+    assert_includes compiled, %(data-herb-slot=\"0:child\")
   end
 
   test "turning slots on marks every template" do

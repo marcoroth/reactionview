@@ -15,5 +15,10 @@
   "workspaces": [
     "docs",
     "javascript/packages/*"
-  ]
+  ],
+  "resolutions": {
+    "@herb-tools/runtime": "file:/Users/marcoroth/Development/herb-worktree/javascript/packages/runtime",
+    "@herb-tools/core": "file:/Users/marcoroth/Development/herb-worktree/javascript/packages/core",
+    "@herb-tools/client": "file:/Users/marcoroth/Development/herb-worktree/javascript/packages/client"
+  }
 }

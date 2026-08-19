@@ -6,6 +6,19 @@ PATH
       cruise
       herb (>= 0.10.0, < 0.11.0)
 
+PATH
+  remote: /Users/marcoroth/Development/herb-worktree/.claude/worktrees/slots
+  specs:
+    herb (0.10.3)
+    herb (0.10.3-aarch64-linux-gnu)
+    herb (0.10.3-aarch64-linux-musl)
+    herb (0.10.3-arm-linux-gnu)
+    herb (0.10.3-arm-linux-musl)
+    herb (0.10.3-arm64-darwin)
+    herb (0.10.3-x86_64-darwin)
+    herb (0.10.3-x86_64-linux-gnu)
+    herb (0.10.3-x86_64-linux-musl)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -72,14 +85,6 @@ GEM
     drb (2.2.3)
     erb (6.0.7)
     erubi (1.13.1)
-    herb (0.10.3-aarch64-linux-gnu)
-    herb (0.10.3-aarch64-linux-musl)
-    herb (0.10.3-arm-linux-gnu)
-    herb (0.10.3-arm-linux-musl)
-    herb (0.10.3-arm64-darwin)
-    herb (0.10.3-x86_64-darwin)
-    herb (0.10.3-x86_64-linux-gnu)
-    herb (0.10.3-x86_64-linux-musl)
     i18n (1.15.2)
       concurrent-ruby (~> 1.0)
     io-console (0.8.2)
@@ -211,6 +216,7 @@ PLATFORMS
 DEPENDENCIES
   actionview (~> 8.1)
   appraisal
+  herb!
   maxitest (~> 7.0)
   minitest-difftastic
   minitest-mock

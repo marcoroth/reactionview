@@ -92,7 +92,7 @@ class ReActionView::ValuesTest < Minitest::Spec
     reported = values(source, View.new(**state))[:slots]
 
     assert_equal "calm", reported[0]
-    assert_equal({ "a" => { 3 => "a", 4 => "a" }, "b" => { 3 => "b", 4 => "b" } }, reported[2][:rows])
+    assert_equal({ "a" => { 3 => "a", 4 => "a" }, "b" => { 3 => "b", 4 => "b" } }, reported[2][:items])
 
     flatten(reported).each { |value| assert_includes rendered, value }
   end
@@ -120,7 +120,7 @@ class ReActionView::ValuesTest < Minitest::Spec
       when String then found << value
       when Hash
         flatten(value[:slots], found) if value[:slots]
-        value[:rows]&.each_value { |row| flatten(row, found) }
+        value[:items]&.each_value { |item| flatten(item, found) }
       end
     end
 

@@ -8,6 +8,7 @@ require "herb/engine/dynamics_compiler"
 # when they became opt-in, so anything that names one has to ask for it.
 require "herb/engine/debug_visitor"
 require "herb/engine/slot_visitor"
+require "herb/engine/slot_dependencies"
 require "herb/engine/content_for_visitor"
 require "herb/engine/validators"
 
@@ -40,6 +41,12 @@ module ReActionView
 
         def self.call(template, source, validation_mode: nil)
           new.call(template, source, validation_mode: validation_mode)
+        end
+
+        # The slot visitor a template is compiled with here, for anything that has to agree with
+        # this compile about what a template's slots are.
+        def self.compile_for_dependencies(source, path)
+          new.send(:compile_for_dependencies, source, path)
         end
 
         def call(template, source, validation_mode: nil)
@@ -85,6 +92,30 @@ module ReActionView
           return "{}" unless visitor
 
           ::Herb::Engine::DynamicsCompiler.new(source, config.merge(slot_visitor: visitor, **VALUES_ESCAPING)).src
+        end
+
+        # How a template is compiled here, for anything that needs the same slots this does.
+        #
+        # A version is a digest of the slots a template has, and those depend on every visitor that
+        # ran before the slot visitor. A map built without them names versions no page carries, so
+        # the page and the map would agree about nothing.
+        def compile_for_dependencies(source, path)
+          template = ::Struct.new(:identifier, :format).new(path, :html)
+          visitor = slot_visitors(template, source, mark: false).first
+
+          return nil unless visitor
+
+          visitors = [
+            *validation_visitors(ReActionView.config.validation_mode),
+            *debug_visitors(template),
+            *head_visitors(template),
+            *ReActionView.config.transform_visitors,
+            visitor
+          ]
+
+          erb_implementation.new(source, filename: translate_path_for_editor(path), project_path: ::ReActionView.config.project_path, visitors: visitors).src
+
+          visitor
         end
 
         def values_format?(template)

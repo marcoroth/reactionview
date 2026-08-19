@@ -21,8 +21,9 @@
     }
   },
   "dependencies": {
-    "@herb-tools/client": "0.10.3",
-    "@herb-tools/dev-tools": "0.10.3"
+    "@herb-tools/client": "file:/Users/marcoroth/Development/herb-worktree/javascript/packages/client",
+    "@herb-tools/dev-tools": "file:/Users/marcoroth/Development/herb-worktree/javascript/packages/dev-tools",
+    "@herb-tools/core": "file:/Users/marcoroth/Development/herb-worktree/javascript/packages/core"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^16.0.1",

@@ -4,8 +4,9 @@ source "https://rubygems.org"
 
 gemspec
 
-gem "appraisal"
 # gem "herb", path: "../herb"
+
+gem "appraisal"
 gem "actionview", "~> 8.1"
 gem "maxitest", "~> 7.0"
 gem "minitest-difftastic"

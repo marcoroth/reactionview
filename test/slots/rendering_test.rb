@@ -143,4 +143,64 @@ class ReActionView::Slots::RenderingTest < Minitest::Spec
       refute_includes options.keys, :layout
     end
   end
+
+  # A client cannot know which slots a state change touches without the map, and the map spans a
+  # render tree, so it is delivered once for the page rather than by whatever compiled a template.
+  describe "the dependency map a page carries" do
+    class Rendering < Controller
+      prepend ReActionView::Slots::Rendering
+
+      attr_reader :lookup_context, :request
+
+      def initialize(lookup_context, format)
+        @lookup_context = lookup_context
+        @request = Request.new(Format.new(format))
+      end
+
+      def _prefixes = []
+    end
+
+    def page_body(format, body)
+      lookup = ActionView::LookupContext.new([ReActionView::Slots::Resolver.new(@root), ActionView::FileSystemResolver.new(@root)])
+      lookup.formats = [:html]
+
+      previous = ReActionView.config.instance_variable_get(:@project_path)
+      ReActionView.config.project_path = @root
+      ReActionView::Slots.reset_dependencies!
+
+      Rendering.new(lookup, format).render_to_body(body: body, template: "users/show")
+    ensure
+      ReActionView.config.project_path = previous
+      ReActionView::Slots.reset_dependencies!
+    end
+
+    def slotted_page
+      html = render(:html)
+
+      "<html><body>#{html}</body></html>"
+    end
+
+    test "carries what the page's state reaches" do
+      body = page_body(:html, slotted_page)
+
+      assert_includes body, "<template data-herb-dependencies>"
+      assert_includes body, "@tone"
+      assert_includes body, "@title"
+    end
+
+    test "puts it where a page ends, so nothing it names is missing yet" do
+      body = page_body(:html, slotted_page)
+
+      assert_operator body.index("data-herb-dependencies"), :<, body.index("</body>")
+      assert_operator body.index("herb-region:"), :<, body.index("data-herb-dependencies")
+    end
+
+    test "leaves a page with no slots alone" do
+      assert_equal "<html><body><p>plain</p></body></html>", page_body(:html, "<html><body><p>plain</p></body></html>")
+    end
+
+    test "leaves a values response alone" do
+      assert_equal "{\"a\":1}", page_body(ReActionView::Slots::FORMAT, { a: 1 })
+    end
+  end
 end
