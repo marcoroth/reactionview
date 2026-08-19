@@ -1,6 +1,6 @@
-import "@herb-tools/client"
+import { HerbDevTools, type HerbDevToolsOptions } from "@herb-tools/dev-tools"
 
-import { initHerbDevTools, HerbOverlay, type HerbDevToolsOptions } from "@herb-tools/dev-tools"
+type HerbOverlay = NonNullable<HerbDevTools["overlay"]>
 
 export interface ReActionViewDevToolsOptions extends HerbDevToolsOptions {
   projectPath?: string
@@ -8,7 +8,7 @@ export interface ReActionViewDevToolsOptions extends HerbDevToolsOptions {
 }
 
 export class ReActionViewDevTools {
-  private herbOverlay: HerbOverlay | null = null
+  private devTools: HerbDevTools | null = null
   private static instance: ReActionViewDevTools | null = null
 
   constructor(private options: ReActionViewDevToolsOptions = {}) {
@@ -17,33 +17,26 @@ export class ReActionViewDevTools {
     }
   }
 
-  init(): HerbOverlay {
-    if (this.herbOverlay) {
-      this.destroy()
-    }
+  init(): HerbDevTools | null {
+    this.destroy()
 
-    this.herbOverlay = initHerbDevTools({
+    HerbDevTools.instance?.stop()
+
+    this.devTools = HerbDevTools.start({
       projectPath: this.options.projectPath,
       ...this.options
     })
 
-    return this.herbOverlay
+    return this.devTools
   }
 
   destroy(): void {
-    if (this.herbOverlay) {
-      const existingMenu = document.querySelector(".herb-floating-menu")
-
-      if (existingMenu) {
-        existingMenu.remove()
-      }
-    }
-
-    this.herbOverlay = null
+    this.devTools?.stop()
+    this.devTools = null
   }
 
   getHerbOverlay(): HerbOverlay | null {
-    return this.herbOverlay
+    return this.devTools?.overlay ?? null
   }
 
   static getInstance(): ReActionViewDevTools | null {
@@ -85,6 +78,10 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
       return
     }
 
+    if (ReActionViewDevTools.getInstance() && HerbDevTools.instance) {
+      return
+    }
+
     isInitializing = true
 
     try {
@@ -118,7 +115,7 @@ declare global {
     ReActionViewDevTools: {
       init: typeof initReActionViewDevTools
       ReActionViewDevTools: typeof ReActionViewDevTools
-      HerbOverlay: typeof HerbOverlay
+      HerbDevTools: typeof HerbDevTools
     }
   }
 }
@@ -127,8 +124,8 @@ if (typeof window !== "undefined") {
   window.ReActionViewDevTools = {
     init: initReActionViewDevTools,
     ReActionViewDevTools,
-    HerbOverlay
+    HerbDevTools
   }
 }
 
-export { HerbOverlay, type HerbDevToolsOptions }
+export { HerbDevTools, type HerbDevToolsOptions }
