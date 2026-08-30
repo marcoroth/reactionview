@@ -2,8 +2,10 @@
 
 require "herb"
 require "herb/engine"
+require "herb/engine/slots/dynamics_compiler"
 
 require "herb/engine/visitors/debug_visitor"
+require "herb/engine/slots/visitor"
 require "herb/engine/visitors/content_for_visitor"
 require "herb/engine/validators"
 
@@ -16,6 +18,14 @@ module ReActionView
         autoload :Herb, "reactionview/template/handlers/herb/herb"
 
         class_attribute :erb_implementation, default: Handlers::Herb::Herb
+
+        VALUES_ESCAPING = {
+          escape: true,
+          escapefunc: "::ERB::Util.h",
+          attrfunc: nil,
+          jsfunc: nil,
+          cssfunc: nil,
+        }.freeze
 
         def self.call(template, source, validation_mode: nil)
           new.call(template, source, validation_mode: validation_mode)
@@ -37,10 +47,26 @@ module ReActionView
             visitors: visitors,
           }
 
+          return values_source(template, source, config) if values_format?(template)
+
+          config[:visitors] = [*visitors, *slot_visitors(template, source)]
+
           erb_implementation.new(source, config).src
         end
 
         private
+
+        def values_source(template, source, config)
+          visitor = slot_visitors(template, source, mark: false).first
+
+          return "{}" unless visitor
+
+          ::Herb::Engine::Slots::DynamicsCompiler.new(source, config.merge(slot_visitor: visitor, **VALUES_ESCAPING)).src
+        end
+
+        def values_format?(template)
+          template.respond_to?(:format) && template.format == :slots
+        end
 
         def validation_visitors(mode)
           case mode
@@ -62,6 +88,16 @@ module ReActionView
           return [] if markup.nil? || markup.empty?
 
           [::Herb::Engine::ContentForVisitor.new(markup, tag_name: "head")]
+        end
+
+        def slot_visitors(template, source, mark: true)
+          return [] unless values_format?(template) || (template.respond_to?(:format) && template.format == :html)
+
+          mode = ::ReActionView.config.slot_mode_for(source)
+
+          return [] unless mode
+
+          [::Herb::Engine::Slots::Visitor.new(mode: mode, mark: mark)]
         end
 
         def layout_template?(template)

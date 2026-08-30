@@ -2,11 +2,14 @@
 
 module ReActionView
   class Config
+    EXTERNAL_TEMPLATE_MODES = %i[fallback skip compile].freeze
+    SLOT_MODES = %i[server client].freeze
+
     attr_accessor :intercept_erb
     attr_accessor :debug_mode
     attr_accessor :transform_visitors
 
-    EXTERNAL_TEMPLATE_MODES = %i[fallback skip compile].freeze
+    attr_reader :slots
 
     attr_writer :dev_server_port
     attr_writer :project_path
@@ -19,6 +22,25 @@ module ReActionView
       @external_template_mode = nil
       @transform_visitors = []
       @project_path = nil
+      @slots = false
+    end
+
+    def slots=(value)
+      unless [nil, true, false].include?(value) || SLOT_MODES.include?(value)
+        raise ArgumentError, "slots must be true, false, or one of #{SLOT_MODES.inspect}, got #{value.inspect}"
+      end
+
+      @slots = value
+    end
+
+    def slot_mode_for(source)
+      ::Herb::Engine::Slots::Visitor.directive_mode(source) || default_slot_mode
+    end
+
+    def default_slot_mode
+      return nil unless slots
+
+      slots == true ? :server : slots
     end
 
     def external_template_mode
