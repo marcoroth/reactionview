@@ -8,6 +8,7 @@ require "herb/engine/visitors/debug_visitor"
 require "herb/engine/slots/visitor"
 require "herb/engine/slots/dependencies"
 require "herb/engine/visitors/content_for_visitor"
+require "reactionview/template/visitors/conditional_content_for_visitor"
 require "herb/engine/validators"
 
 module ReActionView
@@ -19,6 +20,8 @@ module ReActionView
         autoload :Herb, "reactionview/template/handlers/herb/herb"
 
         class_attribute :erb_implementation, default: Handlers::Herb::Herb
+
+        DEBUG_MODE_CONDITION = "::ReActionView.config.debug_mode_for_request?(defined?(request) ? request : nil)" #: String
 
         VALUES_ESCAPING = {
           escape: true,
@@ -116,7 +119,15 @@ module ReActionView
 
           return [] if markup.nil? || markup.empty?
 
-          [::Herb::Engine::ContentForVisitor.new(markup, tag_name: "head")]
+          return [::Herb::Engine::ContentForVisitor.new(markup, tag_name: "head")] unless ::ReActionView.config.debug_mode_callable?
+
+          [
+            ::ReActionView::Template::Visitors::ConditionalContentForVisitor.new(
+              markup,
+              tag_name: "head",
+              condition: DEBUG_MODE_CONDITION
+            )
+          ]
         end
 
         def slot_visitors(template, source, mark: true)
