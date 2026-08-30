@@ -65,7 +65,9 @@ module ReActionView
       return @dev_server_port if @dev_server_port
       return nil unless development?
 
-      ::Herb.dev_server_port(Rails.root.to_s)
+      require "herb/dev/server_entry"
+
+      ::Herb::Dev::ServerEntry.port_for(Rails.root.to_s)
     end
   end
 

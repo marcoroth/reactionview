@@ -124,11 +124,14 @@ class ReActionView::ConfigTest < Minitest::Spec
   private
 
   def with_detected_dev_server_port(port)
+    require "herb/dev/server_entry"
+
     calls = []
-    original = ::Herb.method(:dev_server_port)
+    entry = ::Herb::Dev::ServerEntry
+    original = entry.method(:port_for)
 
     silence_warnings do
-      ::Herb.define_singleton_method(:dev_server_port) do |project_path = nil|
+      entry.define_singleton_method(:port_for) do |project_path = nil|
         calls << project_path
 
         port
@@ -137,7 +140,7 @@ class ReActionView::ConfigTest < Minitest::Spec
 
     yield calls
   ensure
-    silence_warnings { ::Herb.define_singleton_method(:dev_server_port, original) }
+    silence_warnings { entry.define_singleton_method(:port_for, original) }
   end
 
   def silence_warnings
