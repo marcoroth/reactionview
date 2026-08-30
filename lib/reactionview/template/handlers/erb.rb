@@ -6,6 +6,8 @@ module ReActionView
       class ERB < ActionView::Template::Handlers::ERB
         include ReActionView::Template::LocalTemplate
 
+        INTERCEPTED_FORMATS = [:html, ::ReActionView::Slots::FORMAT].freeze
+
         autoload :Herb, "reactionview/template/handlers/herb/herb"
 
         def call(template, source)
@@ -25,7 +27,7 @@ module ReActionView
         private
 
         def intercept_template?(template)
-          return false unless template.format == :html && ReActionView.config.intercept_erb
+          return false unless INTERCEPTED_FORMATS.include?(template.format) && ReActionView.config.intercept_erb
           return false if framework_template?(template)
 
           local_template?(template) || ReActionView.config.external_template_mode != :skip
