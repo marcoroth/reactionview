@@ -26,6 +26,7 @@ module ReActionView
 
         def intercept_template?(template)
           return false unless template.format == :html && ReActionView.config.intercept_erb
+          return false if framework_template?(template)
 
           local_template?(template) || ReActionView.config.external_template_mode != :skip
         end
