@@ -106,8 +106,6 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   }
 
   document.addEventListener("turbo:load", initializeDevTools)
-  document.addEventListener("turbo:render", initializeDevTools)
-  document.addEventListener("turbo:visit", initializeDevTools)
 }
 
 declare global {
