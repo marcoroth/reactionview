@@ -21,8 +21,11 @@ class Herb::TemplateHandlerTest < Minitest::Spec
   test "error for invalid html" do
     template = "Plain text: <%= 1 + 1 %> (<with_an_invalid_bracket>)"
 
-    assert_compiled_snapshot(template, format: :html)
-    assert_evaluated_snapshot(template, format: :html, ivars: { name: "User" })
+    error = assert_raises(::Herb::Engine::ParseError) do
+      assert_compiled_snapshot(template, format: :html)
+    end
+
+    assert_match(/MissingClosingTag/, error.detailed_message)
   end
 
   test "template with expression" do

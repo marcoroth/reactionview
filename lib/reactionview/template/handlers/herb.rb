@@ -1,5 +1,12 @@
 # frozen_string_literal: true
 
+require "herb"
+require "herb/engine"
+
+require "herb/engine/visitors/debug_visitor"
+require "herb/engine/visitors/content_for_visitor"
+require "herb/engine/validators"
+
 module ReActionView
   class Template
     module Handlers
@@ -15,27 +22,47 @@ module ReActionView
         end
 
         def call(template, source, validation_mode: nil)
-          visitors = []
+          mode = validation_mode || ReActionView.config.validation_mode
 
-          if ::ReActionView.config.debug_mode_enabled? && local_template?(template)
-            visitors << ::Herb::Engine::DebugVisitor.new(
-              file_path: translate_path_for_editor(template.identifier),
-              project_path: ::ReActionView.config.project_path
-            )
-          end
+          visitors = [
+            *validation_visitors(mode),
+            *debug_visitors(template),
+            *head_visitors(template),
+            *ReActionView.config.transform_visitors
+          ]
 
           config = {
-            filename: template.identifier,
-            project_path: Rails.root.to_s,
-            validation_mode: validation_mode || ReActionView.config.validation_mode,
-            content_for_head: reactionview_dev_tools_markup(template),
-            visitors: visitors + ReActionView.config.transform_visitors,
+            filename: translate_path_for_editor(template.identifier),
+            project_path: ::ReActionView.config.project_path,
+            visitors: visitors,
           }
 
           erb_implementation.new(source, config).src
         end
 
         private
+
+        def validation_visitors(mode)
+          case mode
+          when :raise then ::Herb::Engine::Validators.all(fatal: true).to_a
+          when :overlay then ::Herb::Engine::Validators.all(fatal: false).to_a
+          else []
+          end
+        end
+
+        def debug_visitors(template)
+          return [] unless ::ReActionView.config.debug_mode_enabled? && local_template?(template)
+
+          [::Herb::Engine::DebugVisitor.new]
+        end
+
+        def head_visitors(template)
+          markup = reactionview_dev_tools_markup(template)
+
+          return [] if markup.nil? || markup.empty?
+
+          [::Herb::Engine::ContentForVisitor.new(markup, tag_name: "head")]
+        end
 
         def layout_template?(template)
           return false unless template.respond_to?(:identifier) && template.identifier
