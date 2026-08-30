@@ -65,6 +65,21 @@ class ReActionView::Slots::RenderingTest < Minitest::Spec
     prepend ReActionView::Slots::Rendering
   end
 
+  class Rendering < Controller
+    prepend ReActionView::Slots::Rendering
+
+    attr_reader :lookup_context, :request
+
+    def initialize(lookup_context, format)
+      super()
+
+      @lookup_context = lookup_context
+      @request = Request.new(Format.new(format))
+    end
+
+    def _prefixes = []
+  end
+
   def render(format, **assigns)
     lookup = ActionView::LookupContext.new(
       [ReActionView::Slots::Resolver.new(@root), ActionView::FileSystemResolver.new(@root)]
@@ -132,6 +147,57 @@ class ReActionView::Slots::RenderingTest < Minitest::Spec
       options = NormalizingWithSlots.new(:html)._normalize_options({})
 
       refute_includes options.keys, :layout
+    end
+  end
+
+  describe "the dependency map a page carries" do
+    def page_body(format, body)
+      lookup = ActionView::LookupContext.new([ReActionView::Slots::Resolver.new(@root), ActionView::FileSystemResolver.new(@root)])
+      lookup.formats = [:html]
+
+      previous = ReActionView.config.instance_variable_get(:@project_path)
+      ReActionView.config.project_path = @root
+      ReActionView::Slots.reset_dependencies!
+
+      Rendering.new(lookup, format).render_to_body(body: body, template: "users/show")
+    ensure
+      ReActionView.config.project_path = previous
+      ReActionView::Slots.reset_dependencies!
+    end
+
+    def slotted_page
+      html = render(:html)
+
+      "<html><body>#{html}</body></html>"
+    end
+
+    def delivered(body)
+      session = ::Herb::Engine::Runtime::Session.capture { page_body(:html, body) }
+
+      session.channel(::Herb::Engine::Slots::Dependencies::Channel::NAME) { nil }
+    end
+
+    test "carries what the page's state reaches" do
+      map = delivered(slotted_page).to_html
+
+      assert_includes map, "<template data-herb-dependencies>"
+      assert_includes map, "@tone"
+      assert_includes map, "@title"
+    end
+
+    test "hands it to the response rather than writing it into the page" do
+      body = page_body(:html, slotted_page)
+
+      refute_includes body, "data-herb-dependencies"
+    end
+
+    test "leaves a page with no slots alone, and hands over nothing" do
+      assert_equal "<html><body><p>plain</p></body></html>", page_body(:html, "<html><body><p>plain</p></body></html>")
+      assert_nil delivered("<html><body><p>plain</p></body></html>")
+    end
+
+    test "leaves a values response alone" do
+      assert_equal "{\"a\":1}", page_body(ReActionView::Slots::FORMAT, { a: 1 })
     end
   end
 end

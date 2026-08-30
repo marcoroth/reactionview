@@ -6,6 +6,7 @@ require "herb/engine/slots/dynamics_compiler"
 
 require "herb/engine/visitors/debug_visitor"
 require "herb/engine/slots/visitor"
+require "herb/engine/slots/dependencies"
 require "herb/engine/visitors/content_for_visitor"
 require "herb/engine/validators"
 
@@ -31,6 +32,10 @@ module ReActionView
           new.call(template, source, validation_mode: validation_mode)
         end
 
+        def self.compile_for_dependencies(source, path)
+          new.compile_for_dependencies(source, path)
+        end
+
         def call(template, source, validation_mode: nil)
           mode = validation_mode || ReActionView.config.validation_mode
 
@@ -52,6 +57,30 @@ module ReActionView
           config[:visitors] = [*visitors, *slot_visitors(template, source)]
 
           erb_implementation.new(source, config).src
+        end
+
+        def compile_for_dependencies(source, path)
+          template = ::Struct.new(:identifier, :format).new(path, :html)
+          visitor = slot_visitors(template, source, mark: false).first
+
+          return nil unless visitor
+
+          visitors = [
+            *validation_visitors(ReActionView.config.validation_mode),
+            *debug_visitors(template),
+            *head_visitors(template),
+            *ReActionView.config.transform_visitors,
+            visitor
+          ]
+
+          erb_implementation.new(
+            source,
+            filename: translate_path_for_editor(path),
+            project_path: ::ReActionView.config.project_path,
+            visitors: visitors
+          ).src
+
+          visitor
         end
 
         private

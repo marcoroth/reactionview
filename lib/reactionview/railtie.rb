@@ -69,6 +69,21 @@ module ReActionView
       end
     end
 
+    initializer "reactionview.slots.reloading" do |app|
+      next unless ReActionView.config.slots
+
+      views = app.config.paths["app/views"].existent
+
+      next if views.empty?
+
+      watcher = app.config.file_watcher.new([], views.index_with { %w[erb] }) do
+        ReActionView::Slots.reset_dependencies!
+      end
+
+      app.reloaders << watcher
+      app.reloader.to_run { watcher.execute_if_updated }
+    end
+
     initializer "reactionview.register_herb_handler" do
       ActiveSupport.on_load(:action_view) do
         ActionView::Template.register_template_handler :herb, ReActionView::Template::Handlers::Herb
