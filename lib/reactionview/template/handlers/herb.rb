@@ -126,7 +126,7 @@ module ReActionView
 
           return [] unless mode
 
-          [::Herb::Engine::Slots::Visitor.new(mode: mode, mark: mark)]
+          [::Herb::Engine::Slots::Visitor.new(mode: mode, mark: mark, fatal: !::ReActionView.config.development?)]
         end
 
         def layout_template?(template)
