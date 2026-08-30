@@ -39,6 +39,22 @@ module ReActionView
       app.middleware.use ::Herb::Engine::Runtime::Middleware
     end
 
+    initializer "reactionview.error_page", after: :load_config_initializers do |app|
+      next unless ReActionView.config.development?
+
+      require "herb/engine/runtime/error_page"
+
+      app.middleware.use(
+        ::Herb::Engine::Runtime::ErrorPage,
+        dev_tools: -> { ReActionView::Railtie.dev_tools_module_path },
+        dev_server_port: -> { ReActionView.config.dev_server_port }
+      )
+    end
+
+    def self.dev_tools_module_path
+      ActionController::Base.helpers.asset_path("reactionview-dev-tools.esm.js")
+    end
+
     initializer "reactionview.register_herb_handler" do
       ActiveSupport.on_load(:action_view) do
         ActionView::Template.register_template_handler :herb, ReActionView::Template::Handlers::Herb
