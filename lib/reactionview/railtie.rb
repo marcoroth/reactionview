@@ -31,6 +31,14 @@ module ReActionView
       app.middleware.use ReActionView::Middleware::AssetManifestCheck
     end
 
+    initializer "reactionview.diagnostics" do |app|
+      next unless ReActionView.config.debug_mode_enabled? || ReActionView.config.validation_mode == :overlay
+
+      require "herb/engine/runtime/middleware"
+
+      app.middleware.use ::Herb::Engine::Runtime::Middleware
+    end
+
     initializer "reactionview.register_herb_handler" do
       ActiveSupport.on_load(:action_view) do
         ActionView::Template.register_template_handler :herb, ReActionView::Template::Handlers::Herb
