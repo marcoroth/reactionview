@@ -4,7 +4,8 @@ require_relative "../../test_helper"
 
 class ReActionView::ExternalTemplateModeTest < Minitest::Spec
   RAILS_ROOT = "/app"
-  EXTERNAL = "/gems/actionpack-8.1.2/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb"
+  EXTERNAL = "/gems/devise-4.9.4/app/views/devise/sessions/new.html.erb"
+  FRAMEWORK = "/gems/actionpack-8.1.2/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb"
   LOCAL = "/app/app/views/users/show.html.erb"
 
   INVALID = %(<p><h2>I am invalid</h2></p>)
@@ -111,6 +112,26 @@ class ReActionView::ExternalTemplateModeTest < Minitest::Spec
     assert_raises(Herb::Engine::CompilationError) do
       compile(INVALID, EXTERNAL)
     end
+  ensure
+    ReActionView.config.validation_mode = nil
+  end
+
+  test "never compiles a template Rails renders its own errors from" do
+    ReActionView.config.external_template_mode = :compile
+
+    compiled = compile(VALID, FRAMEWORK)
+
+    assert_equal ActionView::Template::Handlers::ERB.new.call(build(VALID, FRAMEWORK), VALID), compiled
+    assert_empty @log.string
+  end
+
+  test "leaves it to Rails even when Herb could not have compiled it anyway" do
+    ReActionView.config.external_template_mode = :compile
+    ReActionView.config.validation_mode = :raise
+
+    compiled = compile(INVALID, FRAMEWORK)
+
+    assert_equal ActionView::Template::Handlers::ERB.new.call(build(INVALID, FRAMEWORK), INVALID), compiled
   ensure
     ReActionView.config.validation_mode = nil
   end
