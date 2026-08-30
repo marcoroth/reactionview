@@ -55,6 +55,20 @@ module ReActionView
       ActionController::Base.helpers.asset_path("reactionview-dev-tools.esm.js")
     end
 
+    initializer "reactionview.slots" do |app|
+      next unless ReActionView.config.slots
+
+      Mime::Type.register ReActionView::Slots::MIME_TYPE, ReActionView::Slots::FORMAT unless Mime[ReActionView::Slots::FORMAT]
+
+      ActiveSupport.on_load(:action_controller_base) do
+        prepend ReActionView::Slots::Rendering
+
+        app.config.paths["app/views"].existent.each do |path|
+          prepend_view_path ReActionView::Slots::Resolver.new(path)
+        end
+      end
+    end
+
     initializer "reactionview.register_herb_handler" do
       ActiveSupport.on_load(:action_view) do
         ActionView::Template.register_template_handler :herb, ReActionView::Template::Handlers::Herb

@@ -4,6 +4,7 @@ $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
 require "rails"
 require "action_view"
+require "action_view/base"
 require "reactionview"
 
 require "pathname"

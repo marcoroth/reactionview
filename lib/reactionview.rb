@@ -17,6 +17,10 @@ require_relative "reactionview/config"
 
 # require_relative "reactionview/source_annotation_extractor"
 
+require_relative "reactionview/slots"
+require_relative "reactionview/slots/resolver"
+require_relative "reactionview/slots/rendering"
+
 require_relative "reactionview/template/local_template"
 
 require_relative "reactionview/template/handlers/erb"
