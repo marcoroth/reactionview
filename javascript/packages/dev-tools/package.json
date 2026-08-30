@@ -21,8 +21,7 @@
     }
   },
   "dependencies": {
-    "@herb-tools/client": "0.10.3",
-    "@herb-tools/dev-tools": "0.10.3"
+    "@herb-tools/dev-tools": "https://pkg.pr.new/marcoroth/herb/@herb-tools/dev-tools@6232d43"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^16.0.1",

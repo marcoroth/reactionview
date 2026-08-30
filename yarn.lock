@@ -180,24 +180,48 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.25.9.tgz#585624dc829cfb6e7c0aa6c3ca7d7e6daa87e34f"
   integrity sha512-PPOl1mi6lpLNQxnGoyAfschAodRFYXJ+9fs6WHXz7CSWKbOqiMZsubC+BQsVKuul+3vKLuwTHsS2c2y9EoKwxQ==
 
-"@herb-tools/client@0.10.3":
+"@herb-tools/browser@0.10.3":
   version "0.10.3"
-  resolved "https://registry.yarnpkg.com/@herb-tools/client/-/client-0.10.3.tgz#87b01a6d86b50891819624f67184718f21c5e6d4"
-  integrity sha512-0bZCDlrWz9x9d5amgwY28AEcdI4ng7n4W1mDA/bzKO0JZPP66r6zhi3S8g+CWyInOW2QJk1IcfbASe6W6CB7DQ==
+  resolved "https://registry.yarnpkg.com/@herb-tools/browser/-/browser-0.10.3.tgz#bdd7238de68efe76b3ed988bba2b8c6214553931"
+  integrity sha512-5Kz1jEvj/VIeed8cIm4HFcsCdz6jIUO6aTZPW+wGq07k46AtQqwC0BsoxjSelU2gELvHVg9igNybhJkSBemVcQ==
+  dependencies:
+    "@herb-tools/core" "0.10.3"
+    "@ruby/prism" "^1.9.0"
 
-"@herb-tools/core@0.10.3":
+"@herb-tools/client@https://pkg.pr.new/marcoroth/herb/@herb-tools/client@6232d43":
   version "0.10.3"
-  resolved "https://registry.yarnpkg.com/@herb-tools/core/-/core-0.10.3.tgz#03b1bf1a5d0c5acf9841209cf0c26dae3e2d85bb"
-  integrity sha512-rtDoh6C/EMYLEtFwYpuY+IlnV7PLsF5hQszq7uMDE/bwEpLVBlPFd2Wlk9E0RB31PVQKV1MwgGqstte87XqF9g==
+  resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/client@6232d43#74e3b05dfa0296eabac57e64520234df080fbd65"
+
+"@herb-tools/core@0.10.3", "@herb-tools/core@https://pkg.pr.new/marcoroth/herb/@herb-tools/core@6232d43":
+  version "0.10.3"
+  resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/core@6232d43#b76e6f5d8b12052fddc17bbe2d3d621da50532fa"
   dependencies:
     "@ruby/prism" "^1.9.0"
 
-"@herb-tools/dev-tools@0.10.3":
+"@herb-tools/dev-tools@https://pkg.pr.new/marcoroth/herb/@herb-tools/dev-tools@6232d43":
   version "0.10.3"
-  resolved "https://registry.yarnpkg.com/@herb-tools/dev-tools/-/dev-tools-0.10.3.tgz#9f6d1281692079b6cb68ffad2b4dbc65673d18a3"
-  integrity sha512-j0kXJGXDdcYRnci1OImvlViRqnPt+ACpfQbp9tL4EI1Bjtr/HW5oQu1ADuchar7lVKwamBG9L6BEuxOy5tjvmg==
+  resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/dev-tools@6232d43#aaaee5fed3e3b1fedeebf2584c2dc73bd797295f"
+  dependencies:
+    "@herb-tools/browser" "0.10.3"
+    "@herb-tools/client" "https://pkg.pr.new/marcoroth/herb/@herb-tools/client@6232d43"
+    "@herb-tools/core" "https://pkg.pr.new/marcoroth/herb/@herb-tools/core@6232d43"
+    "@herb-tools/highlighter" "0.10.3"
+
+"@herb-tools/highlighter@0.10.3":
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/@herb-tools/highlighter/-/highlighter-0.10.3.tgz#f4b1dfb770e32055a778c4f44847111387efe98c"
+  integrity sha512-vyBPl/oWalPcXrhni6RrQzeizzC0i7An3yMAg/Xx+4HDhgU/zOlRqSUYLU7SpzjfK4OU5QhRDdc3OBI8dT5qmg==
   dependencies:
     "@herb-tools/core" "0.10.3"
+    "@herb-tools/node-wasm" "0.10.3"
+
+"@herb-tools/node-wasm@0.10.3":
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/@herb-tools/node-wasm/-/node-wasm-0.10.3.tgz#dc1527c2af245f67dbe85e3ba3782aefafc70653"
+  integrity sha512-KUwHUMB6kluyvRiW0A9wbTiuO/qlvXLlSAnewmH2za7yePvYRSiThfAZEmXPqEmpmMRcIksFxaNaxUc6nBqyuA==
+  dependencies:
+    "@herb-tools/core" "0.10.3"
+    "@ruby/prism" "^1.9.0"
 
 "@iconify-json/logos@^1.2.4":
   version "1.2.9"
