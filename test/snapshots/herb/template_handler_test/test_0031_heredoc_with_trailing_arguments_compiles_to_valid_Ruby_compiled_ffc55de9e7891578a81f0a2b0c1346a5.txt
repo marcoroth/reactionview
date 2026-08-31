@@ -3,6 +3,6 @@
     field
   }
 GRAPHQL
-);
- @output_buffer.safe_append='
-'.freeze;@output_buffer
+); @output_buffer.safe_append='
+'.freeze; 
+@output_buffer
