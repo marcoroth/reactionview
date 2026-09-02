@@ -36,6 +36,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "actionview", ">= 7.0"
-  spec.add_dependency "cruise"
+  spec.add_dependency "cruise", ">= 0.3.0"
   spec.add_dependency "herb", ">= 0.10.0", "< 0.11.0"
 end

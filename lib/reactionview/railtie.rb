@@ -97,12 +97,15 @@ module ReActionView
 
       ::Herb::Dev.compiler = ReActionView::Slots::DevCompiler.new
 
-      app.server { Railtie.boot_dev_server }
+      view_paths = app.config.paths["app/views"].existent
+
+      app.server { Railtie.boot_dev_server(view_paths: view_paths) }
     end
 
-    def self.boot_dev_server
+    def self.boot_dev_server(view_paths: nil)
       embedded = ::Herb::Dev.boot(
         ReActionView.config.project_path,
+        watch_paths: view_paths,
         logger: ->(message) { Rails.logger.info("[Herb Dev Server] #{message}") }
       )
 
