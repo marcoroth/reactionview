@@ -43,9 +43,17 @@ module ReActionView
           class: cause.class.name,
           message: cause.message,
           template: template.respond_to?(:short_identifier) ? template.short_identifier : nil,
+          backtrace: cleaned_backtrace(cause),
         }
 
         ::JSON.generate({ error: entry })
+      end
+
+      def cleaned_backtrace(cause)
+        raw = cause.backtrace || []
+        cleaned = ::Rails.backtrace_cleaner.clean(raw)
+
+        (cleaned.empty? ? raw : cleaned).first(5)
       end
 
       def merge_schema(rendered, options)

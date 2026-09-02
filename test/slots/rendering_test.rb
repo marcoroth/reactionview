@@ -36,6 +36,21 @@ class ReActionView::Slots::RenderingTest < Minitest::Spec
     end
   end
 
+  class Raising
+    prepend ReActionView::Slots::Rendering
+
+    attr_accessor :status
+    attr_reader :request
+
+    def initialize
+      @request = Request.new(Format.new(ReActionView::Slots::FORMAT))
+    end
+
+    def render_to_body(_options = {})
+      raise ::NoMethodError, "undefined method 'sent_label'"
+    end
+  end
+
   class Controller
     def render_to_body(options = {})
       options[:body]
@@ -198,6 +213,32 @@ class ReActionView::Slots::RenderingTest < Minitest::Spec
 
     test "leaves a values response alone" do
       assert_equal "{\"a\":1}", page_body(ReActionView::Slots::FORMAT, { a: 1 })
+    end
+  end
+
+  describe "a raise during a slots re-render" do
+    test "answers with a structured error and the first backtrace frames" do
+      controller = Raising.new
+
+      body = ReActionView.config.stub(:development?, true) do
+        ::JSON.parse(controller.render_to_body)
+      end
+
+      assert_equal 500, controller.status
+      assert_equal "NoMethodError", body["error"]["class"]
+      assert_equal "undefined method 'sent_label'", body["error"]["message"]
+      assert_operator body["error"]["backtrace"].length, :<=, 5
+      assert_includes body["error"]["backtrace"].first, "rendering_test.rb"
+    end
+
+    test "keeps raising outside development" do
+      controller = Raising.new
+
+      assert_raises(::NoMethodError) do
+        ReActionView.config.stub(:development?, false) do
+          controller.render_to_body
+        end
+      end
     end
   end
 end
