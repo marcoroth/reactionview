@@ -59,6 +59,17 @@ class ReActionView::ConfigTest < Minitest::Spec
     assert_equal :raise, config.validation_mode
   end
 
+  test "the dev server is on by default" do
+    assert_predicate ReActionView::Config.new, :dev_server_enabled?
+  end
+
+  test "the dev server can be switched off" do
+    config = ReActionView::Config.new
+    config.dev_server = false
+
+    refute_predicate config, :dev_server_enabled?
+  end
+
   test "project_path defaults to Rails.root" do
     config = ReActionView::Config.new
 
