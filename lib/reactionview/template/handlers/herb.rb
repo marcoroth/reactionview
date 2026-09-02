@@ -3,6 +3,7 @@
 require "herb"
 require "herb/engine"
 require "herb/engine/slots/dynamics_compiler"
+require "herb/engine/slots/schema_compiler"
 
 require "herb/engine/visitors/debug_visitor"
 require "herb/engine/slots/visitor"
@@ -36,15 +37,14 @@ module ReActionView
           new.compile_for_dependencies(source, path)
         end
 
+        def self.compile_for_schema(source, path)
+          new.compile_for_schema(source, path)
+        end
+
         def call(template, source, validation_mode: nil)
           mode = validation_mode || ReActionView.config.validation_mode
 
-          visitors = [
-            *validation_visitors(mode),
-            *debug_visitors(template),
-            *head_visitors(template),
-            *ReActionView.config.transform_visitors
-          ]
+          visitors = base_visitors(template, validation_mode: mode)
 
           config = {
             filename: translate_path_for_editor(template.identifier),
@@ -65,25 +65,43 @@ module ReActionView
 
           return nil unless visitor
 
-          visitors = [
-            *validation_visitors(ReActionView.config.validation_mode),
-            *debug_visitors(template),
-            *head_visitors(template),
-            *ReActionView.config.transform_visitors,
-            visitor
-          ]
-
           erb_implementation.new(
             source,
             filename: translate_path_for_editor(path),
             project_path: ::ReActionView.config.project_path,
-            visitors: visitors
+            visitors: [*base_visitors(template), visitor]
           ).src
 
           visitor
         end
 
+        def compile_for_schema(source, path)
+          template = ::Struct.new(:identifier, :format).new(path, :html)
+
+          ::Herb::Engine::Slots::SchemaCompiler.call(
+            source,
+            filename: translate_path_for_editor(path),
+            mode: ::ReActionView.config.slot_mode_for(source),
+            visitors: -> { base_visitors(template, validation_mode: schema_validation_mode) },
+            engine: erb_implementation,
+            options: { project_path: ::ReActionView.config.project_path }
+          )
+        end
+
         private
+
+        def base_visitors(template, validation_mode: ReActionView.config.validation_mode)
+          [
+            *validation_visitors(validation_mode),
+            *debug_visitors(template),
+            *head_visitors(template),
+            *ReActionView.config.transform_visitors
+          ]
+        end
+
+        def schema_validation_mode
+          ReActionView.config.validation_mode == :none ? :none : :overlay
+        end
 
         def values_source(template, source, config)
           visitor = slot_visitors(template, source, mark: false).first
@@ -168,9 +186,9 @@ module ReActionView
         end
 
         def reactionview_dev_tools_markup(template)
-          return nil unless ::ReActionView.config.debug_mode_enabled?
           return nil unless layout_template?(template)
           return nil unless local_template?(template)
+          return slots_meta_markup unless ::ReActionView.config.debug_mode_enabled?
 
           <<~HTML
             <meta name="herb-debug-mode" content="true">
@@ -180,6 +198,15 @@ module ReActionView
 
             #{ActionController::Base.new.view_context.javascript_include_tag "reactionview-dev-tools.umd.js", defer: true}
             #{dismiss_hint_template}
+          HTML
+        end
+
+        def slots_meta_markup
+          return nil unless ::ReActionView.config.slots && ::ReActionView.config.development?
+
+          <<~HTML
+            <meta name="herb-project-path" content="#{Rails.root}">
+            #{dev_server_port_meta_tag}
           HTML
         end
 

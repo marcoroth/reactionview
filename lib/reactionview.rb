@@ -20,6 +20,7 @@ require_relative "reactionview/config"
 require_relative "reactionview/slots"
 require_relative "reactionview/slots/resolver"
 require_relative "reactionview/slots/rendering"
+require_relative "reactionview/slots/dev_compiler"
 
 require_relative "reactionview/template/local_template"
 

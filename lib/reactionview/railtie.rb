@@ -32,7 +32,7 @@ module ReActionView
     end
 
     initializer "reactionview.diagnostics" do |app|
-      next unless ReActionView.config.debug_mode_enabled? || ReActionView.config.validation_mode == :overlay
+      next unless ReActionView.config.debug_mode_enabled? || ReActionView.config.validation_mode == :overlay || ReActionView.config.slots
 
       require "herb/engine/runtime/middleware"
 
@@ -82,6 +82,35 @@ module ReActionView
 
       app.reloaders << watcher
       app.reloader.to_run { watcher.execute_if_updated }
+    end
+
+    initializer "reactionview.slots.dev_server", after: :load_config_initializers do |app|
+      next unless ReActionView.config.slots
+      next unless ReActionView.config.development?
+      next unless ReActionView.config.dev_server_enabled?
+
+      begin
+        require "herb/dev"
+      rescue LoadError
+        next
+      end
+
+      ::Herb::Dev.compiler = ReActionView::Slots::DevCompiler.new
+
+      app.server { Railtie.boot_dev_server }
+    end
+
+    def self.boot_dev_server
+      embedded = ::Herb::Dev.boot(
+        ReActionView.config.project_path,
+        logger: ->(message) { Rails.logger.info("[Herb Dev Server] #{message}") }
+      )
+
+      if embedded
+        $stdout.puts "* Herb Dev Server: ws://localhost:#{embedded.server.port} (embedded)"
+      else
+        $stdout.puts "* Herb Dev Server: not started, see the log"
+      end
     end
 
     initializer "reactionview.register_herb_handler" do

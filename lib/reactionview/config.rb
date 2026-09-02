@@ -11,6 +11,7 @@ module ReActionView
 
     attr_reader :slots
 
+    attr_writer :dev_server
     attr_writer :dev_server_port
     attr_writer :project_path
     attr_writer :validation_mode
@@ -18,11 +19,18 @@ module ReActionView
     def initialize
       @intercept_erb = false
       @debug_mode = nil
+      @dev_server = nil
       @dev_server_port = nil
       @external_template_mode = nil
       @transform_visitors = []
       @project_path = nil
       @slots = false
+    end
+
+    def dev_server_enabled?
+      return @dev_server unless @dev_server.nil?
+
+      true
     end
 
     def slots=(value)
