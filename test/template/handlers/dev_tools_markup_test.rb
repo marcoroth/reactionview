@@ -92,4 +92,87 @@ class ReActionView::DevToolsMarkupTest < Minitest::Spec
     refute_includes compiled, DISMISS_HINT
     refute_includes compiled, "herb-debug-mode"
   end
+
+  REQUEST = Struct.new(:user_agent)
+
+  class RenderContext
+    attr_reader :output_buffer
+
+    attr_reader :request
+
+    def initialize(request)
+      @request = request
+      @output_buffer = ActionView::OutputBuffer.new
+    end
+
+    def method_missing(*) = ""
+
+    def respond_to_missing?(*) = true
+  end
+
+  def render(compiled, user_agent)
+    context = RenderContext.new(REQUEST.new(user_agent))
+    context.instance_eval(compiled)
+    context.output_buffer.to_s
+  end
+
+  test "compiles a render-time condition when debug mode is a callable" do
+    ReActionView.config.debug_mode = ->(_request) { true }
+
+    assert_includes compile, "debug_mode_for_request?"
+  end
+
+  test "a callable debug mode decides per request from one compiled template" do
+    ReActionView.config.debug_mode = ->(request) { !request.user_agent.to_s.include?("Hotwire Native") }
+
+    compiled = compile
+
+    assert_includes render(compiled, "Mozilla/5.0"), "herb-debug-mode"
+    refute_includes render(compiled, "MyApp Hotwire Native iOS"), "herb-debug-mode"
+  end
+
+  test "a callable returning a non-boolean is evaluated for truthiness" do
+    ReActionView.config.debug_mode = ->(request) { request.user_agent.presence }
+
+    compiled = compile
+
+    assert_includes render(compiled, "Mozilla/5.0"), "herb-debug-mode"
+    refute_includes render(compiled, ""), "herb-debug-mode"
+  end
+
+  test "a callable is not invoked when there is no request" do
+    ReActionView.config.debug_mode = ->(request) { request.user_agent.include?("nope") }
+
+    refute ReActionView.config.debug_mode_for_request?(nil)
+  end
+
+  test "debug_mode_enabled? assumes enabled for a callable so boot-time hooks still install" do
+    ReActionView.config.debug_mode = ->(_request) { false }
+
+    assert ReActionView.config.debug_mode_enabled?
+  end
+
+  test "a non-callable truthy value is evaluated for truthiness" do
+    ReActionView.config.debug_mode = "yes"
+
+    assert ReActionView.config.debug_mode_enabled?
+    assert_includes compile, "herb-debug-mode"
+  end
+
+  test "non-callable values still compile a static tag with no render-time condition" do
+    ReActionView.config.debug_mode = true
+
+    compiled = compile
+
+    assert_includes compiled, "herb-debug-mode"
+    refute_includes compiled, "debug_mode_for_request?"
+  end
+
+  test "debug_mode_for_request? falls back to the static value for non-callables" do
+    ReActionView.config.debug_mode = true
+    assert ReActionView.config.debug_mode_for_request?(nil)
+
+    ReActionView.config.debug_mode = false
+    refute ReActionView.config.debug_mode_for_request?(nil)
+  end
 end

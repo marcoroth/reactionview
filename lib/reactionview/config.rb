@@ -86,9 +86,21 @@ module ReActionView
     end
 
     def debug_mode_enabled?
-      return @debug_mode unless @debug_mode.nil?
+      return true if debug_mode_callable?
+      return !!@debug_mode unless @debug_mode.nil?
 
       development?
+    end
+
+    def debug_mode_for_request?(request)
+      return debug_mode_enabled? unless debug_mode_callable?
+      return false if request.nil?
+
+      !!@debug_mode.call(request)
+    end
+
+    def debug_mode_callable?
+      @debug_mode.respond_to?(:call)
     end
 
     def dev_server_port
