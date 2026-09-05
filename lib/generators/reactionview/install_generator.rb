@@ -32,6 +32,13 @@ module ReActionView
             # How to handle templates that come from gems (:fallback, :skip, or :compile), defaults to :fallback
             # config.external_template_mode = :skip
 
+            # Measure what a page does while it renders, and show it in the dev tools.
+            # Follows development unless you say otherwise, and each measurement can be turned off.
+            # config.instrumentation.enabled = Rails.env.development?
+            # config.instrumentation.sql_queries = false
+            # config.instrumentation.render_times = false
+            # config.instrumentation.translations = false
+
             # Add custom transform visitors to process templates before compilation
             # config.transform_visitors = [
             #   Herb::Visitor::new

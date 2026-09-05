@@ -39,6 +39,14 @@ module ReActionView
       app.middleware.use ::Herb::Engine::Runtime::Middleware
     end
 
+    initializer "reactionview.instrumentation", after: :load_config_initializers do |_app|
+      next unless ReActionView.config.instrumentation.enabled
+
+      require_relative "instrumentation"
+
+      ReActionView::Instrumentation.install!
+    end
+
     initializer "reactionview.error_page", after: :load_config_initializers do |app|
       next unless ReActionView.config.development?
 
