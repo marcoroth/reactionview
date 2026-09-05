@@ -25,6 +25,7 @@ module ReActionView
       @transform_visitors = []
       @project_path = nil
       @slots = false
+      @instrumentation = nil
     end
 
     def dev_server_enabled?
@@ -89,6 +90,31 @@ module ReActionView
       return @debug_mode unless @debug_mode.nil?
 
       development?
+    end
+
+    def instrumentation
+      @instrumentation ||= InstrumentationOptions.new(enabled: development?)
+    end
+
+    class InstrumentationOptions < ::ActiveSupport::OrderedOptions
+      BUILT_INS = [:sql_queries, :render_times, :translations].freeze
+      KEYS = ([:enabled] + BUILT_INS).freeze
+
+      def initialize(enabled:)
+        super()
+
+        merge!(enabled: enabled, **BUILT_INS.to_h { |key| [key, true] })
+      end
+
+      def []=(key, value)
+        raise ArgumentError, "unknown instrumentation option #{key.inspect}, expected one of #{KEYS.inspect}" unless KEYS.include?(key.to_sym)
+
+        super
+      end
+
+      def measuring?(built_in)
+        !!self[:enabled] && !!self[built_in]
+      end
     end
 
     def dev_server_port
