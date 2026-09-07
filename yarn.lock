@@ -180,18 +180,18 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.25.9.tgz#585624dc829cfb6e7c0aa6c3ca7d7e6daa87e34f"
   integrity sha512-PPOl1mi6lpLNQxnGoyAfschAodRFYXJ+9fs6WHXz7CSWKbOqiMZsubC+BQsVKuul+3vKLuwTHsS2c2y9EoKwxQ==
 
-"@herb-tools/browser@https://pkg.pr.new/marcoroth/herb/@herb-tools/browser@1da6e95", "@herb-tools/browser@https://pkg.pr.new/marcoroth/herb/@herb-tools/browser@1da6e9566":
+"@herb-tools/browser@https://pkg.pr.new/marcoroth/herb/@herb-tools/browser@1da6e95":
   version "0.10.3"
   resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/browser@1da6e9566#822c049ffae5b4466d7138ea20702ba1a55ff116"
   dependencies:
     "@herb-tools/core" "https://pkg.pr.new/marcoroth/herb/@herb-tools/core@1da6e95"
     "@ruby/prism" "^1.9.0"
 
-"@herb-tools/client@https://pkg.pr.new/marcoroth/herb/@herb-tools/client@1da6e95", "@herb-tools/client@https://pkg.pr.new/marcoroth/herb/@herb-tools/client@1da6e9566":
+"@herb-tools/client@https://pkg.pr.new/marcoroth/herb/@herb-tools/client@1da6e95":
   version "0.10.3"
   resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/client@1da6e9566#d0e3b761db05f756bdc7d746ad9239d3ab0e5a3a"
 
-"@herb-tools/core@https://pkg.pr.new/marcoroth/herb/@herb-tools/core@1da6e95", "@herb-tools/core@https://pkg.pr.new/marcoroth/herb/@herb-tools/core@1da6e9566":
+"@herb-tools/core@https://pkg.pr.new/marcoroth/herb/@herb-tools/core@1da6e95":
   version "0.10.3"
   uid "48bed2c6dc21f943214c5f7c78bd3c2b11bb1d84"
   resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/core@1da6e9566#48bed2c6dc21f943214c5f7c78bd3c2b11bb1d84"
@@ -207,7 +207,7 @@
     "@herb-tools/core" "https://pkg.pr.new/marcoroth/herb/@herb-tools/core@1da6e95"
     "@herb-tools/highlighter" "https://pkg.pr.new/marcoroth/herb/@herb-tools/highlighter@1da6e95"
 
-"@herb-tools/highlighter@https://pkg.pr.new/marcoroth/herb/@herb-tools/highlighter@1da6e95", "@herb-tools/highlighter@https://pkg.pr.new/marcoroth/herb/@herb-tools/highlighter@1da6e9566":
+"@herb-tools/highlighter@https://pkg.pr.new/marcoroth/herb/@herb-tools/highlighter@1da6e95":
   version "0.10.3"
   resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/highlighter@1da6e9566#066359311ef2f18418c90cc8813b9616c23cae82"
   dependencies:
@@ -215,7 +215,7 @@
     "@herb-tools/node-wasm" "https://pkg.pr.new/marcoroth/herb/@herb-tools/node-wasm@1da6e95"
     ansi_up "^6.0.6"
 
-"@herb-tools/node-wasm@https://pkg.pr.new/marcoroth/herb/@herb-tools/node-wasm@1da6e95", "@herb-tools/node-wasm@https://pkg.pr.new/marcoroth/herb/@herb-tools/node-wasm@1da6e9566":
+"@herb-tools/node-wasm@https://pkg.pr.new/marcoroth/herb/@herb-tools/node-wasm@1da6e95":
   version "0.10.3"
   resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/node-wasm@1da6e9566#ad9c6cd4d10bb2658436636c88162699c830b8e7"
   dependencies:
@@ -1240,10 +1240,10 @@ ms@^2.1.3:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
-nanoid@^3.3.11:
-  version "3.3.11"
-  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.11.tgz#4f4f112cefbe303202f2199838128936266d185b"
-  integrity sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==
+nanoid@^3.3.18:
+  version "3.3.18"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.18.tgz#f66a2de1199ffde0fcf21c8a5f13106b1c081913"
+  integrity sha512-DTg4MJbGMWkfi6VZFdNt2/caMbQy4Ou+Op/hJQvGEWcnVfoA1QA+xzRKAzw9jD6+GVOOeYr/mIcuDSdug6F6+w==
 
 oniguruma-parser@^0.12.1:
   version "0.12.1"
@@ -1321,11 +1321,11 @@ pkg-types@^2.3.0:
     pathe "^2.0.3"
 
 postcss@^8.5.6:
-  version "8.5.6"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.6.tgz#2825006615a619b4f62a9e7426cc120b349a8f3c"
-  integrity sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==
+  version "8.5.28"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.28.tgz#da4563a99a06e62d6c1cd1acae363224bcaed6e9"
+  integrity sha512-RRuzqDtt5Y9h3quz5hWhK+TPnsmVs6WwSU6LkJMeY4HstUEDuYTG8UJSdawMRzmzAtV+KEoG8N3Qg2qLy5vM/A==
   dependencies:
-    nanoid "^3.3.11"
+    nanoid "^3.3.18"
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 
