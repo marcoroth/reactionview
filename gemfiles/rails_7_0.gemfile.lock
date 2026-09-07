@@ -13,6 +13,13 @@ GIT
     herb (0.10.3-x86_64-linux-gnu)
     herb (0.10.3-x86_64-linux-musl)
 
+GIT
+  remote: https://github.com/ruby/prism.git
+  revision: c0e37816e97e23e92524a4070e1b99a4025bc63f
+  tag: v1.9.0
+  specs:
+    prism (1.9.0)
+
 PATH
   remote: ..
   specs:
@@ -125,7 +132,6 @@ GEM
       racc
     pretty_please (0.2.0)
       dispersion (~> 0.2)
-    prism (1.9.0)
     racc (1.8.1)
     rack (2.2.23)
     rack-test (2.2.0)
@@ -194,6 +200,7 @@ DEPENDENCIES
   maxitest (~> 7.0)
   minitest-difftastic
   minitest-mock
+  prism!
   railties (~> 7.0.0)
   rake (~> 13.0)
   reactionview!
@@ -202,4 +209,4 @@ DEPENDENCIES
   tsort (~> 0.2.0)
 
 BUNDLED WITH
-   2.7.1
+  4.0.19
