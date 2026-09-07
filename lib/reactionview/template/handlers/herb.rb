@@ -60,7 +60,7 @@ module ReActionView
 
           slots = slot_visitors(template, source)
 
-          config[:visitors] = slots.any? ? [*visitors, *slots] : [*visitors, *rewriting_transform_visitors]
+          config[:visitors] = [*visitors, *slots, *rewriting_transform_visitors]
 
           erb_implementation.new(source, config).src
         end
