@@ -60,7 +60,7 @@ module ReActionView
 
           slots = slot_visitors(template, source)
 
-          config[:visitors] = [*visitors, *slots, *rewriting_transform_visitors]
+          config[:visitors] = compile_stack(template, validation_mode: mode, slots: slots)
 
           erb_implementation.new(source, config).src
         end
@@ -114,28 +114,25 @@ module ReActionView
         private
 
         def base_visitors(template, validation_mode: ReActionView.config.validation_mode)
-          passive, _rewriting = partitioned_transform_visitors
+          compile_stack(template, validation_mode: validation_mode).reject { |visitor| rewrites_erb_source?(visitor) }
+        end
 
-          [
+        def compile_stack(template, validation_mode:, slots: [])
+          visitors = [
             *validation_visitors(validation_mode),
             *debug_visitors(template),
             *head_visitors(template),
-            *passive
+            *slots,
+            *::ReActionView.config.engine.visitors
           ]
+
+          ::Herb::Visitor::Stack.arrange(visitors)
         end
 
-        def rewriting_transform_visitors
-          _passive, rewriting = partitioned_transform_visitors
+        def rewrites_erb_source?(visitor)
+          klass = visitor.class
 
-          rewriting
-        end
-
-        def partitioned_transform_visitors
-          ::ReActionView.config.transform_visitors.partition { |visitor|
-            klass = visitor.class
-
-            !(klass.respond_to?(:rewrites_erb_source?) && klass.rewrites_erb_source?)
-          }
+          klass.respond_to?(:rewrites_erb_source?) && klass.rewrites_erb_source?
         end
 
         def schema_validation_mode

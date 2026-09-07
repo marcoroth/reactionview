@@ -2,7 +2,11 @@
 
 require_relative "../test_helper"
 
+require "active_support/testing/deprecation"
+
 class ReActionView::ConfigTest < Minitest::Spec
+  include ActiveSupport::Testing::Deprecation
+
   test "defaults to :raise in test environment" do
     config = ReActionView::Config.new
 
@@ -161,5 +165,36 @@ class ReActionView::ConfigTest < Minitest::Spec
     yield
   ensure
     $VERBOSE = original
+  end
+
+  test "the engine visitors start as an empty stack" do
+    visitors = ReActionView::Config.new.engine.visitors
+
+    assert_kind_of Herb::Visitor::Stack, visitors
+    assert_empty visitors
+  end
+
+  test "transform_visitors= fills the engine stack and says it is deprecated" do
+    config = ReActionView::Config.new
+    visitor = Herb::Visitor.new
+
+    assert_deprecated(/config\.engine\.visitors\.use/, ReActionView.deprecator) do
+      config.transform_visitors = [visitor]
+    end
+
+    assert_equal [visitor], config.engine.visitors.to_a
+  end
+
+  test "transform_visitors reads the engine stack and says it is deprecated" do
+    config = ReActionView::Config.new
+    visitor = Herb::Visitor.new
+
+    config.engine.visitors.use(visitor)
+
+    read = assert_deprecated(/config\.engine\.visitors/, ReActionView.deprecator) do
+      config.transform_visitors
+    end
+
+    assert_same config.engine.visitors, read
   end
 end

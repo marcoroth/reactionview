@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "active_support/deprecation"
+
 require_relative "reactionview/version"
 require_relative "reactionview/config"
 
@@ -32,4 +34,7 @@ require_relative "reactionview/template/handlers/herb/herb"
 require_relative "reactionview/railtie" if defined?(Rails::Railtie)
 
 module ReActionView
+  def self.deprecator
+    @deprecator ||= ::ActiveSupport::Deprecation.new("1.0", "ReActionView")
+  end
 end

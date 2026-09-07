@@ -23,6 +23,10 @@ module ReActionView
       end
     end
 
+    initializer "reactionview.deprecator" do |app|
+      app.deprecators[:reactionview] = ReActionView.deprecator if app.respond_to?(:deprecators)
+    end
+
     initializer "reactionview.asset_manifest_check" do |app|
       next unless ReActionView.config.development?
 
