@@ -46,7 +46,7 @@ module ReActionView
       install_render_times if config.instrumentation.measuring?(:render_times)
       install_translations if config.instrumentation.measuring?(:translations)
 
-      config.transform_visitors += [visitor(config)]
+      config.engine.visitors.use(visitor(config))
 
       nil
     end

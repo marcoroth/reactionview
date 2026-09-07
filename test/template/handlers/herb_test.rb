@@ -456,13 +456,31 @@ class Herb::TemplateHandlerTest < Minitest::Spec
   test "instrumentation runs after the slots visitor and keeps its markers" do
     require "herb/engine/visitors/instrumentation_visitor"
 
-    previous = ReActionView.config.transform_visitors
-    ReActionView.config.transform_visitors = [::Herb::Engine::InstrumentationVisitor.new]
+    previous = ReActionView.config.engine.visitors.dup
+    ReActionView.config.engine.visitors.use(::Herb::Engine::InstrumentationVisitor.new)
 
     template = %(<%# herb:slots client %>\n<p><%= @name %></p>)
 
     assert_compiled_snapshot(template, handler: ReActionView::Template::Handlers::Herb)
   ensure
-    ReActionView.config.transform_visitors = previous
+    ReActionView.config.engine.visitors.replace(previous)
+  end
+
+  class StyleReadingVisitor < Herb::Visitor
+    def self.reads_style_blocks? = true
+  end
+
+  test "a visitor is arranged by what it declares, wherever the app added it" do
+    require "herb/engine/scoped_style/visitor"
+
+    previous = ReActionView.config.engine.visitors.dup
+    ReActionView.config.engine.visitors.use(StyleReadingVisitor.new)
+    ReActionView.config.engine.visitors.use(::Herb::Engine::ScopedStyle::Visitor.new)
+
+    template = %(<%# herb:slots client %>\n<style scoped>p { color: red }</style>\n<p><%= @name %></p>)
+
+    assert_compiled_snapshot(template, handler: ReActionView::Template::Handlers::Herb)
+  ensure
+    ReActionView.config.engine.visitors.replace(previous)
   end
 end

@@ -55,7 +55,7 @@ class ReActionView::InstrumentationTest < Minitest::Spec
 
       refute_predicate ReActionView::Instrumentation, :installed?
       assert_empty ::Herb::Engine::Runtime::Session.measurements
-      assert_empty config.transform_visitors
+      assert_empty config.engine.visitors
     end
 
     test "installs once, however often it is asked" do
@@ -65,7 +65,7 @@ class ReActionView::InstrumentationTest < Minitest::Spec
       ReActionView::Instrumentation.install!(config)
 
       assert_equal 3, ::Herb::Engine::Runtime::Session.measurements.size
-      assert_equal 1, config.transform_visitors.size
+      assert_equal 1, config.engine.visitors.size
     end
 
     test "hands the compiler the visitor that makes a template say what it is rendering" do
@@ -73,7 +73,7 @@ class ReActionView::InstrumentationTest < Minitest::Spec
 
       ReActionView::Instrumentation.install!(config)
 
-      assert_kind_of ::Herb::Engine::InstrumentationVisitor, config.transform_visitors.first
+      assert_kind_of ::Herb::Engine::InstrumentationVisitor, config.engine.visitors.first
     end
   end
 

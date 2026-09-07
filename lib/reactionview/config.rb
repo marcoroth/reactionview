@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "herb"
+require "herb/visitor/stack"
+
 module ReActionView
   class Config
     EXTERNAL_TEMPLATE_MODES = %i[fallback skip compile].freeze
@@ -7,7 +10,6 @@ module ReActionView
 
     attr_accessor :intercept_erb
     attr_accessor :debug_mode
-    attr_accessor :transform_visitors
 
     attr_reader :slots
 
@@ -22,10 +24,37 @@ module ReActionView
       @dev_server = nil
       @dev_server_port = nil
       @external_template_mode = nil
-      @transform_visitors = []
+      @engine = nil
       @project_path = nil
       @slots = false
       @instrumentation = nil
+    end
+
+    def engine
+      @engine ||= EngineOptions.new
+    end
+
+    def transform_visitors
+      ReActionView.deprecator.warn("`config.transform_visitors` is deprecated. Read the visitors from `config.engine.visitors` instead.")
+
+      engine.visitors
+    end
+
+    def transform_visitors=(visitors)
+      ReActionView.deprecator.warn(
+        "`config.transform_visitors=` is deprecated. Add visitors with `config.engine.visitors.use(visitor)` instead, " \
+        "and place them with `insert_before` and `insert_after`."
+      )
+
+      engine.visitors.replace(Array(visitors))
+    end
+
+    class EngineOptions
+      attr_reader :visitors
+
+      def initialize
+        @visitors = ::Herb::Visitor::Stack.new
+      end
     end
 
     def dev_server_enabled?

@@ -39,10 +39,8 @@ module ReActionView
             # config.instrumentation.render_times = false
             # config.instrumentation.translations = false
 
-            # Add custom transform visitors to process templates before compilation
-            # config.transform_visitors = [
-            #   Herb::Visitor::new
-            # ]
+            # Add visitors to the compile. Place them with `insert_before` and `insert_after`.
+            # config.engine.visitors.use(Herb::Visitor.new)
           end
         RUBY
       end
