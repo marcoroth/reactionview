@@ -68,7 +68,12 @@ module ReActionView
 
       Mime::Type.register ReActionView::Slots::MIME_TYPE, ReActionView::Slots::FORMAT unless Mime[ReActionView::Slots::FORMAT]
 
+      ActiveSupport.on_load(:action_view) do
+        include ReActionView::Slots::StateOverridesHelper
+      end
+
       ActiveSupport.on_load(:action_controller_base) do
+        include ReActionView::Slots::StateOverridesHelper
         prepend ReActionView::Slots::Rendering
 
         app.config.paths["app/views"].existent.each do |path|

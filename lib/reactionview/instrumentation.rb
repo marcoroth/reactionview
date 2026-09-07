@@ -56,7 +56,14 @@ module ReActionView
     end
 
     def self.reset!
+      subscriptions.each { |subscription| ::ActiveSupport::Notifications.unsubscribe(subscription) }
+      subscriptions.clear
+
       @installed = false
+    end
+
+    def self.subscriptions
+      @subscriptions ||= []
     end
 
     def self.visitor(config = ReActionView.config)
@@ -66,7 +73,7 @@ module ReActionView
     end
 
     def self.install_sql_queries
-      ::ActiveSupport::Notifications.subscribe("sql.active_record") do |*, payload|
+      subscriptions << ::ActiveSupport::Notifications.subscribe("sql.active_record") do |*, payload|
         next if payload[:cached]
         next if IGNORED_QUERIES.include?(payload[:name])
 
@@ -83,11 +90,11 @@ module ReActionView
 
     def self.install_render_times
       RENDER_EVENTS.each do |event|
-        ::ActiveSupport::Notifications.subscribe(event) do |notification|
+        subscriptions << ::ActiveSupport::Notifications.subscribe(event) do |notification|
           session.observe(:render, {
             duration: notification.duration.round(2),
-            gc: notification.gc_time.round(2),
-            allocations: notification.allocations,
+            gc: notification.respond_to?(:gc_time) ? notification.gc_time.round(2) : 0.0,
+            allocations: notification.respond_to?(:allocations) ? notification.allocations : 0,
             cached: notification.payload[:cache_hit] ? true : nil,
           }.compact)
         end

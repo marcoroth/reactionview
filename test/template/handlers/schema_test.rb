@@ -65,16 +65,14 @@ class ReActionView::SchemaTest < Minitest::Spec
     assert_equal :server, schema("<%# herb:slots server %>\n<p><%= @name %></p>").mode
   end
 
-  it "parks statics only in client mode" do
+  it "parks statics in server mode too, so a values response can unroll a branch" do
     source = "<% if @open %><b>yes</b><% else %><i>no</i><% end %>"
 
     refute_nil schema(source).statics
 
     ReActionView.config.slots = :server
 
-    server_statics = schema(source).statics
-
-    assert server_statics.nil? || server_statics.empty?
+    refute_empty schema(source).statics
   end
 
   it "carries the static markup" do

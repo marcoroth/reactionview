@@ -14,7 +14,7 @@ def ask?(prompt = "")
   Readline.readline("===> #{prompt}? (y/N) ", true).squeeze(" ").strip == "y"
 end
 
-module SnapshotUtils # rubocop:disable Metrics/ModuleLength
+module SnapshotUtils
   def assert_compiled_snapshot(source, handler: ReActionView::Template::Handlers::ERB, virtual_path: "test", identifier: "test_template", format: :html, locals: [], options: {}) # rubocop:disable Metrics/ParameterLists,Layout/LineLength
     template = ActionView::Template.new(
       source,

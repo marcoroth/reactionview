@@ -41,6 +41,10 @@ module ReActionView
           new.compile_for_schema(source, path)
         end
 
+        def self.compile_for_block(source, path, index)
+          new.compile_for_block(source, path, index)
+        end
+
         def call(template, source, validation_mode: nil)
           mode = validation_mode || ReActionView.config.validation_mode
 
@@ -54,7 +58,9 @@ module ReActionView
 
           return values_source(template, source, config) if values_format?(template)
 
-          config[:visitors] = [*visitors, *slot_visitors(template, source)]
+          slots = slot_visitors(template, source)
+
+          config[:visitors] = slots.any? ? [*visitors, *slots] : [*visitors, *rewriting_transform_visitors]
 
           erb_implementation.new(source, config).src
         end
@@ -75,6 +81,23 @@ module ReActionView
           visitor
         end
 
+        def compile_for_block(source, path, index)
+          template = ::Struct.new(:identifier, :format).new(path, :html)
+          visitor = slot_visitors(template, source, mark: false).first
+
+          return nil unless visitor
+
+          ::Herb::Engine::Slots::DynamicsCompiler.new(
+            source,
+            filename: translate_path_for_editor(path),
+            project_path: ::ReActionView.config.project_path,
+            visitors: base_visitors(template),
+            slot_visitor: visitor,
+            block: index,
+            **VALUES_ESCAPING
+          ).src
+        end
+
         def compile_for_schema(source, path)
           template = ::Struct.new(:identifier, :format).new(path, :html)
 
@@ -91,12 +114,28 @@ module ReActionView
         private
 
         def base_visitors(template, validation_mode: ReActionView.config.validation_mode)
+          passive, _rewriting = partitioned_transform_visitors
+
           [
             *validation_visitors(validation_mode),
             *debug_visitors(template),
             *head_visitors(template),
-            *ReActionView.config.transform_visitors
+            *passive
           ]
+        end
+
+        def rewriting_transform_visitors
+          _passive, rewriting = partitioned_transform_visitors
+
+          rewriting
+        end
+
+        def partitioned_transform_visitors
+          ::ReActionView.config.transform_visitors.partition { |visitor|
+            klass = visitor.class
+
+            !(klass.respond_to?(:rewrites_erb_source?) && klass.rewrites_erb_source?)
+          }
         end
 
         def schema_validation_mode
