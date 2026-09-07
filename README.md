@@ -54,6 +54,14 @@ ReActionView.configure do |config|
 
   # How to handle templates that come from gems (:fallback, :skip, or :compile), defaults to :fallback
   # config.external_template_mode = :skip
+
+  # Measure what a page does while it renders, defaults to on in development
+  # config.instrumentation.enabled = Rails.env.development?
+
+  # Each measurement can be turned off on its own
+  # config.instrumentation.sql_queries = false
+  # config.instrumentation.render_times = false
+  # config.instrumentation.translations = false
 end
 ```
 
