@@ -60,7 +60,7 @@ module ReActionView
 
           slots = slot_visitors(template, source)
 
-          config[:visitors] = slots.any? ? [*visitors, *slots] : [*visitors, *rewriting_transform_visitors]
+          config[:visitors] = [*visitors, *slots, *rewriting_transform_visitors]
 
           erb_implementation.new(source, config).src
         end
@@ -183,7 +183,7 @@ module ReActionView
 
           return [] unless mode
 
-          [::Herb::Engine::Slots::Visitor.new(mode: mode, mark: mark, fatal: !::ReActionView.config.development?)]
+          [::Herb::Engine::Slots::Visitor.new(mode: mode, mark: mark)]
         end
 
         def layout_template?(template)

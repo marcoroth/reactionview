@@ -91,4 +91,20 @@ class ReActionView::SlotsTest < Minitest::Spec
 
     assert_match(/slots must be/, error.message)
   end
+
+  test "a slot error raises at compile time in development too" do
+    source = <<~ERB
+      <%# herb:slots client %>
+      <%# herb:state (filter: "") %>
+      <% if Data.feed(filter).any? %>
+        <p>busy</p>
+      <% end %>
+    ERB
+
+    ReActionView.config.stub(:development?, true) do
+      error = assert_raises(Herb::Engine::CompilationError) { compile(source) }
+
+      assert_match(/cannot run Ruby to pick a branch/, error.message)
+    end
+  end
 end

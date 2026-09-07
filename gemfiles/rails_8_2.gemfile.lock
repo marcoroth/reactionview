@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/marcoroth/herb.git
-  revision: 1da6e95664d77148c568024fe0e73f702e1928a5
+  revision: db16eadb9d5aa49db873449bda268af74786256b
   branch: main
   specs:
     herb (0.10.3)
@@ -57,6 +57,13 @@ GIT
       thor (~> 1.0, >= 1.2.2)
       tsort (>= 0.2)
       zeitwerk (~> 2.6)
+
+GIT
+  remote: https://github.com/ruby/prism.git
+  revision: c0e37816e97e23e92524a4070e1b99a4025bc63f
+  tag: v1.9.0
+  specs:
+    prism (1.9.0)
 
 PATH
   remote: ..
@@ -152,7 +159,6 @@ GEM
     pretty_please (0.2.0)
       dispersion (~> 0.2)
     prettyprint (0.2.0)
-    prism (1.9.0)
     psych (5.4.0)
       date
       stringio
@@ -235,6 +241,7 @@ DEPENDENCIES
   maxitest (~> 7.0)
   minitest-difftastic
   minitest-mock
+  prism!
   railties!
   rake (~> 13.0)
   reactionview!
@@ -243,4 +250,4 @@ DEPENDENCIES
   tsort (~> 0.2.0)
 
 BUNDLED WITH
-   2.7.1
+  4.0.19
