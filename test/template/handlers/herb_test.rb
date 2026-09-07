@@ -452,4 +452,17 @@ class Herb::TemplateHandlerTest < Minitest::Spec
 
     assert_includes compiled_source, %(data-herb-debug-file-full-path="/app/app/views/users/show.html.erb")
   end
+
+  test "instrumentation stands down when a template compiles slots" do
+    require "herb/engine/visitors/instrumentation_visitor"
+
+    previous = ReActionView.config.transform_visitors
+    ReActionView.config.transform_visitors = [::Herb::Engine::InstrumentationVisitor.new]
+
+    template = %(<%# herb:slots client %>\n<p><%= @name %></p>)
+
+    assert_compiled_snapshot(template, handler: ReActionView::Template::Handlers::Herb)
+  ensure
+    ReActionView.config.transform_visitors = previous
+  end
 end
