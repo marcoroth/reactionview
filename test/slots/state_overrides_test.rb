@@ -56,7 +56,9 @@ class ReActionView::Slots::StateOverridesTest < Minitest::Spec
     attr_reader :request, :response
 
     def initialize(headers)
-      @request = ActionDispatch::Request.new(headers.transform_keys { |key| "HTTP_#{key.upcase.tr("-", "_")}" })
+      env = Rack::MockRequest.env_for("/").merge(headers.transform_keys { |key| "HTTP_#{key.upcase.tr("-", "_")}" })
+
+      @request = ActionDispatch::Request.new(env)
       @request.format = ReActionView::Slots::FORMAT
       @response = ActionDispatch::Response.new
     end
