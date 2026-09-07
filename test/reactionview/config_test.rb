@@ -197,4 +197,21 @@ class ReActionView::ConfigTest < Minitest::Spec
 
     assert_same config.engine.visitors, read
   end
+
+  test "the engine parser options start empty" do
+    assert_empty ReActionView::Config.new.engine.parser_options
+  end
+
+  test "engine parser options take symbol keys whichever way they were written" do
+    config = ReActionView::Config.new
+    config.engine.parser_options = { "strict_locals" => true, prism_program: false }
+
+    assert_equal({ strict_locals: true, prism_program: false }, config.engine.parser_options)
+  end
+
+  test "engine parser options refuse anything but a Hash" do
+    error = assert_raises(ArgumentError) { ReActionView::Config.new.engine.parser_options = [:strict_locals] }
+
+    assert_match(/must be a Hash/, error.message)
+  end
 end

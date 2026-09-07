@@ -41,6 +41,9 @@ module ReActionView
 
             # Add visitors to the compile. Place them with `insert_before` and `insert_after`.
             # config.engine.visitors.use(Herb::Visitor.new)
+
+            # Parser options for every compile, merged over the ones in .herb.yml
+            # config.engine.parser_options = { strict_locals: true }
           end
         RUBY
       end
