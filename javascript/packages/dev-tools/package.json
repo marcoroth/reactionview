@@ -4,6 +4,11 @@
   "description": "Development tools for ReActionView with Herb integration",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marcoroth/reactionview.git",
+    "directory": "javascript/packages/dev-tools"
+  },
   "main": "./dist/reactionview-dev-tools.umd.js",
   "module": "./dist/reactionview-dev-tools.esm.js",
   "types": "./dist/types/index.d.ts",

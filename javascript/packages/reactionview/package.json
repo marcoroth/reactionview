@@ -3,7 +3,11 @@
   "version": "0.0.1",
   "description": "ReActionView",
   "main": "src/index.js",
-  "repository": "https://github.com/marcoroth/reactionview",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marcoroth/reactionview.git",
+    "directory": "javascript/packages/reactionview"
+  },
   "author": "Marco Roth",
   "license": "MIT",
   "private": false

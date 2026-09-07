@@ -34,6 +34,16 @@ jobs:
           test -f app/assets/javascripts/reactionview-dev-tools.umd.js
           test -f app/assets/javascripts/reactionview-dev-tools.esm.js
 
+      - name: Upload package artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-packages
+          path: |
+            javascript/packages/*/
+            !javascript/packages/*/node_modules
+          if-no-files-found: error
+          retention-days: 1
+
   build:
     runs-on: ubuntu-latest
     name: "Ruby ${{ matrix.ruby }} / ${{ matrix.gemfile }}"
@@ -70,3 +80,66 @@ jobs:
 
       - name: Run tests
         run: bundle exec rake
+
+  preview-check:
+    name: "Check preview permissions"
+    if: |
+      (github.repository == 'marcoroth/reactionview' && github.event_name == 'pull_request' && github.event.pull_request.user.login == github.repository_owner) ||
+      (github.repository == 'marcoroth/reactionview' && github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'release-preview')) ||
+      (github.repository == 'marcoroth/reactionview' && github.event_name == 'push' && github.ref == 'refs/heads/main')
+
+    runs-on: ubuntu-latest
+    outputs:
+      has-permissions: ${{ steps.check.outputs.require-result || steps.push-check.outputs.result }}
+
+    steps:
+      - name: Check permissions
+        id: check
+        if: github.event_name != 'push'
+        uses: actions-cool/check-user-permission@v2
+        with:
+          require: write
+
+      - name: Set permission for push events
+        id: push-check
+        if: github.event_name == 'push'
+        run: echo "result=true" >> $GITHUB_OUTPUT
+
+  preview:
+    name: "Publish preview packages"
+    needs: [assets, preview-check]
+    if: needs.preview-check.outputs.has-permissions == 'true'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".node-version"
+
+      - name: Download package artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: npm-packages
+          path: javascript/packages/
+
+      - name: Publish preview packages
+        run: |
+          packages=$(for directory in ./javascript/packages/*/; do
+            [ -f "$directory/package.json" ] || continue
+            [ "$(jq -r '.private // false' "$directory/package.json")" = "true" ] && continue
+            printf '%s ' "$directory"
+          done)
+
+          echo "Publishing: $packages"
+
+          npx pkg-pr-new@0.0.88 publish --compact --comment=update $packages
