@@ -41,6 +41,10 @@ module ReActionView
           new.compile_for_schema(source, path)
         end
 
+        def self.compile_for_block(source, path, index)
+          new.compile_for_block(source, path, index)
+        end
+
         def call(template, source, validation_mode: nil)
           mode = validation_mode || ReActionView.config.validation_mode
 
@@ -73,6 +77,23 @@ module ReActionView
           ).src
 
           visitor
+        end
+
+        def compile_for_block(source, path, index)
+          template = ::Struct.new(:identifier, :format).new(path, :html)
+          visitor = slot_visitors(template, source, mark: false).first
+
+          return nil unless visitor
+
+          ::Herb::Engine::Slots::DynamicsCompiler.new(
+            source,
+            filename: translate_path_for_editor(path),
+            project_path: ::ReActionView.config.project_path,
+            visitors: base_visitors(template),
+            slot_visitor: visitor,
+            block: index,
+            **VALUES_ESCAPING
+          ).src
         end
 
         def compile_for_schema(source, path)

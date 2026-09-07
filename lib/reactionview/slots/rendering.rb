@@ -6,6 +6,7 @@ module ReActionView
   module Slots
     module Rendering
       BODY_END_TAG = "</body>"
+      BLOCK_HEADER = "Herb-Block"
 
       def _normalize_options(options)
         super
@@ -16,6 +17,18 @@ module ReActionView
       end
 
       def render_to_body(options = {})
+        protect_steered_response
+
+        if (block = scoped_block_index)
+          begin
+            return ::JSON.generate(render_scoped_block(block, options))
+          rescue ::StandardError => e
+            raise unless ReActionView.config.development?
+
+            return render_slots_error(e)
+          end
+        end
+
         begin
           rendered = super
         rescue ::StandardError => e
@@ -32,6 +45,14 @@ module ReActionView
       end
 
       private
+
+      def protect_steered_response
+        return unless slots_request?
+        return unless request.respond_to?(:headers) && respond_to?(:response) && response
+        return if request.headers[StateOverrides::HEADER].nil?
+
+        response.headers["Cache-Control"] = "no-store"
+      end
 
       def render_slots_error(error)
         self.status = 500
@@ -77,6 +98,26 @@ module ReActionView
         logger&.debug { "ReActionView could not build the schema envelope: #{e.class}: #{e.message}" }
 
         rendered
+      end
+
+      def scoped_block_index
+        return nil unless slots_request?
+
+        value = request.headers[BLOCK_HEADER]
+
+        value&.match?(/\A\d+\z/) ? Integer(value, 10) : nil
+      end
+
+      def render_scoped_block(index, options)
+        entry = entry_point_for(options)
+
+        raise ::ArgumentError, "a scoped block request found no entry template" unless entry
+
+        program = ReActionView::Slots.block_program(entry, index)
+
+        raise ::ArgumentError, "the entry template compiles no slots, so it holds no block \#{index}" unless program
+
+        view_context.instance_eval(program, entry)
       end
 
       def slots_request?

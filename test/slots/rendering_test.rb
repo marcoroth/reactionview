@@ -62,7 +62,10 @@ class ReActionView::Slots::RenderingTest < Minitest::Spec
   end
 
   Format = Struct.new(:symbol)
-  Request = Struct.new(:format)
+
+  Request = Struct.new(:format) do
+    def headers = {}
+  end
 
   class Normalizing
     attr_reader :request

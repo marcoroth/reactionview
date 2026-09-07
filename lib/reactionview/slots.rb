@@ -22,5 +22,17 @@ module ReActionView
     def self.reset_dependencies!
       @dependencies = nil
     end
+
+    #: (String, Integer) -> String?
+    def self.block_program(path, index)
+      mtime = ::File.mtime(path)
+      key = [path, index, mtime]
+
+      (@block_programs_lock ||= ::Mutex.new).synchronize do
+        programs = (@block_programs ||= {})
+        programs.clear if programs.size > 128 && !programs.key?(key)
+        programs[key] ||= ReActionView::Template::Handlers::Herb.compile_for_block(::File.read(path), path, index)
+      end
+    end
   end
 end
