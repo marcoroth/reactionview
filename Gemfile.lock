@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/marcoroth/herb.git
-  revision: 168298340a686806be16ea14c3dfdd0f8ec744f2
+  revision: db16eadb9d5aa49db873449bda268af74786256b
   branch: main
   specs:
     herb (0.10.3)

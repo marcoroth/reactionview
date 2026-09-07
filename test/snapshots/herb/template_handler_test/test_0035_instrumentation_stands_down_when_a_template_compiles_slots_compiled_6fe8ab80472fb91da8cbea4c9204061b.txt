@@ -1,3 +1,0 @@
- _herb_occurrence = ((@_herb_region_occurrences ||= ::Hash.new(0))["test_template"] += 1) - 1 ; @output_buffer.safe_append='<!--herb-region:test_template:6fd3ef2b:'.freeze; @output_buffer.append=(_herb_occurrence); @output_buffer.safe_append='-->
-<p data-herb-slot="0:child">'.freeze; @output_buffer.append=(@name); @output_buffer.safe_append='</p><!--/herb-region:test_template-->'.freeze;
-@output_buffer
