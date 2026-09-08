@@ -128,6 +128,39 @@ Skipping silently means you never find out that a gem's templates cannot be comp
 In `:fallback` mode, external templates are always compiled with `validation_mode: :raise` regardless of your `validation_mode` setting, so a gem template can never put a validation overlay on your page over markup you cannot change.
 :::
 
+#### Compile Visitors <Badge type="info" text="^0.5.0" />
+
+`config.engine.visitors` is the stack of visitors ReActionView adds to every compile on top of its own. It is a `Herb::Visitor::Stack`, so a visitor can be appended with `use` or placed against a built-in with `insert_before` and `insert_after`:
+
+:::code-group
+```ruby [config/initializers/reactionview.rb]
+ReActionView.configure do |config|
+  config.engine.visitors.use(MyVisitor.new)
+  config.engine.visitors.insert_after(Herb::Engine::Slots::Visitor, MyRewriter.new)
+end
+```
+:::
+
+The order visitors run in follows what they declare about themselves. A visitor that reads the ERB a template was written with runs before any visitor that rewrites it, a visitor that reads `<style>` blocks runs after any visitor that rewrites them, and a visitor that inlines other templates runs first. ReActionView merges its built-ins with your stack and lets `Herb::Visitor::Stack.arrange` order the result, so placing a visitor where its declarations do not allow moves it instead of failing the compile. A visitor that rewrites ERB takes part in the page compile only. The values, block and schema compiles that answer the client leave rewriters out, since nothing reads what they would wrap there.
+
+`config.transform_visitors` still works and fills the same stack, and says it is deprecated when used.
+
+#### Parser Options <Badge type="info" text="^0.5.0" />
+
+Visitors declare the parser options they need themselves, and Herb reads the rest from the `engine.parser_options` section of `.herb.yml`. An application without a `.herb.yml` can set them on the engine instead:
+
+:::code-group
+```ruby [config/initializers/reactionview.rb]
+ReActionView.configure do |config|
+  config.engine.parser_options = { strict_locals: true }
+end
+```
+:::
+
+These are merged over the project's parser options and handed to every compile alike, so the page, the values it answers with, and the schema never parse a template differently from one another. The keys are the ones `.herb.yml` uses, so the engine and `herb lint` keep reading the same names. An option that contradicts what a visitor requires raises at compile time, the same way it would when passed to `Herb::Engine` directly.
+
+**Default**: `{}`, which leaves the engine to its own defaults.
+
 ## Verify Installation
 
 Create a test template to verify ReActionView is working:
