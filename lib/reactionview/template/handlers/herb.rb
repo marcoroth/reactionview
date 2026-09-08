@@ -54,6 +54,7 @@ module ReActionView
             filename: translate_path_for_editor(template.identifier),
             project_path: ::ReActionView.config.project_path,
             visitors: visitors,
+            **engine_options,
           }
 
           return values_source(template, source, config) if values_format?(template)
@@ -75,7 +76,8 @@ module ReActionView
             source,
             filename: translate_path_for_editor(path),
             project_path: ::ReActionView.config.project_path,
-            visitors: [*base_visitors(template), visitor]
+            visitors: [*base_visitors(template), visitor],
+            **engine_options
           ).src
 
           visitor
@@ -94,6 +96,7 @@ module ReActionView
             visitors: base_visitors(template),
             slot_visitor: visitor,
             block: index,
+            **engine_options,
             **VALUES_ESCAPING
           ).src
         end
@@ -107,7 +110,7 @@ module ReActionView
             mode: ::ReActionView.config.slot_mode_for(source),
             visitors: -> { base_visitors(template, validation_mode: schema_validation_mode) },
             engine: erb_implementation,
-            options: { project_path: ::ReActionView.config.project_path }
+            options: { project_path: ::ReActionView.config.project_path, **engine_options }
           )
         end
 
@@ -127,6 +130,16 @@ module ReActionView
           ]
 
           ::Herb::Visitor::Stack.arrange(visitors)
+        end
+
+        def engine_options
+          configured = ::ReActionView.config.engine.parser_options
+
+          return {} if configured.empty?
+
+          defaults = ::Herb.configuration.engine_option("parser_options", {})
+
+          { parser_options: defaults.transform_keys(&:to_sym).merge(configured) }
         end
 
         def rewrites_erb_source?(visitor)

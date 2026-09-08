@@ -483,4 +483,79 @@ class Herb::TemplateHandlerTest < Minitest::Spec
   ensure
     ReActionView.config.engine.visitors.replace(previous)
   end
+
+  def compile_with_engine_parser_options(options)
+    previous = ReActionView.config.engine.parser_options
+    ReActionView.config.engine.parser_options = options
+
+    yield
+  ensure
+    ReActionView.config.engine.parser_options = previous
+  end
+
+  test "parser options on the engine reach the page compile" do
+    source = %(<%# herb:slots client %>\n<p><%= @name %></p>)
+    template_object = ActionView::Template.new(source, "/app/app/views/users/show.html.erb", ReActionView::Template::Handlers::Herb, virtual_path: "users/show", format: :html, locals: [])
+    implementation = ReActionView::Template::Handlers::Herb.erb_implementation
+    original = implementation.method(:new)
+    captured = nil
+
+    compile_with_engine_parser_options({ strict_locals: true }) do
+      implementation.stub(:new, lambda { |compiled, config = {}|
+        captured = config[:parser_options]
+        original.call(compiled, config)
+      }) do
+        Rails.stub(:root, Pathname.new("/app")) { ReActionView::Template::Handlers::Herb.call(template_object, source) }
+      end
+    end
+
+    assert_equal true, captured[:strict_locals]
+  end
+
+  test "parser options on the engine reach a block compile" do
+    source = %(<%# herb:slots client %>\n<Async><p><%= @name %></p><Fallback><p>wait</p></Fallback></Async>)
+    original = ::Herb::Engine::Slots::DynamicsCompiler.method(:new)
+    captured = nil
+
+    compile_with_engine_parser_options({ strict_locals: true }) do
+      ::Herb::Engine::Slots::DynamicsCompiler.stub(:new, lambda { |compiled, config = {}|
+        captured = config[:parser_options]
+        original.call(compiled, config)
+      }) do
+        Rails.stub(:root, Pathname.new("/app")) { ReActionView::Template::Handlers::Herb.compile_for_block(source, "/app/app/views/users/show.html.erb", 0) }
+      end
+    end
+
+    assert_equal true, captured[:strict_locals]
+  end
+
+  test "the project's parser options still apply when the engine has none" do
+    source = %(<%# herb:slots client %>\n<p><%= @name %></p>)
+    template_object = ActionView::Template.new(source, "/app/app/views/users/show.html.erb", ReActionView::Template::Handlers::Herb, virtual_path: "users/show", format: :html, locals: [])
+    implementation = ReActionView::Template::Handlers::Herb.erb_implementation
+    original = implementation.method(:new)
+    captured = :untouched
+
+    implementation.stub(:new, lambda { |compiled, config = {}|
+      captured = config.key?(:parser_options)
+      original.call(compiled, config)
+    }) do
+      Rails.stub(:root, Pathname.new("/app")) { ReActionView::Template::Handlers::Herb.call(template_object, source) }
+    end
+
+    assert_equal false, captured
+  end
+
+  test "a parser option on the engine that a visitor requires otherwise raises at compile" do
+    source = %(<%# herb:slots client %>\n<p><%= @name %></p>)
+    template_object = ActionView::Template.new(source, "/app/app/views/users/show.html.erb", ReActionView::Template::Handlers::Herb, virtual_path: "users/show", format: :html, locals: [])
+
+    error = compile_with_engine_parser_options({ track_locations: false }) do
+      assert_raises(ArgumentError) do
+        Rails.stub(:root, Pathname.new("/app")) { ReActionView::Template::Handlers::Herb.call(template_object, source) }
+      end
+    end
+
+    assert_equal "Herb::Engine::Validators::SecurityValidator requires the `track_locations` parser option to be true, but it is set to false", error.message
+  end
 end

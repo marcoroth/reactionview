@@ -51,9 +51,17 @@ module ReActionView
 
     class EngineOptions
       attr_reader :visitors
+      attr_reader :parser_options
 
       def initialize
         @visitors = ::Herb::Visitor::Stack.new
+        @parser_options = {}
+      end
+
+      def parser_options=(options)
+        raise ArgumentError, "parser_options must be a Hash of parser options, got #{options.inspect}" unless options.is_a?(Hash)
+
+        @parser_options = options.transform_keys(&:to_sym)
       end
     end
 
