@@ -27,6 +27,8 @@ bundle add reactionview
 rails generate reactionview:install
 ```
 
+The gem pins the `reactionview` client runtime for importmap applications and the generator imports it from `app/javascript/application.js`. With a bundler, install the npm package and import it from your entry point instead. See [JavaScript Client](https://reactionview.dev/javascript).
+
 ## Usage
 
 ReActionView provides two ways to use enhanced template processing:

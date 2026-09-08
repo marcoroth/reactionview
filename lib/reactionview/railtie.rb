@@ -10,17 +10,27 @@ module ReActionView
     # end
     #
     PRECOMPILE_ASSETS = %w[
+      reactionview.esm.js
       reactionview-dev-tools.esm.js
       reactionview-dev-tools.umd.js
     ].freeze
 
-    initializer "reactionview.assets", after: :load_config_initializers do |app|
-      if ReActionView.config.debug_mode_enabled? && app.config.respond_to?(:assets)
-        gem_root = Gem::Specification.find_by_name("reactionview").gem_dir
+    def self.gem_root
+      Gem::Specification.find_by_name("reactionview").gem_dir
+    end
 
-        app.config.assets.paths << File.join(gem_root, "app", "assets", "javascripts")
-        app.config.assets.precompile += PRECOMPILE_ASSETS
-      end
+    initializer "reactionview.assets", after: :load_config_initializers do |app|
+      next unless app.config.respond_to?(:assets)
+
+      app.config.assets.paths << File.join(ReActionView::Railtie.gem_root, "app", "assets", "javascripts")
+      app.config.assets.precompile += PRECOMPILE_ASSETS
+    end
+
+    initializer "reactionview.importmap", before: "importmap" do |app|
+      next unless app.config.respond_to?(:importmap)
+
+      app.config.importmap.paths << File.join(ReActionView::Railtie.gem_root, "lib", "reactionview", "importmap.rb")
+      app.config.importmap.cache_sweepers << File.join(ReActionView::Railtie.gem_root, "app", "assets", "javascripts")
     end
 
     initializer "reactionview.deprecator" do |app|

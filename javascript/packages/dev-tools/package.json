@@ -15,7 +15,7 @@
   "scripts": {
     "build": "yarn clean && tsc --emitDeclarationOnly && rolldown -c",
     "dev": "rolldown -c -w",
-    "clean": "rimraf dist && rimraf ../../../app/assets/"
+    "clean": "rimraf dist ../../../app/assets/javascripts/reactionview-dev-tools.*"
   },
   "exports": {
     "./package.json": "./package.json",

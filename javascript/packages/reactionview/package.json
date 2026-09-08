@@ -1,14 +1,47 @@
 {
   "name": "reactionview",
-  "version": "0.0.1",
-  "description": "ReActionView",
-  "main": "src/index.js",
+  "version": "0.4.0",
+  "description": "Reactive views for the HTML+ERB you already have. The browser runtime for ReActionView.",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://reactionview.dev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marcoroth/reactionview.git",
+    "url": "git+https://github.com/marcoroth/reactionview.git",
     "directory": "javascript/packages/reactionview"
   },
-  "author": "Marco Roth",
-  "license": "MIT",
-  "private": false
+  "main": "./dist/reactionview.esm.js",
+  "module": "./dist/reactionview.esm.js",
+  "sideEffects": [
+    "./src/auto-start.ts",
+    "./dist/reactionview.esm.js"
+  ],
+  "types": "./dist/types/index.d.ts",
+  "scripts": {
+    "build": "yarn clean && tsc --emitDeclarationOnly && rolldown -c",
+    "dev": "rolldown -c -w",
+    "clean": "rimraf dist ../../../app/assets/javascripts/reactionview.esm.js ../../../app/assets/javascripts/reactionview.esm.js.map"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/reactionview.esm.js",
+      "default": "./dist/reactionview.esm.js"
+    }
+  },
+  "dependencies": {
+    "@herb-tools/client": "https://pkg.pr.new/marcoroth/herb/@herb-tools/client@1da6e95"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1",
+    "rolldown": "^1.2.3",
+    "typescript": "^7.0.2"
+  },
+  "files": [
+    "package.json",
+    "README.md",
+    "dist/",
+    "src/"
+  ]
 }

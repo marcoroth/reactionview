@@ -46,7 +46,7 @@ module ReActionView
 
     def explanation
       <<~MESSAGE
-        ReActionView's dev tools assets are missing from your precompiled assets.
+        ReActionView's JavaScript assets are missing from your precompiled assets.
         #{status}
 
         To fix this, delete the precompiled assets:
