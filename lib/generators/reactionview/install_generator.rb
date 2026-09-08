@@ -48,12 +48,39 @@ module ReActionView
         RUBY
       end
 
+      def add_javascript
+        if File.exist?("config/importmap.rb")
+          say "The gem pins the reactionview client runtime in your importmap, nothing to add there.", :green
+        elsif File.exist?("package.json")
+          say "Add the client runtime to your bundle: #{javascript_install_command}", :yellow
+        end
+
+        return unless File.exist?("app/javascript/application.js")
+
+        say "Importing reactionview in app/javascript/application.js...", :green
+
+        append_to_file "app/javascript/application.js", %(import "reactionview"\n)
+      end
+
+      def javascript_install_command
+        if File.exist?("bun.lock") || File.exist?("bun.lockb")
+          "bun add reactionview"
+        elsif File.exist?("pnpm-lock.yaml")
+          "pnpm add reactionview"
+        elsif File.exist?("package-lock.json")
+          "npm install reactionview"
+        else
+          "yarn add reactionview"
+        end
+      end
+
       def show_installation_complete
         say "\nReActionView has been successfully installed! 🎉", :green
         say "\nNext steps:", :blue
         say "  1. Review config/initializers/reactionview.rb"
         say "  2. Enable `config.intercept_erb = true` to process all `*.html.erb` templates using `Herb::Engine`."
         say "  3. Create `*.html.herb` templates for explicit Herb usage."
+        say "  4. Make sure `import \"reactionview\"` runs in your JavaScript entry point, see https://reactionview.dev/javascript"
 
         say "\nLearn more:", :yellow
         say "  GitHub:  https://github.com/marcoroth/reactionview"

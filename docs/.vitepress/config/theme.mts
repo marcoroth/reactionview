@@ -5,6 +5,7 @@ const defaultSidebar = [
     items: [
       { text: "Overview", link: "/overview" },
       { text: "Installation", link: "/installation" },
+      { text: "JavaScript Client", link: "/javascript" },
     ],
   },
   {

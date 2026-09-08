@@ -46,6 +46,10 @@ end
 ```
 :::
 
+## Add the JavaScript Client
+
+Interactive templates need the client runtime on the page. The gem pins it in the importmap for importmap applications, and the generator appends `import "reactionview"` to `app/javascript/application.js`. Applications with a bundler install the `reactionview` npm package instead. See [JavaScript Client](/javascript) for both setups.
+
 ## Configuration Options
 
 ### Basic Setup
