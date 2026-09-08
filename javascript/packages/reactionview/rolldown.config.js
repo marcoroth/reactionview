@@ -5,12 +5,14 @@ export default [
       {
         file: "dist/reactionview.esm.js",
         format: "esm",
-        sourcemap: true
+        sourcemap: true,
+        minify: true
       },
       {
         file: "../../../app/assets/javascripts/reactionview.esm.js",
         format: "esm",
-        sourcemap: true
+        sourcemap: true,
+        minify: true
       },
     ],
     external: [],
