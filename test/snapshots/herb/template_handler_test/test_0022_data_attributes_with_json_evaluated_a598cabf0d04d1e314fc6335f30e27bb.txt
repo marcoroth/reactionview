@@ -1,0 +1,1 @@
+<div data-value="[&quot;foo&quot;,&quot;bar&quot;]"></div>

@@ -7,6 +7,7 @@ Gem::Specification.new do |spec|
   spec.version = ReActionView::VERSION
   spec.authors = ["Marco Roth"]
   spec.email = ["marco.roth@intergga.ch"]
+  spec.license = "MIT"
 
   spec.summary = "An ActionView-compatible ERB engine with modern DX - re-imagined with Herb."
   spec.description = spec.summary
@@ -35,5 +36,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "actionview", ">= 7.0"
-  spec.add_dependency "herb", ">= 0.7.2", "< 1.0.0"
+  spec.add_dependency "cruise", ">= 0.3.0"
+  spec.add_dependency "herb", ">= 0.10.0", "< 0.11.0"
 end

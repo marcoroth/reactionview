@@ -5,6 +5,7 @@ const defaultSidebar = [
     items: [
       { text: "Overview", link: "/overview" },
       { text: "Installation", link: "/installation" },
+      { text: "JavaScript Client", link: "/javascript" },
     ],
   },
   {
@@ -14,6 +15,7 @@ const defaultSidebar = [
       { text: "Debug Mode", link: "/guides/debug-mode" },
       { text: "Validation Overlays", link: "/guides/validation-overlays" },
       { text: "Development Tools", link: "/guides/development-tools" },
+      { text: "Runtime Instrumentation", link: "/guides/runtime-instrumentation" },
     ],
   },
   {

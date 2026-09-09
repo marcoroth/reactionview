@@ -23,12 +23,55 @@ module ReActionView
             # Enable debug mode in development (adds debug attributes to HTML)
             config.debug_mode = Rails.env.development? && !ENV["REACTIONVIEW_DISABLE_DEBUG_MODE"]
 
-            # Add custom transform visitors to process templates before compilation
-            # config.transform_visitors = [
-            #   Herb::Visitor::new
-            # ]
+            # Path used for editor "open in editor" links (optional, defaults to Rails.root)
+            # config.project_path = ENV.fetch('PROJECT_PATH', Rails.root.to_s)
+
+            # Validation mode (:raise, :overlay, or :none) — defaults to :raise in test, :overlay otherwise
+            # config.validation_mode = :overlay
+
+            # How to handle templates that come from gems (:fallback, :skip, or :compile), defaults to :fallback
+            # config.external_template_mode = :skip
+
+            # Measure what a page does while it renders, and show it in the dev tools.
+            # Follows development unless you say otherwise, and each measurement can be turned off.
+            # config.instrumentation.enabled = Rails.env.development?
+            # config.instrumentation.sql_queries = false
+            # config.instrumentation.render_times = false
+            # config.instrumentation.translations = false
+
+            # Add visitors to the compile. Place them with `insert_before` and `insert_after`.
+            # config.engine.visitors.use(Herb::Visitor.new)
+
+            # Parser options for every compile, merged over the ones in .herb.yml
+            # config.engine.parser_options = { strict_locals: true }
           end
         RUBY
+      end
+
+      def add_javascript
+        if File.exist?("config/importmap.rb")
+          say "The gem pins the reactionview client runtime in your importmap, nothing to add there.", :green
+        elsif File.exist?("package.json")
+          say "Add the client runtime to your bundle: #{javascript_install_command}", :yellow
+        end
+
+        return unless File.exist?("app/javascript/application.js")
+
+        say "Importing reactionview in app/javascript/application.js...", :green
+
+        append_to_file "app/javascript/application.js", %(import "reactionview"\n)
+      end
+
+      def javascript_install_command
+        if File.exist?("bun.lock") || File.exist?("bun.lockb")
+          "bun add reactionview"
+        elsif File.exist?("pnpm-lock.yaml")
+          "pnpm add reactionview"
+        elsif File.exist?("package-lock.json")
+          "npm install reactionview"
+        else
+          "yarn add reactionview"
+        end
       end
 
       def show_installation_complete
@@ -37,6 +80,7 @@ module ReActionView
         say "  1. Review config/initializers/reactionview.rb"
         say "  2. Enable `config.intercept_erb = true` to process all `*.html.erb` templates using `Herb::Engine`."
         say "  3. Create `*.html.herb` templates for explicit Herb usage."
+        say "  4. Make sure `import \"reactionview\"` runs in your JavaScript entry point, see https://reactionview.dev/javascript"
 
         say "\nLearn more:", :yellow
         say "  GitHub:  https://github.com/marcoroth/reactionview"

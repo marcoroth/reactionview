@@ -27,6 +27,8 @@ bundle add reactionview
 rails generate reactionview:install
 ```
 
+The gem pins the `reactionview` client runtime for importmap applications and the generator imports it from `app/javascript/application.js`. With a bundler, install the npm package and import it from your entry point instead. See [JavaScript Client](https://reactionview.dev/javascript).
+
 ## Usage
 
 ReActionView provides two ways to use enhanced template processing:
@@ -45,6 +47,29 @@ ReActionView.configure do |config|
 
   # Enable debug mode
   config.debug_mode = Rails.env.development? && !ENV["REACTIONVIEW_DISABLE_DEBUG_MODE"]
+
+  # Custom path for editor "open in editor" links (optional, defaults to Rails.root)
+  # config.project_path = ENV.fetch('PROJECT_PATH', Rails.root.to_s)
+
+  # Validation mode (:raise, :overlay, or :none) — defaults to :raise in test, :overlay otherwise
+  # config.validation_mode = :overlay
+
+  # How to handle templates that come from gems (:fallback, :skip, or :compile), defaults to :fallback
+  # config.external_template_mode = :skip
+
+  # Measure what a page does while it renders, defaults to on in development
+  # config.instrumentation.enabled = Rails.env.development?
+
+  # Each measurement can be turned off on its own
+  # config.instrumentation.sql_queries = false
+  # config.instrumentation.render_times = false
+  # config.instrumentation.translations = false
+
+  # Add visitors to the compile. Place them with `insert_before` and `insert_after`.
+  # config.engine.visitors.use(Herb::Visitor.new)
+
+  # Parser options for every compile, merged over the ones in .herb.yml
+  # config.engine.parser_options = { strict_locals: true }
 end
 ```
 
@@ -62,6 +87,6 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/marcor
 
 Everyone interacting in the ReActionView project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/marcoroth/reactionview/blob/main/CODE_OF_CONDUCT.md).
 
-## License 
+## License
 
 This project is available as open source under the terms of the [MIT License](https://github.com/marcoroth/reactionview/blob/main/LICENSE.txt).

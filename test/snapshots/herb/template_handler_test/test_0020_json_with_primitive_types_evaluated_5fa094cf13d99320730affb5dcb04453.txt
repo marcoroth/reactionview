@@ -1,0 +1,1 @@
+<div data-values="{&quot;active&quot;:true,&quot;disabled&quot;:false,&quot;count&quot;:42,&quot;price&quot;:19.99,&quot;nothing&quot;:null}"></div>

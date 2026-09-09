@@ -1,0 +1,1 @@
+<style>:root { --primary: #FF0000; --secondary: rgb(0, 255, 0); }</style>

@@ -16,7 +16,7 @@
     "clean": "rimraf .vitepress/dist/ && rimraf .vitepress/cache/"
   },
   "devDependencies": {
-    "vitepress": "^2.0.0-alpha.5",
-    "vitepress-plugin-group-icons": "^1.5.5"
+    "vitepress": "^2.0.0-alpha.20",
+    "vitepress-plugin-group-icons": "^1.7.6"
   }
 }

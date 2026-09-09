@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "active_support/deprecation"
+
 require_relative "reactionview/version"
 require_relative "reactionview/config"
 
@@ -17,6 +19,14 @@ require_relative "reactionview/config"
 
 # require_relative "reactionview/source_annotation_extractor"
 
+require_relative "reactionview/slots"
+require_relative "reactionview/slots/resolver"
+require_relative "reactionview/slots/rendering"
+require_relative "reactionview/slots/state_overrides"
+require_relative "reactionview/slots/dev_compiler"
+
+require_relative "reactionview/template/local_template"
+
 require_relative "reactionview/template/handlers/erb"
 require_relative "reactionview/template/handlers/herb"
 require_relative "reactionview/template/handlers/herb/herb"
@@ -24,4 +34,7 @@ require_relative "reactionview/template/handlers/herb/herb"
 require_relative "reactionview/railtie" if defined?(Rails::Railtie)
 
 module ReActionView
+  def self.deprecator
+    @deprecator ||= ::ActiveSupport::Deprecation.new("1.0", "ReActionView")
+  end
 end

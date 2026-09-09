@@ -1,0 +1,2 @@
+ @output_buffer.append=(render(component));
+@output_buffer

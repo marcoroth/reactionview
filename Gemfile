@@ -4,11 +4,16 @@ source "https://rubygems.org"
 
 gemspec
 
-gem "actionview", "~> 8.0"
-# gem "herb", path: "../herb"
-gem "maxitest"
-gem "minitest", "~> 5.16"
+gem "herb", github: "marcoroth/herb", branch: "main"
+gem "prism", github: "ruby/prism", tag: "v1.9.0"
+
+gem "actionview", "~> 8.1"
+gem "appraisal"
+gem "maxitest", "~> 7.0"
 gem "minitest-difftastic"
-gem "railties", "~> 8.0"
+gem "minitest-mock"
+gem "railties", "~> 8.1"
 gem "rake", "~> 13.0"
+gem "readline", "~> 0.0.4"
 gem "rubocop", "~> 1.80.1"
+gem "tsort", "~> 0.2.0"
