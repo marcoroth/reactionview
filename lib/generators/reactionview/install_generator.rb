@@ -21,7 +21,7 @@ module ReActionView
             # config.intercept_erb = true
 
             # Enable debug mode in development (adds debug attributes to HTML)
-            config.debug_mode = Rails.env.development?
+            config.debug_mode = Rails.env.development? && !ENV["REACTIONVIEW_DISABLE_DEBUG_MODE"]
 
             # Path used for editor "open in editor" links (optional, defaults to Rails.root)
             # config.project_path = ENV.fetch('PROJECT_PATH', Rails.root.to_s)
