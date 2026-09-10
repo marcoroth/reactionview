@@ -46,6 +46,40 @@ class ReActionView::ExternalTemplateModeTest < Minitest::Spec
     end
   end
 
+  def erubi_compile(source, identifier)
+    template = build(source, identifier)
+
+    without_builtin_herb do
+      ActionView::Template::Handlers::ERB.new.call(template, source)
+    end
+  end
+
+  def builtin_routing?
+    ActionView::Template::Handlers::ERB.respond_to?(:html_erb_implementation=)
+  end
+
+  def without_builtin_herb
+    return yield unless builtin_routing?
+
+    previous = ActionView::Template::Handlers::ERB.html_erb_implementation
+    ActionView::Template::Handlers::ERB.html_erb_implementation = nil
+
+    yield
+  ensure
+    ActionView::Template::Handlers::ERB.html_erb_implementation = previous if builtin_routing?
+  end
+
+  def with_builtin_herb
+    skip "Rails does not route HTML templates through a builtin Herb implementation" unless builtin_routing?
+
+    previous = ActionView::Template::Handlers::ERB.html_erb_implementation
+    ActionView::Template::Handlers::ERB.html_erb_implementation = ActionView::Template::Handlers::ERB::Herb
+
+    yield
+  ensure
+    ActionView::Template::Handlers::ERB.html_erb_implementation = previous if builtin_routing?
+  end
+
   test "defaults to :fallback" do
     assert_equal :fallback, ReActionView::Config.new.external_template_mode
   end
@@ -81,7 +115,7 @@ class ReActionView::ExternalTemplateModeTest < Minitest::Spec
 
     compiled = compile(VALID, EXTERNAL)
 
-    refute_equal ActionView::Template::Handlers::ERB.new.call(build(VALID, EXTERNAL), VALID), compiled
+    refute_equal erubi_compile(VALID, EXTERNAL), compiled
     assert_empty @log.string
   end
 
@@ -90,7 +124,7 @@ class ReActionView::ExternalTemplateModeTest < Minitest::Spec
 
     compiled = compile(INVALID, EXTERNAL)
 
-    assert_equal ActionView::Template::Handlers::ERB.new.call(build(INVALID, EXTERNAL), INVALID), compiled
+    assert_equal erubi_compile(INVALID, EXTERNAL), compiled
     assert_includes @log.string, "[ReActionView]"
     assert_includes @log.string, EXTERNAL
     assert_includes @log.string, "falling back to"
@@ -101,7 +135,7 @@ class ReActionView::ExternalTemplateModeTest < Minitest::Spec
 
     compiled = compile(VALID, EXTERNAL)
 
-    assert_equal ActionView::Template::Handlers::ERB.new.call(build(VALID, EXTERNAL), VALID), compiled
+    assert_equal erubi_compile(VALID, EXTERNAL), compiled
     assert_empty @log.string
   end
 
@@ -181,6 +215,28 @@ class ReActionView::ExternalTemplateModeTest < Minitest::Spec
     assert_empty @log.string
   ensure
     ReActionView.config.validation_mode = nil
+  end
+
+  test ":fallback falls back to the default ERB implementation when Rails routes HTML through Herb" do
+    with_builtin_herb do
+      ReActionView.config.external_template_mode = :fallback
+
+      compiled = compile(INVALID, EXTERNAL)
+
+      assert_equal erubi_compile(INVALID, EXTERNAL), compiled
+      assert_includes @log.string, "falling back to"
+    end
+  end
+
+  test ":skip compiles external templates with the default ERB implementation when Rails routes HTML through Herb" do
+    with_builtin_herb do
+      ReActionView.config.external_template_mode = :skip
+
+      compiled = compile(INVALID, EXTERNAL)
+
+      assert_equal erubi_compile(INVALID, EXTERNAL), compiled
+      assert_empty @log.string
+    end
   end
 
   test "external templates never render a validation overlay in :fallback mode" do

@@ -11,6 +11,12 @@ module ReActionView
         autoload :Herb, "reactionview/template/handlers/herb/herb"
 
         def call(template, source)
+          if skip_external_template?(template)
+            @erb_fallback = true
+
+            return super
+          end
+
           return super unless intercept_template?(template)
 
           ::ReActionView::Template::Handlers::Herb.call(
@@ -21,10 +27,25 @@ module ReActionView
 
           log_external_template_error(template, e)
 
+          @erb_fallback = true
+
           super
         end
 
         private
+
+        def implementation_for(template)
+          return self.class.erb_implementation if @erb_fallback
+
+          super
+        end
+
+        def skip_external_template?(template)
+          return false unless INTERCEPTED_FORMATS.include?(template.format) && ReActionView.config.intercept_erb
+          return false if framework_template?(template) || local_template?(template)
+
+          ReActionView.config.external_template_mode == :skip
+        end
 
         def intercept_template?(template)
           return false unless INTERCEPTED_FORMATS.include?(template.format) && ReActionView.config.intercept_erb
