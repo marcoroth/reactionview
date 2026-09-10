@@ -71,6 +71,14 @@ end
 
 This gives you all the benefits of Herb's validation, security features, and debugging tools for your existing templates.
 
+### Rails 8.2 and the built-in Herb implementation
+
+Rails 8.2 compiles HTML templates through Herb on its own when an application runs the 8.2 framework defaults, through `config.action_view.html_erb_implementation`. That covers plain compilation. Enabling `intercept_erb` on Rails 8.2 adds what Rails does not do on its own. You get validators and transform visitors, validation modes, the debug tooling, and the external template modes for gem templates.
+
+The two settings compose. When `intercept_erb` is off, Rails 8.2 compiles your HTML templates through its built-in Herb implementation and ReActionView only handles `.html.herb` templates. When `intercept_erb` is on, ReActionView takes over HTML template compilation, and templates it declines, such as gem templates in `:skip` or `:fallback` mode, compile through the default ERB implementation instead of the built-in Herb one.
+
+On Rails 8.1 and earlier, `intercept_erb` remains the way to compile `.html.erb` templates through Herb at all.
+
 ### Advanced Configuration
 
 #### Custom Project Path for Editor Links <Badge type="info" text="^0.4.0" />

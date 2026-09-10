@@ -558,4 +558,10 @@ class Herb::TemplateHandlerTest < Minitest::Spec
 
     assert_equal "Herb::Engine::Validators::SecurityValidator requires the `track_locations` parser option to be true, but it is set to false", error.message
   end
+
+  test "reuses the Rails builtin Herb implementation when available" do
+    skip "Rails ships no builtin Herb implementation" unless defined?(ActionView::Template::Handlers::ERB::Herb)
+
+    assert_operator ReActionView::Template::Handlers::Herb::Herb, :<, ActionView::Template::Handlers::ERB::Herb
+  end
 end
