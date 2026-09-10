@@ -180,24 +180,24 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.25.9.tgz#585624dc829cfb6e7c0aa6c3ca7d7e6daa87e34f"
   integrity sha512-PPOl1mi6lpLNQxnGoyAfschAodRFYXJ+9fs6WHXz7CSWKbOqiMZsubC+BQsVKuul+3vKLuwTHsS2c2y9EoKwxQ==
 
-"@herb-tools/client@0.10.3":
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/@herb-tools/client/-/client-0.10.3.tgz#87b01a6d86b50891819624f67184718f21c5e6d4"
-  integrity sha512-0bZCDlrWz9x9d5amgwY28AEcdI4ng7n4W1mDA/bzKO0JZPP66r6zhi3S8g+CWyInOW2QJk1IcfbASe6W6CB7DQ==
+"@herb-tools/client@0.10.4":
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/@herb-tools/client/-/client-0.10.4.tgz#7a6d1010f902fee3dae3ed436e23bdee945f7f3b"
+  integrity sha512-3nswYcbYUR18nfb14W16dvS23DU52Y0ZxwG3ixXXqBu2ZRVwiIoT5cIAh/zhssyO8QPusBjNpaseysYND9knXg==
 
-"@herb-tools/core@0.10.3":
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/@herb-tools/core/-/core-0.10.3.tgz#03b1bf1a5d0c5acf9841209cf0c26dae3e2d85bb"
-  integrity sha512-rtDoh6C/EMYLEtFwYpuY+IlnV7PLsF5hQszq7uMDE/bwEpLVBlPFd2Wlk9E0RB31PVQKV1MwgGqstte87XqF9g==
+"@herb-tools/core@0.10.4":
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/@herb-tools/core/-/core-0.10.4.tgz#e1ae4490c1a01899a6cd3b7ae7c8ec83233fe1a3"
+  integrity sha512-JcLwVjqW8gfTaCsSRueFU31CtYSjWkKdFVvNA1fPM4D90j/RqY04aa0rlZghjHc0AzNIiJd81Vk8c8WWjfn4Ag==
   dependencies:
     "@ruby/prism" "^1.9.0"
 
-"@herb-tools/dev-tools@0.10.3":
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/@herb-tools/dev-tools/-/dev-tools-0.10.3.tgz#9f6d1281692079b6cb68ffad2b4dbc65673d18a3"
-  integrity sha512-j0kXJGXDdcYRnci1OImvlViRqnPt+ACpfQbp9tL4EI1Bjtr/HW5oQu1ADuchar7lVKwamBG9L6BEuxOy5tjvmg==
+"@herb-tools/dev-tools@0.10.4":
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/@herb-tools/dev-tools/-/dev-tools-0.10.4.tgz#1be696d8a99c0228e7ade65f1ea6aa7d96ea3791"
+  integrity sha512-lvlzL48ANCGDWfOYLhl58Ls0E23XWk1DisaIc802MBQpsiCLdWSRzKhmVW9nKdSUmIh9DMd0ALAaOWKl9BsdbA==
   dependencies:
-    "@herb-tools/core" "0.10.3"
+    "@herb-tools/core" "0.10.4"
 
 "@iconify-json/logos@^1.2.4":
   version "1.2.9"
