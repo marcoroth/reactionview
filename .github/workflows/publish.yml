@@ -1,4 +1,4 @@
-name: Publish Gem
+name: Publish
 
 on:
   workflow_dispatch:
@@ -98,3 +98,63 @@ jobs:
               gem push "$gem_file"
             fi
           done
+
+  push_npm:
+    name: Publish packages to npm
+    if: github.event_name == 'release' && github.repository_owner == 'marcoroth'
+    needs: build
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".node-version"
+          cache: "yarn"
+
+      - name: Yarn install
+        run: yarn install --frozen-lockfile
+
+      - name: Build JavaScript
+        run: yarn build
+
+      - name: Publish packages
+        run: |
+          failed=()
+
+          for package_dir in javascript/packages/*; do
+            [ -f "$package_dir/package.json" ] || continue
+
+            name=$(jq -r '.name' "$package_dir/package.json")
+            version=$(jq -r '.version' "$package_dir/package.json")
+
+            if [ "$(jq -r '.private // false' "$package_dir/package.json")" = "true" ]; then
+              echo "Skipping $name (private)"
+              continue
+            fi
+
+            if npm view "$name@$version" version > /dev/null 2>&1; then
+              echo "Skipping $name@$version (already published)"
+              continue
+            fi
+
+            echo "::group::Publishing $name@$version"
+
+            if (cd "$package_dir" && npm publish --access public --ignore-scripts); then
+              echo "Published $name@$version"
+            else
+              failed+=("$name@$version")
+            fi
+
+            echo "::endgroup::"
+          done
+
+          if [ ${#failed[@]} -gt 0 ]; then
+            echo "::error::Failed to publish: ${failed[*]}"
+            exit 1
+          fi
