@@ -16,7 +16,7 @@ module ReActionView
           ::ReActionView::Template::Handlers::Herb.call(
             template, source, validation_mode: herb_validation_mode(template)
           )
-        rescue StandardError => e
+        rescue ::Herb::Engine::CompilationError, StandardError => e
           raise unless fall_back_to_erb?(template)
 
           log_external_template_error(template, e)
