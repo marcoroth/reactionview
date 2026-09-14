@@ -50,45 +50,46 @@
   resolved "https://registry.yarnpkg.com/@docsearch/sidepanel-js/-/sidepanel-js-4.7.0.tgz#d767ca71f72c4673db87229f64634786a255bb08"
   integrity sha512-A8r34jCU8kcIk2viECEn2msA28ojUF1BLi/3v5OWWc5G2N3jOuuumBXoeYjfr8dA0UxgFSy5R2bt12dnFJQSyA==
 
-"@herb-tools/browser@https://pkg.pr.new/marcoroth/herb/@herb-tools/browser@9040568":
+"@herb-tools/browser@https://pkg.pr.new/marcoroth/herb/@herb-tools/browser@a3edae4":
   version "0.10.3"
-  resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/browser@9040568#8e4f17c7daa35ab089a18e0207dcd27d6d516948"
+  resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/browser@a3edae4#69003f3eaf447168d2c4b03e711e424b914b297b"
   dependencies:
-    "@herb-tools/core" "https://pkg.pr.new/marcoroth/herb/@herb-tools/core@9040568"
+    "@herb-tools/core" "https://pkg.pr.new/marcoroth/herb/@herb-tools/core@a3edae4"
     "@ruby/prism" "^1.9.0"
 
-"@herb-tools/client@https://pkg.pr.new/marcoroth/herb/@herb-tools/client@9040568":
+"@herb-tools/client@https://pkg.pr.new/marcoroth/herb/@herb-tools/client@a3edae4":
   version "0.10.3"
-  resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/client@9040568#8f06c277c8fa50d32ae2bcd82cf9f907399361f7"
+  resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/client@a3edae4#8f06c277c8fa50d32ae2bcd82cf9f907399361f7"
 
-"@herb-tools/core@https://pkg.pr.new/marcoroth/herb/@herb-tools/core@9040568":
+"@herb-tools/core@https://pkg.pr.new/marcoroth/herb/@herb-tools/core@a3edae4":
   version "0.10.3"
-  resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/core@9040568#9ffe8b019af8be5c42a3eaa9dead547017d70d69"
+  uid "6e02764871155b6fd11064cf83bde5087ade7c96"
+  resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/core@a3edae4#6e02764871155b6fd11064cf83bde5087ade7c96"
   dependencies:
     "@ruby/prism" "^1.9.0"
 
-"@herb-tools/dev-tools@https://pkg.pr.new/marcoroth/herb/@herb-tools/dev-tools@9040568":
+"@herb-tools/dev-tools@https://pkg.pr.new/marcoroth/herb/@herb-tools/dev-tools@a3edae4":
   version "0.10.3"
-  resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/dev-tools@9040568#99bf565b5be49dc6e35d2e231752408cc5609ed8"
+  resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/dev-tools@a3edae4#9b6749dce966df3bd004f2d9d50336bec70edb38"
   dependencies:
-    "@herb-tools/browser" "https://pkg.pr.new/marcoroth/herb/@herb-tools/browser@9040568"
-    "@herb-tools/client" "https://pkg.pr.new/marcoroth/herb/@herb-tools/client@9040568"
-    "@herb-tools/core" "https://pkg.pr.new/marcoroth/herb/@herb-tools/core@9040568"
-    "@herb-tools/highlighter" "https://pkg.pr.new/marcoroth/herb/@herb-tools/highlighter@9040568"
+    "@herb-tools/browser" "https://pkg.pr.new/marcoroth/herb/@herb-tools/browser@a3edae4"
+    "@herb-tools/client" "https://pkg.pr.new/marcoroth/herb/@herb-tools/client@a3edae4"
+    "@herb-tools/core" "https://pkg.pr.new/marcoroth/herb/@herb-tools/core@a3edae4"
+    "@herb-tools/highlighter" "https://pkg.pr.new/marcoroth/herb/@herb-tools/highlighter@a3edae4"
 
-"@herb-tools/highlighter@https://pkg.pr.new/marcoroth/herb/@herb-tools/highlighter@9040568":
+"@herb-tools/highlighter@https://pkg.pr.new/marcoroth/herb/@herb-tools/highlighter@a3edae4":
   version "0.10.3"
-  resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/highlighter@9040568#c6b8781200026291786daa9669586f9adb8739e9"
+  resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/highlighter@a3edae4#05832363957b6054cf59595a184a80c63ab67a38"
   dependencies:
-    "@herb-tools/core" "https://pkg.pr.new/marcoroth/herb/@herb-tools/core@9040568"
-    "@herb-tools/node-wasm" "https://pkg.pr.new/marcoroth/herb/@herb-tools/node-wasm@9040568"
+    "@herb-tools/core" "https://pkg.pr.new/marcoroth/herb/@herb-tools/core@a3edae4"
+    "@herb-tools/node-wasm" "https://pkg.pr.new/marcoroth/herb/@herb-tools/node-wasm@a3edae4"
     ansi_up "^6.0.6"
 
-"@herb-tools/node-wasm@https://pkg.pr.new/marcoroth/herb/@herb-tools/node-wasm@9040568":
+"@herb-tools/node-wasm@https://pkg.pr.new/marcoroth/herb/@herb-tools/node-wasm@a3edae4":
   version "0.10.3"
-  resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/node-wasm@9040568#131b80bbd8de25b4b5d237fe27024fad9787b008"
+  resolved "https://pkg.pr.new/marcoroth/herb/@herb-tools/node-wasm@a3edae4#4ba6b0d20c5db8fca6de62772a99f7dca411ab0d"
   dependencies:
-    "@herb-tools/core" "https://pkg.pr.new/marcoroth/herb/@herb-tools/core@9040568"
+    "@herb-tools/core" "https://pkg.pr.new/marcoroth/herb/@herb-tools/core@a3edae4"
     "@ruby/prism" "^1.9.0"
 
 "@iconify-json/logos@^1.2.11":

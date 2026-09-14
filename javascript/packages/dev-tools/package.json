@@ -26,7 +26,7 @@
     }
   },
   "dependencies": {
-    "@herb-tools/dev-tools": "https://pkg.pr.new/marcoroth/herb/@herb-tools/dev-tools@9040568"
+    "@herb-tools/dev-tools": "https://pkg.pr.new/marcoroth/herb/@herb-tools/dev-tools@a3edae4"
   },
   "devDependencies": {
     "rimraf": "^6.0.1",
