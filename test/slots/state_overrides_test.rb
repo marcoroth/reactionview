@@ -37,7 +37,25 @@ class ReActionView::Slots::StateOverridesTest < Minitest::Spec
     end
   end
 
-  FakeRequest = Struct.new(:headers)
+  FakeRequest = Struct.new(:headers, :format)
+
+  class PageView
+    include ReActionView::Slots::StateOverridesHelper
+
+    attr_reader :request
+
+    def initialize(request, **assigns)
+      @request = request
+
+      assigns.each { |name, value| instance_variable_set(:"@#{name}", value) }
+    end
+  end
+
+  def page_request(headers)
+    env = Rack::MockRequest.env_for("/").merge(headers.transform_keys { |key| "HTTP_#{key.upcase.tr("-", "_")}" })
+
+    ActionDispatch::Request.new(env)
+  end
 
   class Helped
     include ReActionView::Slots::StateOverridesHelper
@@ -120,15 +138,21 @@ class ReActionView::Slots::StateOverridesTest < Minitest::Spec
   end
 
   describe "the view helper" do
-    test "reads and memoizes the header" do
-      helped = Helped.new(FakeRequest.new({ Overrides::HEADER => %({"a.html.erb":{"open":false}}) }))
+    test "reads and memoizes the header of a values request" do
+      helped = Helped.new(FakeRequest.new({ Overrides::HEADER => %({"a.html.erb":{"open":false}}) }, Mime[ReActionView::Slots::FORMAT]))
 
       assert_equal({ "a.html.erb" => { "open" => false } }, helped.__herb_state_overrides)
       assert_same helped.__herb_state_overrides, helped.__herb_state_overrides
     end
 
     test "answers nothing without a header" do
-      assert_nil Helped.new(FakeRequest.new({})).__herb_state_overrides
+      assert_nil Helped.new(FakeRequest.new({}, Mime[ReActionView::Slots::FORMAT])).__herb_state_overrides
+    end
+
+    test "answers nothing for a page request, header or not" do
+      helped = Helped.new(FakeRequest.new({ Overrides::HEADER => %({"a.html.erb":{"open":false}}) }, Mime[:html]))
+
+      assert_nil helped.__herb_state_overrides
     end
 
     test "answers nothing without a request" do
@@ -192,15 +216,48 @@ class ReActionView::Slots::StateOverridesTest < Minitest::Spec
       assert_equal "shown", payload[:slots][0][:slots].values.first
     end
 
-    test "the page render ignores overrides entirely" do
-      view = View.new(yes: "shown", no: "hidden")
-      view.__herb_state_overrides = { IDENTIFIER => { "open" => false } }
+    test "the page render ignores the header" do
+      view = PageView.new(page_request(Overrides::HEADER => %({"#{IDENTIFIER}":{"open":false}})), yes: "shown", no: "hidden")
       view.instance_variable_set(:@output_buffer, ActionView::OutputBuffer.new)
 
       rendered = view.instance_eval(compile(STATE_SOURCE, format: :html)).to_s
 
       assert_includes rendered, "shown"
       refute_includes rendered, "hidden"
+    end
+
+    describe "with a render frame" do
+      before do
+        skip "needs a Herb that carries render bindings" unless defined?(::Herb::Engine::Slots::Bindings)
+      end
+
+      test "a render frame steers the page render" do
+        view = PageView.new(page_request({}), yes: "shown", no: "hidden")
+        view.instance_variable_set(:@output_buffer, ActionView::OutputBuffer.new)
+
+        rendered = Herb::Engine::Slots::Bindings.with(IDENTIFIER, bound: { "open" => false }) do
+          view.instance_eval(compile(STATE_SOURCE, format: :html)).to_s
+        end
+
+        assert_includes rendered, "hidden"
+        refute_includes rendered, "shown"
+      end
+
+      test "a binding wins over the client's value in a values render" do
+        payload = Herb::Engine::Slots::Bindings.with(IDENTIFIER, bound: { "open" => false }) do
+          steered({ IDENTIFIER => { "open" => true } }, yes: "shown", no: "hidden")
+        end
+
+        assert_equal "hidden", payload[:slots][0][:slots].values.first
+      end
+
+      test "a seed loses to the client's value in a values render" do
+        payload = Herb::Engine::Slots::Bindings.with(IDENTIFIER, seeded: { "open" => false }) do
+          steered({ IDENTIFIER => { "open" => true } }, yes: "shown", no: "hidden")
+        end
+
+        assert_equal "shown", payload[:slots][0][:slots].values.first
+      end
     end
   end
 

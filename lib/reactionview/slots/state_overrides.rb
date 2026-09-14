@@ -37,9 +37,17 @@ module ReActionView
       def __herb_state_overrides
         return @__herb_state_overrides if defined?(@__herb_state_overrides)
 
-        header = respond_to?(:request) && request ? request.headers[StateOverrides::HEADER] : nil
+        header = __herb_values_request? ? request.headers[StateOverrides::HEADER] : nil
 
         @__herb_state_overrides = StateOverrides.parse(header)
+      end
+
+      #: () -> bool
+      def __herb_values_request?
+        return false unless respond_to?(:request) && request
+        return false unless request.respond_to?(:format)
+
+        request.format&.symbol == Slots::FORMAT
       end
 
       #: (?String?, ?untyped) -> untyped
