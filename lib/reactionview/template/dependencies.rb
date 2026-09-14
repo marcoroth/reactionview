@@ -25,6 +25,10 @@ module ReActionView
         @app_view_paths ||= (registered_view_paths - engine_view_paths).filter_map { |path| directory(path) }
       end
 
+      def view_paths
+        @view_paths ||= registered_view_paths.filter_map { |path| directory(path) }
+      end
+
       private
 
       def gem_paths

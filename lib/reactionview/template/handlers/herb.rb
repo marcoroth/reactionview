@@ -134,12 +134,19 @@ module ReActionView
 
         def engine_options
           configured = ::ReActionView.config.engine.parser_options
+          options = resolver_option
 
-          return {} if configured.empty?
+          return options if configured.empty?
 
           defaults = ::Herb.configuration.engine_option("parser_options", {})
 
-          { parser_options: defaults.transform_keys(&:to_sym).merge(configured) }
+          options.merge(parser_options: defaults.transform_keys(&:to_sym).merge(configured))
+        end
+
+        def resolver_option
+          return {} unless defined?(::Herb::Analysis::PartialResolver)
+
+          { resolver: ::ReActionView::Template::PartialResolver.current }
         end
 
         def rewrites_erb_source?(visitor)

@@ -26,6 +26,7 @@ require_relative "reactionview/slots/state_overrides"
 require_relative "reactionview/slots/dev_compiler"
 
 require_relative "reactionview/template/dependencies"
+require_relative "reactionview/template/partial_resolver"
 require_relative "reactionview/template/local_template"
 
 require_relative "reactionview/template/handlers/erb"
