@@ -125,4 +125,19 @@ class ReActionView::RailtieTest < Minitest::Spec
     assert_includes ReActionView::Railtie::PRECOMPILE_ASSETS, "reactionview.esm.js"
     assert_includes ReActionView::Railtie::PRECOMPILE_ASSETS, "reactionview-dev-tools.umd.js"
   end
+
+  test "depends on the gems the dev server loads, so booting one cannot fail on them" do
+    gemspec = Gem::Specification.load(File.expand_path("../../reactionview.gemspec", __dir__))
+    names = gemspec.runtime_dependencies.map(&:name)
+
+    assert_includes names, "cruise"
+    assert_includes names, "websocket"
+  end
+
+  test "loads the dev server without reaching for a gem the bundle is missing" do
+    require "herb/dev"
+    require "herb/dev/server"
+
+    assert defined?(::Herb::Dev::Server)
+  end
 end
