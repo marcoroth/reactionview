@@ -1,6 +1,6 @@
 # Runtime Instrumentation
 
-ReActionView can measure what a page did while it rendered, and file each measurement against the ERB tag that caused it. A `render` call that ran fifteen queries says so on the line it was written on, rather than in a log you have to correlate by hand.
+ReActionView can measure what a page did while it rendered, and file each measurement against the ERB tag that caused it. A `render` call that ran fifteen queries says so on the line it was written on, not in a log you have to correlate by hand.
 
 ## Configuration
 
@@ -46,13 +46,13 @@ config.instrumentation.render_time = false
 
 Rails already announces this work through `ActiveSupport::Notifications`, so nothing is measured twice. A render reports the duration, GC time and allocation count that Rails put on the event, and a query is skipped when it was served from cache, because that is not a query the page paid for.
 
-Herb's instrumentation supplies the other half: it says which tag is rendering at any moment, so whatever a subscriber observes is filed against the tag that was open at the time.
+Herb's instrumentation supplies the other half. It says which tag is rendering at any moment, so whatever a subscriber observes is filed against the tag that was open at the time.
 
 ## Where they show up
 
 Measurements appear in the Herb dev tools panel in the browser, beside the diagnostics for the same page. Each one shows what was observed behind its count, so `5 SQL queries` opens to the statements themselves.
 
-They are also written to a journal on disk, keyed by the template and a digest of its contents, which is what lets the Herb Language Server show them in your editor on the line they belong to. A template that has been edited since it was rendered shows nothing rather than something misleading.
+They are also written to a journal on disk, keyed by the template and a digest of its contents, which is what lets the Herb Language Server show them in your editor on the line they belong to. A template that has been edited since it was rendered shows nothing instead of something misleading.
 
 ## Measuring something of your own
 

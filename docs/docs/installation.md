@@ -1,64 +1,35 @@
-# Installation
+# Setup
 
-Get started with ReActionView in your Rails application.
+ReActionView needs Ruby 3.2 or newer and Rails 7.0 or newer. It installs the `herb` gem as a dependency.
 
-## Requirements
+## Step 1: Install the gem
 
-- **Ruby**: 3.0+ (3.4+ recommended)
-- **Rails**: 7.0+ (8.0+ recommended)
-- **Herb**: The Herb gem will be installed automatically as a dependency
-
-## Install the Gem
-
-Add ReActionView to your Rails application's `Gemfile`:
-
-```ruby
-gem "reactionview"
-```
-
-Then run:
-
-```bash
-bundle install
-```
-
-## Run the Generator
-
-ReActionView includes a Rails generator to set up the initial configuration:
-
-```bash
-rails generate reactionview:install
-```
-
-This creates the initializer with default configuration:
+Add ReActionView to your application and run its generator.
 
 :::code-group
-```ruby [config/initializers/reactionview.rb]
-# frozen_string_literal: true
-
-ReActionView.configure do |config|
-  # Intercept .html.erb templates and process them with `Herb::Engine` for enhanced features
-  # config.intercept_erb = true
-
-  # Enable debug mode in development (adds debug attributes to HTML)
-  config.debug_mode = Rails.env.development?
-end
+```bash [Terminal]
+bundle add reactionview
+bin/rails generate reactionview:install
 ```
 :::
 
-## Add the JavaScript Client
+The generator creates `config/initializers/reactionview.rb` and adds `import "reactionview"` to `app/javascript/application.js`.
 
-Interactive templates need the client runtime on the page. The gem pins it in the importmap for importmap applications, and the generator appends `import "reactionview"` to `app/javascript/application.js`. Applications with a bundler install the `reactionview` npm package instead. See [JavaScript Client](/javascript) for both setups.
+## Step 2: Load the JavaScript client
 
-## Configuration Options
+In an application on importmap-rails, the gem pins `reactionview` for you, so there is nothing else to install. With jsbundling-rails, Vite or another bundler, install the npm package and keep it on the same version as the gem.
 
-### Basic Setup
+:::code-group
+```bash [Terminal]
+yarn add reactionview
+```
+:::
 
-For basic usage, you can start using `.html.herb` templates alongside your existing `.html.erb` files without any additional configuration.
+[JavaScript Client](/javascript) covers both setups and the options the client starts with.
 
-### Enhanced Mode (Recommended)
+## Step 3: Put your templates through ReActionView
 
-To process **all** existing `.html.erb` templates through the Herb engine, enable ERB interception in your initializer:
+With the Rails 8.2 framework defaults, Rails already compiles your HTML templates with Herb. `intercept_erb` hands them to ReActionView instead, which adds the validators and overlays, the debug tooling and reactive templates. On Rails 8.1 and earlier, it is also what compiles them with Herb at all. Templates named `.html.herb` always go through ReActionView.
 
 :::code-group
 ```ruby [config/initializers/reactionview.rb]
@@ -69,121 +40,44 @@ end
 ```
 :::
 
-This gives you all the benefits of Herb's validation, security features, and debugging tools for your existing templates.
+[Rails Integration](/integrations/rails) explains how the setting combines with the Rails 8.2 default.
 
-### Rails 8.2 and the built-in Herb implementation
+## Step 4: Turn on reactive templates <Badge type="tip" text="^0.6.0" />
 
-Rails 8.2 compiles HTML templates through Herb on its own when an application runs the 8.2 framework defaults, through `config.action_view.html_erb_implementation`. That covers plain compilation. Enabling `intercept_erb` on Rails 8.2 adds what Rails does not do on its own. You get validators and transform visitors, validation modes, the debug tooling, and the external template modes for gem templates.
-
-The two settings compose. When `intercept_erb` is off, Rails 8.2 compiles your HTML templates through its built-in Herb implementation and ReActionView only handles `.html.herb` templates. When `intercept_erb` is on, ReActionView takes over HTML template compilation, and templates it declines, such as gem templates in `:skip` or `:fallback` mode, compile through the default ERB implementation instead of the built-in Herb one.
-
-On Rails 8.1 and earlier, `intercept_erb` remains the way to compile `.html.erb` templates through Herb at all.
-
-### Advanced Configuration
-
-#### Custom Project Path for Editor Links <Badge type="info" text="^0.4.0" />
-
-When your app runs somewhere other than where its files live, such as a Docker bind mount, a devcontainer, or a VM, the paths Rails sees aren't paths your editor can open. `config.project_path` says where `Rails.root` is mounted on the machine running your editor, and rewrites "open in editor" links to match:
+[State](https://herb-tools.dev/language/state), [actions](https://herb-tools.dev/language/actions) and the other reactive features need slots. Turn them on for the whole application with `config.slots`.
 
 :::code-group
 ```ruby [config/initializers/reactionview.rb]
 ReActionView.configure do |config|
-  # Where Rails.root is mounted on the machine running your editor
-  config.project_path = "/Users/you/myapp"
-
-  # Or take it from the environment
-  # config.project_path = ENV.fetch("PROJECT_PATH", Rails.root.to_s)
+  config.intercept_erb = true
+  config.debug_mode = Rails.env.development?
+  config.slots = true
 end
 ```
 :::
 
-With `Rails.root` at `/app` inside the container, a template at `/app/app/views/users/show.html.erb` then opens as `/Users/you/myapp/app/views/users/show.html.erb`.
+In development, `config.slots` also starts the Herb dev server inside your Rails server. It needs no extra gems, and it prints the address it listens on when your server boots. Turn it off with `config.dev_server = false`.
 
-**Default**: `Rails.root.to_s`
+## Check that it works
 
-::: info Only editor links are affected
-Local template detection and the `herb-project-path` meta tag stay on `Rails.root`. The meta tag is compared against the path the `herb dev` server reports, so overriding it would make the dev tools treat the page as a different project and ignore it.
-:::
+Start your server and open any page. In development, a small Herb badge appears in the top right corner. That is the dev tools, and it means the client is loaded and debug mode is on.
 
-#### Templates From Gems <Badge type="info" text="^0.4.0" />
-
-With `intercept_erb` enabled, ReActionView sees every `.html.erb` template Rails renders, including ones shipped inside gems. Those are not yours to fix, so they get their own handling:
+Now break a template on purpose. Change a closing tag so it no longer matches.
 
 :::code-group
-```ruby [config/initializers/reactionview.rb]
-ReActionView.configure do |config|
-  config.external_template_mode = :fallback
-end
+```erb [app/views/messages/index.html.erb]
+<h1>Messages</h2>
 ```
 :::
 
-| Mode | Behavior |
-| --- | --- |
-| `:fallback` (default) | Compile with Herb. If that fails, log a warning and fall back to Rails' own ERB handler, so the template renders exactly as it would without ReActionView. |
-| `:skip` | Never compile templates from gems. |
-| `:compile` | No special treatment. Your `validation_mode` applies to them just as it does to your own templates, and nothing is rescued. |
+Reload the page. It no longer renders, and the error names the file, the line and the problem.
 
-Templates are considered external when they live outside `Rails.root`, or inside `Bundler.bundle_path` for applications that vendor their gems with `bundle config set --local path vendor/bundle`.
-
-Anything other than these three values raises an `ArgumentError` when you set it, so a typo fails at boot rather than changing how your templates compile:
-
-```ruby
-config.external_template_mode = :warm
-# => ArgumentError: external_template_mode must be one of :fallback, :skip, or :compile, got :warm
+```
+app/views/messages/index.html.erb:1:1: Opening tag `<h1>` at (1:1) doesn't have a matching closing tag `</h1>` in the same scope. (and 1 more error)
 ```
 
-::: info Why :fallback rather than :skip
-Skipping silently means you never find out that a gem's templates cannot be compiled, which matters if you later want to rely on Herb processing them. `:fallback` keeps every environment behaving the same way and tells you which templates fell back. See [herb#1508](https://github.com/marcoroth/herb/issues/1508).
-:::
+Fix the tag and the page renders again. Problems that do not stop a template from rendering, such as a `<div>` inside a `<p>`, show up on the badge instead. [Validation Overlays](/guides/validation-overlays) covers the difference, including what to check when the badge does not appear at all.
 
-::: warning
-In `:fallback` mode, external templates are always compiled with `validation_mode: :raise` regardless of your `validation_mode` setting, so a gem template can never put a validation overlay on your page over markup you cannot change.
-:::
+## Next
 
-#### Compile Visitors <Badge type="info" text="^0.5.0" />
-
-`config.engine.visitors` is the stack of visitors ReActionView adds to every compile on top of its own. It is a `Herb::Visitor::Stack`, so a visitor can be appended with `use` or placed against a built-in with `insert_before` and `insert_after`:
-
-:::code-group
-```ruby [config/initializers/reactionview.rb]
-ReActionView.configure do |config|
-  config.engine.visitors.use(MyVisitor.new)
-  config.engine.visitors.insert_after(Herb::Engine::Slots::Visitor, MyRewriter.new)
-end
-```
-:::
-
-The order visitors run in follows what they declare about themselves. A visitor that reads the ERB a template was written with runs before any visitor that rewrites it, a visitor that reads `<style>` blocks runs after any visitor that rewrites them, and a visitor that inlines other templates runs first. ReActionView merges its built-ins with your stack and lets `Herb::Visitor::Stack.arrange` order the result, so placing a visitor where its declarations do not allow moves it instead of failing the compile. A visitor that rewrites ERB takes part in the page compile only. The values, block and schema compiles that answer the client leave rewriters out, since nothing reads what they would wrap there.
-
-`config.transform_visitors` still works and fills the same stack, and says it is deprecated when used.
-
-#### Parser Options <Badge type="info" text="^0.5.0" />
-
-Visitors declare the parser options they need themselves, and Herb reads the rest from the `engine.parser_options` section of `.herb.yml`. An application without a `.herb.yml` can set them on the engine instead:
-
-:::code-group
-```ruby [config/initializers/reactionview.rb]
-ReActionView.configure do |config|
-  config.engine.parser_options = { strict_locals: true }
-end
-```
-:::
-
-These are merged over the project's parser options and handed to every compile alike, so the page, the values it answers with, and the schema never parse a template differently from one another. The keys are the ones `.herb.yml` uses, so the engine and `herb lint` keep reading the same names. An option that contradicts what a visitor requires raises at compile time, the same way it would when passed to `Herb::Engine` directly.
-
-**Default**: `{}`, which leaves the engine to its own defaults.
-
-## Verify Installation
-
-Create a test template to verify ReActionView is working:
-
-:::code-group
-```erb [app/views/test/index.html.herb]
-<div class="test">
-  <h1>ReActionView Test</h1>
-  <p>Current time: <%= Time.current %></p>
-</div>
-```
-:::
-
-If you have debug mode enabled, you should see debug attributes in the rendered HTML when viewing in development mode.
+The [Quick Start](/quick-start) builds one page step by step, from a plain template to one the server updates in place. Every configuration option is listed in [Configuration](/reference/configuration).
