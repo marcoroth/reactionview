@@ -59,6 +59,7 @@ Metrics/ModuleLength:
 Metrics/BlockLength:
   Max: 30
   Exclude:
+    - "*.gemspec"
     - test/**/*_test.rb
 
 Layout/LineLength:
