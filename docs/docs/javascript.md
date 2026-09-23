@@ -1,4 +1,4 @@
-# JavaScript Client <Badge type="info" text="^0.5.0" />
+# JavaScript Client <Badge type="tip" text="^0.6.0" />
 
 Templates that declare states, slots, fragments or actions need the client runtime on the page. It indexes the markers the gem compiles into your HTML, keeps state, applies values the server sends back, and drives `data-herb-*` attributes.
 

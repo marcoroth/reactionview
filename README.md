@@ -1,13 +1,14 @@
 <div align="center">
-  <img alt="ReActionView - Enhanced Rails templates" style="height: 256px" height="256px" src="https://github.com/marcoroth/reactionview/blob/main/assets/reactionview.png?raw=true">
+  <img alt="ReActionView" style="height: 256px" height="256px" src="https://github.com/marcoroth/reactionview/blob/main/assets/reactionview.png?raw=true">
 </div>
 
 <h2 align="center">ReActionView</h2>
 
-<h4 align="center">A new ActionView-compatible ERB engine with modern DX - re-imagined with <a href="https://github.com/marcoroth/herb"><code>Herb::Engine</code></a>.</h4>
+<h4 align="center">Reactive views for the HTML+ERB you already have.</h4>
 
-<div align="center">Seamless integration of Herb's HTML-aware ERB rendering engine into Rails applications. <br>Compatible with <code>.html.erb</code>, but with modern enhancements:  
-HTML validation, better error feedback, a developer-friendly debug mode, and more!</div><br/>
+<div align="center">You get what a client-side framework gives you, without adopting one.</div><br/>
+
+<div align="center">No new syntax · No client framework · No API layer · No build step</div><br/>
 
 <p align="center">
   <a href="https://rubygems.org/gems/reactionview"><img alt="Gem Version" src="https://img.shields.io/gem/v/reactionview"></a>
@@ -16,77 +17,43 @@ HTML validation, better error feedback, a developer-friendly debug mode, and mor
   <a href="https://github.com/marcoroth/reactionview/issues"><img alt="Issues" src="https://img.shields.io/github/issues/marcoroth/reactionview"></a>
 </p>
 
-<br/><br/><br/>
+<br/>
 
-## Installation
+**ReActionView makes your existing HTML+ERB templates reactive.**
 
-Add to your Rails application:
+Rails 8.2 already renders HTML templates with `Herb::Engine`, which reads the HTML and the Ruby in a template together. ReActionView builds on that. A template declares state the browser owns, changes it with an HTML attribute, and has your controller answer when the server is needed. There is no second copy of the page to keep in sync.
+
+It also brings Herb's error overlays, the dev tools and per-tag instrumentation to the page, so a mismatched tag or a `<div>` inside a `<p>` shows up in the browser with the file and the line while you work. On Rails 8.1 and earlier, it brings the engine itself.
+
+### Documentation
+
+[reactionview.dev](https://reactionview.dev/overview)
+
+### Installation
 
 ```bash
 bundle add reactionview
-rails generate reactionview:install
+bin/rails generate reactionview:install
 ```
 
-The gem pins the `reactionview` client runtime for importmap applications and the generator imports it from `app/javascript/application.js`. With a bundler, install the npm package and import it from your entry point instead. See [JavaScript Client](https://reactionview.dev/javascript).
+The generator creates `config/initializers/reactionview.rb` and imports the client from `app/javascript/application.js`. On importmap-rails the gem pins the client for you. With a bundler, install the `reactionview` npm package as well.
 
-## Usage
+ReActionView needs Ruby 3.2 or newer and Rails 7.0 or newer. [Setup](https://reactionview.dev/installation) covers turning on reactive templates and checking that it works, and the [Quick Start](https://reactionview.dev/quick-start) builds a first reactive page.
 
-ReActionView provides two ways to use enhanced template processing:
-
-1. **Native `.html.herb` templates** - Automatically processed with `Herb::Engine`.
-2. **Intercept `.html.erb` templates** - Enable in config to process all HTML+ERB templates with Herb.
-
-### Configuration
-
-```ruby
-# config/initializers/reactionview.rb
-
-ReActionView.configure do |config|
-  # Intercept .html.erb templates to use Herb::Engine
-  # config.intercept_erb = true
-
-  # Enable debug mode
-  config.debug_mode = Rails.env.development?
-
-  # Custom path for editor "open in editor" links (optional, defaults to Rails.root)
-  # config.project_path = ENV.fetch('PROJECT_PATH', Rails.root.to_s)
-
-  # Validation mode (:raise, :overlay, or :none) — defaults to :raise in test, :overlay otherwise
-  # config.validation_mode = :overlay
-
-  # How to handle templates that come from gems (:fallback, :skip, or :compile), defaults to :fallback
-  # config.external_template_mode = :skip
-
-  # Measure what a page does while it renders, defaults to on in development
-  # config.instrumentation.enabled = Rails.env.development?
-
-  # Each measurement can be turned off on its own
-  # config.instrumentation.sql_queries = false
-  # config.instrumentation.render_times = false
-  # config.instrumentation.translations = false
-
-  # Add visitors to the compile. Place them with `insert_before` and `insert_after`.
-  # config.engine.visitors.use(Herb::Visitor.new)
-
-  # Parser options for every compile, merged over the ones in .herb.yml
-  # config.engine.parser_options = { strict_locals: true }
-end
-```
-
-## Development
+### Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
-## Contributing
+### Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/marcoroth/reactionview. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/marcoroth/reactionview/blob/main/CODE_OF_CONDUCT.md).
 
-## Code of Conduct
+### Code of Conduct
 
 Everyone interacting in the ReActionView project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/marcoroth/reactionview/blob/main/CODE_OF_CONDUCT.md).
 
-## License
+### License
 
 This project is available as open source under the terms of the [MIT License](https://github.com/marcoroth/reactionview/blob/main/LICENSE.txt).
