@@ -12,7 +12,7 @@ gem "minitest-mock"
 gem "railties", "~> 8.0.0"
 gem "rake", "~> 13.0"
 gem "readline", "~> 0.0.4"
-gem "rubocop", "~> 1.80.1"
+gem "rubocop", "~> 1.91.0"
 gem "tsort", "~> 0.2.0"
 
 gemspec path: "../"
