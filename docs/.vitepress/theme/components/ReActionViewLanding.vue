@@ -226,7 +226,7 @@ direction = <span class="g">herb_state</span>(<span class="str">"order"</span>, 
 
 
 .rav-landing .hero { padding: clamp(3rem, 7vw, 5.5rem) 0 clamp(2.5rem, 5vw, 4rem); }
-.rav-landing .hero-grid { display: grid; gap: 2rem; grid-template-columns: 1fr; align-items: center; }
+.rav-landing .hero-grid { display: grid; gap: 2rem; grid-template-columns: minmax(0, 1fr); align-items: center; }
 @media (min-width: 58rem) {
   .rav-landing .hero-grid { grid-template-columns: minmax(0, 46rem) 17rem; gap: 3rem; justify-content: space-between; }
 }
@@ -284,11 +284,12 @@ direction = <span class="g">herb_state</span>(<span class="str">"order"</span>, 
 .rav-landing .sec-head h2 { font-size: clamp(1.65rem, 3.4vw, 2.4rem); font-weight: 500; letter-spacing: -0.028em; max-width: 24ch; }
 .rav-landing .sec-head p { color: var(--ink-soft); max-width: var(--measure); margin: 1rem 0 0; }
 
-.rav-landing .split { display: grid; gap: 1.5rem; grid-template-columns: 1fr; align-items: start; }
-@media (min-width: 58rem) { .rav-landing .split { grid-template-columns: 1fr 1fr; gap: 2rem; } }
+.rav-landing .split { display: grid; gap: 1.5rem; grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 58rem) { .rav-landing .split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem; } }
 
 .rav-landing .caps { display: grid; gap: 2.5rem; }
-.rav-landing .cap { display: grid; gap: 1.25rem; grid-template-columns: 1fr; align-items: center; }
+.rav-landing .cap { display: grid; gap: 1.25rem; grid-template-columns: minmax(0, 1fr); align-items: center; }
+.rav-landing :is(.hero-grid, .split, .caps, .cap, .orgs) > * { min-width: 0; }
 @media (min-width: 58rem) {
   .rav-landing .cap { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2.75rem; }
   .rav-landing .cap:nth-child(even) > .cap-text { order: 2; }
