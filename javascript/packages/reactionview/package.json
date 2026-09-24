@@ -1,6 +1,6 @@
 {
   "name": "reactionview",
-  "version": "0.4.0",
+  "version": "0.6.0",
   "description": "Reactive views for the HTML+ERB you already have. The browser runtime for ReActionView.",
   "type": "module",
   "license": "MIT",
