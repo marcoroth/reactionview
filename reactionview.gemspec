@@ -37,6 +37,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "actionview", ">= 7.0"
   spec.add_dependency "cruise", ">= 0.3.0"
-  spec.add_dependency "herb", ">= 0.11.0", "< 0.12.0"
+  spec.add_dependency "herb", ">= 0.11.0"
   spec.add_dependency "websocket", "~> 1.2"
 end
