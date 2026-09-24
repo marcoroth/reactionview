@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-gem "herb", github: "marcoroth/herb", branch: "main"
+gem "herb", github: "marcoroth/herb", branch: "release-v0.11.0"
 gem "prism", github: "ruby/prism", tag: "v1.9.0"
 gem "actionview", "~> 7.1.0"
 gem "appraisal"
@@ -12,7 +12,7 @@ gem "minitest-mock"
 gem "railties", "~> 7.1.0"
 gem "rake", "~> 13.0"
 gem "readline", "~> 0.0.4"
-gem "rubocop", "~> 1.80.1"
+gem "rubocop", "~> 1.91.0"
 gem "tsort", "~> 0.2.0"
 
 gemspec path: "../"

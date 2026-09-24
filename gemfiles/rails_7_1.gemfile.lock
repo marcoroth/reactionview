@@ -1,17 +1,9 @@
 GIT
   remote: https://github.com/marcoroth/herb.git
-  revision: 90405683520357d9f3cfa65ef4df85472f528baf
-  branch: main
+  revision: 6d6842c9c3c50bd1d63bd51470bdcc106a404031
+  branch: release-v0.11.0
   specs:
-    herb (0.10.3)
-    herb (0.10.3-aarch64-linux-gnu)
-    herb (0.10.3-aarch64-linux-musl)
-    herb (0.10.3-arm-linux-gnu)
-    herb (0.10.3-arm-linux-musl)
-    herb (0.10.3-arm64-darwin)
-    herb (0.10.3-x86_64-darwin)
-    herb (0.10.3-x86_64-linux-gnu)
-    herb (0.10.3-x86_64-linux-musl)
+    herb (0.11.0)
 
 GIT
   remote: https://github.com/ruby/prism.git
@@ -26,7 +18,7 @@ PATH
     reactionview (0.4.0)
       actionview (>= 7.0)
       cruise (>= 0.3.0)
-      herb (>= 0.10.0, < 0.11.0)
+      herb (>= 0.11.0)
       websocket (~> 1.2)
 
 GEM
@@ -190,15 +182,15 @@ GEM
     regexp_parser (2.12.0)
     reline (0.7.0)
       io-console (~> 0.5)
-    rubocop (1.80.2)
-      json (~> 2.3)
+    rubocop (1.91.0)
+      json (>= 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
-      parallel (~> 1.10)
+      parallel (>= 1.10)
       parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 2.9.3, < 3.0)
-      rubocop-ast (>= 1.46.0, < 2.0)
+      rubocop-ast (>= 1.49.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
     rubocop-ast (1.50.0)
@@ -239,7 +231,7 @@ DEPENDENCIES
   rake (~> 13.0)
   reactionview!
   readline (~> 0.0.4)
-  rubocop (~> 1.80.1)
+  rubocop (~> 1.91.0)
   tsort (~> 0.2.0)
 
 BUNDLED WITH
