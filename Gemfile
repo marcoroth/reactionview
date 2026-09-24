@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 gemspec
 
-gem "herb", github: "marcoroth/herb", branch: "main"
+gem "herb", github: "marcoroth/herb", branch: "release-v0.11.0"
 gem "prism", github: "ruby/prism", tag: "v1.9.0"
 
 gem "actionview", "~> 8.1"
