@@ -1,7 +1,7 @@
 ---
 layout: page
-title: "ReActionView - Makes your existing HTML+ERB templates reactive"
-description: "A template declares state the browser owns, changes it from an HTML attribute, and has your controller answer when the server is needed."
+title: "ReActionView - Reactive views for the HTML+ERB you already have"
+description: "You get what a client-side framework gives you, without adopting one."
 sidebar: false
 aside: false
 ---

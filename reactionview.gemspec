@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.email = ["marco.roth@intergga.ch"]
   spec.license = "MIT"
 
-  spec.summary = "An ActionView-compatible ERB engine with modern DX - re-imagined with Herb."
-  spec.description = spec.summary
+  spec.summary = "Reactive views for the HTML+ERB you already have."
+  spec.description = "You get what a client-side framework gives you, without adopting one."
   spec.homepage = "https://reactionview.dev"
   spec.required_ruby_version = ">= 3.2.0"
 
