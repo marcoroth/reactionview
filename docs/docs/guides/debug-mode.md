@@ -20,6 +20,14 @@ It changes the HTML your templates render, so keep it out of production.
 
 Every element a template writes gets `data-herb-debug-*` attributes naming the file, its path relative to `Rails.root` and, for ERB output, the tag and its line and column. Output that is not an element of its own is wrapped in a `<span style="display: contents">` so it can carry the same attributes without changing the layout.
 
+```html
+<strong><span data-herb-debug-outline-type="erb-output"
+  data-herb-debug-erb="&lt;%= message.author %&gt;"
+  data-herb-debug-file-relative-path="app/views/messages/index.html.erb"
+  data-herb-debug-line="9" data-herb-debug-column="17"
+  style="display: contents;">Ada</span></strong>
+```
+
 Debug mode also puts the dev tools script and a few `<meta>` tags into the `<head>` of every layout Herb renders. You do not import anything yourself.
 
 ## The dev tools

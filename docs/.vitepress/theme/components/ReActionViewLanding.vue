@@ -142,7 +142,7 @@ direction = <span class="g">herb_state</span>(<span class="str">"order"</span>, 
       <section>
         <div class="sec-head">
           <h2>Supported by {{ total }} people and companies.</h2>
-          <p>ReActionView is part of the <a href="https://herb-tools.dev">Herb</a> project, which is funded by the people and companies sponsoring it on GitHub.</p>
+          <p><a href="https://herb-tools.dev">Herb</a> is an independent open source project, and it relies on the companies that use it to keep going. If your team depends on Herb, consider sponsoring the project.</p>
         </div>
 
         <p class="sponsor-label">Companies</p>
