@@ -10,7 +10,7 @@
 ```
 :::
 
-In **server** mode, the page carries only what rendered. When the client needs a branch it has not seen, it asks the same URL for it with the current states, and your controller runs as usual. This is the default, for `<%# herb:slots client %>` without a mode and for `config.slots = true`.
+In **server** mode, the page carries only what rendered. When the client needs a branch it has not seen, it asks the same URL for it with the current states, and your controller runs as usual. This is the default, for `<%# herb:slots %>` without a mode and for `config.slots = true`.
 
 :::code-group
 ```erb [app/views/messages/index.html.erb]
