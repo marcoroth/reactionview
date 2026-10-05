@@ -56,6 +56,10 @@ class ReActionView::Slots::ResolverTest < Minitest::Spec
     assert_empty find(@resolver, "show", "users", formats: [:html])
   end
 
+  test "leaves a request that lists slots after html to the resolver Rails already built" do
+    assert_empty find(@resolver, "show", "users", formats: [:html, :text, :slots])
+  end
+
   test "special cases no path, since nothing asks it for a layout" do
     assert_equal :slots, find(@resolver, "application", "layouts", formats: [:slots]).first.format
   end
