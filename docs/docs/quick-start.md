@@ -94,13 +94,13 @@ Click **New message** and the form appears without a page load. The client asked
 
 ## Step 3: Let the server answer
 
-Now add a select that sorts the list. Sorting happens in the database, so this time the server has to answer.
+Now add a select that sorts the list. Sorting happens in the database, so this time the server has to answer. Switch the template to server mode. Client mode would evaluate `<% if order == "newest" %>` in the browser and never ask, so the list would stay put.
 
 Declare a second state, `order`, and set it from the select. The template reads `order` to say which way the list is sorted.
 
 :::code-group
 ```erb [app/views/messages/index.html.erb]
-<%# herb:slots client %>
+<%# herb:slots server %>
 <%# herb:state (composing: false, order: "oldest") %>
 
 <h1>Messages</h1>
