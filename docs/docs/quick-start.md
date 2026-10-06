@@ -62,7 +62,7 @@ Add a button that opens a form for a new message. The form is shown when a state
 
 :::code-group
 ```erb [app/views/messages/index.html.erb]
-<%# herb:slots client %>
+<%# herb:slots server %>
 <%# herb:state (composing: false) %>
 
 <h1>Messages</h1>
@@ -90,11 +90,11 @@ Add a button that opens a form for a new message. The form is shown when a state
 
 Click **New message** and the form appears without a page load. The client asked your app for the form's markup and put it in place. Nothing else on the page was touched, so the list keeps its scroll position and anything you had selected.
 
-`<%# herb:slots client %>` compiles the template with [slots](https://herb-tools.dev/language/slots), which is what lets the client find the `if` again after the page has rendered. With `config.slots = true` every template gets them, and the directive makes it explicit in this one.
+`<%# herb:slots server %>` compiles the template with [slots](https://herb-tools.dev/language/slots), which is what lets the client find the `if` again after the page has rendered. With `config.slots = true` every template gets them, and the directive makes it explicit in this one. [Server and Client Rendering](/guides/rendering-modes) covers the other mode, where the page carries its unrendered branches with it.
 
 ## Step 3: Let the server answer
 
-Now add a select that sorts the list. Sorting happens in the database, so this time the server has to answer. Switch the template to server mode. Client mode would evaluate `<% if order == "newest" %>` in the browser and never ask, so the list would stay put.
+Now add a select that sorts the list. Sorting happens in the database, so this time your controller has to answer, not just render the markup. Keep the template in server mode. Client mode would evaluate `<% if order == "newest" %>` in the browser and never ask, so the list would stay put.
 
 Declare a second state, `order`, and set it from the select. The template reads `order` to say which way the list is sorted.
 
