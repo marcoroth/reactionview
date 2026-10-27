@@ -62,6 +62,7 @@ module ReActionView
           slots = slot_visitors(template, source)
 
           config[:visitors] = compile_stack(template, validation_mode: mode, slots: slots)
+          config.merge!(filename_annotation_options(template))
 
           erb_implementation.new(source, config).src
         end
@@ -115,6 +116,18 @@ module ReActionView
         end
 
         private
+
+        def filename_annotation_options(template)
+          return {} unless ActionView::Base.annotate_rendered_view_with_filenames && template.format == :html
+
+          beginning = "<!-- BEGIN #{template.short_identifier}\n-->"
+          ending = "<!-- END #{template.short_identifier} -->"
+
+          {
+            preamble: "@output_buffer.safe_append=#{beginning.dump};",
+            postamble: "@output_buffer.safe_append=#{ending.dump};@output_buffer",
+          }
+        end
 
         def base_visitors(template, validation_mode: ReActionView.config.validation_mode)
           compile_stack(template, validation_mode: validation_mode).reject { |visitor| rewrites_erb_source?(visitor) }
