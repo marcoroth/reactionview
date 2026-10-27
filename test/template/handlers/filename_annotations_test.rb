@@ -47,6 +47,15 @@ class ReActionView::FilenameAnnotationsTest < Minitest::Spec
     "<!-- BEGIN #{identifier}\n-->#{body}<!-- END #{identifier} -->"
   end
 
+  def rails_output(template)
+    compiled = Rails.stub(:root, Pathname.new("/app")) do
+      ActionView::Template::Handlers::ERB.new.call(template, template.source)
+    end
+    view = ActionView::Base.with_empty_template_cache.new(ActionView::LookupContext.new([]), {}, nil)
+    view.instance_variable_set(:@output_buffer, ActionView::OutputBuffer.new)
+    view.instance_eval(compiled).to_s
+  end
+
   HANDLERS.each_key do |extension|
     test "#{extension} HTML uses the Rails filename comments and preserves escaping and the buffer" do
       object = template("<p><%= '<unsafe>' %><%= '<b>safe</b>'.html_safe %></p>", extension: extension)
@@ -125,14 +134,14 @@ class ReActionView::FilenameAnnotationsTest < Minitest::Spec
     ReActionView.config.external_template_mode = :fallback
     object = template("<p><h2>Invalid</h2></p>", extension: :erb, identifier: "/gems/example/app/views/show.html.erb")
 
-    assert_equal annotated("<p><h2>Invalid</h2></p>", object.identifier), @view.instance_eval(compile(object)).to_s
+    assert_equal rails_output(object), @view.instance_eval(compile(object)).to_s
   end
 
   test "nonintercepted ERB keeps Rails annotations without duplicates" do
     ReActionView.config.intercept_erb = false
     object = template("<p>Hello</p>", extension: :erb)
 
-    assert_equal annotated("<p>Hello</p>", "app/views/users/show.html.erb"), @view.instance_eval(compile(object)).to_s
+    assert_equal rails_output(object), @view.instance_eval(compile(object)).to_s
   end
 
   test "reactive HTML keeps filename comments outside slot markers while values remain a hash" do
