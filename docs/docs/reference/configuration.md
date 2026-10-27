@@ -34,6 +34,10 @@ Renders `.html.erb` templates through `Herb::Engine`. Templates named `.html.her
 
 **Default**: `false`
 
+## Rendered view filename annotations
+
+ReActionView honors Rails' `config.action_view.annotate_rendered_view_with_filenames` setting for `.html.herb` and intercepted `.html.erb` templates, adding the same `BEGIN` and `END` filename comments as Rails. Other formats, including slot values, are not annotated.
+
 ## `debug_mode`
 
 Adds debug attributes to rendered elements and loads the dev tools into the page. [Debug Mode](/guides/debug-mode) describes both.
