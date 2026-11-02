@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/marcoroth/herb.git
-  revision: c0674afae16beac4e725b55739a1b834b434fc3a
+  revision: 559066177e49adb8a158808f82786e246553e949
   branch: main
   specs:
-    herb (0.11.0)
+    herb (0.11.1)
 
 GIT
   remote: https://github.com/ruby/prism.git
