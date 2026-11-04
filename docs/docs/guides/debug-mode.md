@@ -38,6 +38,20 @@ The badge also counts what Herb reported about the page, the [validator findings
 
 Editor links use `config.project_path`. When your app runs in a container and your editor runs outside it, set it to where `Rails.root` is mounted on your machine, as described in [Custom project path for editor links](/reference/configuration#custom-project-path-for-editor-links).
 
+## Phlex components
+
+The attributes are written while Herb compiles a template, so a component written only in Ruby never gets them and the dev tools cannot outline it. If your components are built with [Phlex](https://www.phlex.fun), include `ReActionView::Phlex::ComponentOutlines` in their base class.
+
+:::code-group
+```ruby [app/components/base.rb]
+class Components::Base < Phlex::HTML
+  include ReActionView::Phlex::ComponentOutlines
+end
+```
+:::
+
+While debug mode is on, each component marks the first tag it renders with its class name and the file that defines it, so it shows up in the component outlines and opens in your editor like any template. When a component starts by rendering another one, the inner component keeps the outline. With debug mode off, the HTML is left as it is.
+
 ## Next
 
 [Development Tools](/guides/development-tools) covers the linter, the language server and the dev server, which bring the same information into your editor.
