@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+# TODO: Move RuboCop back into the main `Gemfile` and delete this file once https://github.com/rubocop/rubocop-ast/pull/420 is released.
+# It lives here because `rubocop-ast` requires `prism ~> 1.7`, while Herb's serialized ASTs need the `prism` 2.1 the `Gemfile` pins.
+
+gem "rubocop", "~> 1.92.2"
