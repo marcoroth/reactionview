@@ -15,7 +15,7 @@ def ask?(prompt = "")
 end
 
 module SnapshotUtils
-  def assert_compiled_snapshot(source, handler: ReActionView::Template::Handlers::ERB, virtual_path: "test", identifier: "test_template", format: :html, locals: [], options: {}) # rubocop:disable Metrics/ParameterLists,Layout/LineLength
+  def assert_compiled_snapshot(source, handler: ReActionView::Template::Handlers::ERB, virtual_path: "test", identifier: "test_template", format: :html, locals: [], options: {}) # rubocop:disable Layout/LineLength
     template = ActionView::Template.new(
       source,
       identifier,
@@ -53,7 +53,7 @@ module SnapshotUtils
     compiled_source
   end
 
-  def assert_evaluated_snapshot(source, ivars: {}, options: {}, handler: ReActionView::Template::Handlers::ERB, virtual_path: "test", identifier: "test_template", format: :html, locals: []) # rubocop:disable Metrics/ParameterLists,Layout/LineLength,Metrics/MethodLength
+  def assert_evaluated_snapshot(source, ivars: {}, options: {}, handler: ReActionView::Template::Handlers::ERB, virtual_path: "test", identifier: "test_template", format: :html, locals: []) # rubocop:disable Layout/LineLength,Metrics/MethodLength
     template = ActionView::Template.new(
       source,
       identifier,

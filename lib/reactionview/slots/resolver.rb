@@ -3,7 +3,6 @@
 module ReActionView
   module Slots
     class Resolver < ActionView::FileSystemResolver
-      # rubocop:disable Metrics/ParameterLists, Style/OptionalBooleanParameter -- these match the signatures in Rails
       def find_all(name, prefix = nil, partial = false, details = {}, key = nil, locals = [])
         return [] unless slots_first?(details, key)
 
@@ -16,8 +15,6 @@ module ReActionView
 
         super
       end
-
-      # rubocop:enable Metrics/ParameterLists, Style/OptionalBooleanParameter
 
       private
 
