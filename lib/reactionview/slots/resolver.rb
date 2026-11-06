@@ -5,6 +5,14 @@ module ReActionView
     class Resolver < ActionView::FileSystemResolver
       private
 
+      def _find_all(name, prefix, partial, details, key, locals)
+        requested = key || ActionView::TemplateDetails::Requested.new(**details)
+
+        return [] unless requested.formats.first == Slots::FORMAT
+
+        super
+      end
+
       def build_unbound_template(template)
         unbound = super
         details = unbound.details
