@@ -3,14 +3,28 @@
 module ReActionView
   module Slots
     class Resolver < ActionView::FileSystemResolver
-      private
-
-      def _find_all(name, prefix, partial, details, key, locals)
-        requested = key || ActionView::TemplateDetails::Requested.new(**details)
-
-        return [] unless requested.formats.first == Slots::FORMAT
+      # rubocop:disable Metrics/ParameterLists, Style/OptionalBooleanParameter -- these match the signatures in Rails
+      def find_all(name, prefix = nil, partial = false, details = {}, key = nil, locals = [])
+        return [] unless slots_first?(details, key)
 
         super
+      end
+
+      # Rails 8.2 resolves a single template through `find`, which no longer goes through `find_all`.
+      def find(name, prefix = nil, partial = false, details = {}, key = nil, locals = [])
+        return nil unless slots_first?(details, key)
+
+        super
+      end
+
+      # rubocop:enable Metrics/ParameterLists, Style/OptionalBooleanParameter
+
+      private
+
+      def slots_first?(details, key)
+        requested = key || ActionView::TemplateDetails::Requested.new(**details)
+
+        requested.formats_idx[Slots::FORMAT]&.zero?
       end
 
       def build_unbound_template(template)
