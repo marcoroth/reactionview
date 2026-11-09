@@ -135,6 +135,23 @@ class ReActionView::Slots::RenderingTest < Minitest::Spec
     assert_includes rendered, %(<div class="calm" data-herb-slot="0:attribute:class">)
   end
 
+  test "a partial rendered inside form_with keeps its own values" do
+    File.write(File.join(@root, "users", "show.html.erb"), <<~ERB)
+      <h1><%= @title %></h1>
+      <%= form_with url: "/messages" do |f| %>
+        <%= render "users/field", f: f %>
+      <% end %>
+    ERB
+    File.write(File.join(@root, "users", "_field.html.erb"), %(<%= f.text_field :body %>))
+
+    payload = render(:slots, title: "Hello")
+    partial = payload[:slots].values.find { |value| value.is_a?(::Hash) }
+
+    assert_equal "Hello", payload[:slots][0]
+    assert_equal "users/_field.html.erb", partial[:template].split("/").last(2).join("/")
+    assert_includes partial[:slots][0], %(name="body")
+  end
+
   test "a value is escaped the way the page escaped it" do
     payload = render(:slots, tone: "calm", title: "Hi <b>")
 
